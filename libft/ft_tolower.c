@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinaut <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/23 17:49:10 by ldinaut          ###   ########.fr       */
+/*   Created: 2021/11/23 16:51:49 by ldinaut           #+#    #+#             */
+/*   Updated: 2021/11/25 18:16:57 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
+int	ft_tolower(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
+}
 
-#endif
+/*int	main()
+{
+	printf("moi : %c\n", ft_tolower(48));
+	printf("vrai : %c\n", tolower(48));
+}*/

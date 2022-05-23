@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/23 17:49:10 by ldinaut          ###   ########.fr       */
+/*   Created: 2021/11/22 00:28:00 by ldinaut           #+#    #+#             */
+/*   Updated: 2021/11/25 12:43:00 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}

@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/23 17:49:10 by ldinaut          ###   ########.fr       */
+/*   Created: 2021/11/21 23:50:02 by ldinaut           #+#    #+#             */
+/*   Updated: 2021/11/25 16:44:12 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-
-#endif
+int	ft_isalnum(int c)
+{
+	if (!((c >= 'A' && c <= 'Z')
+			|| (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')))
+		return (0);
+	return (1);
+}

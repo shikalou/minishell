@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinaut <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/23 17:49:10 by ldinaut          ###   ########.fr       */
+/*   Created: 2021/11/23 15:53:15 by ldinaut           #+#    #+#             */
+/*   Updated: 2021/11/25 18:17:33 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
+int	ft_toupper(int c)
+{
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	return (c);
+}
 
-#endif
+/*int	main()
+{
+	printf("moi : %c\n", ft_toupper(48));
+	printf("vrai : %c\n", toupper(48));
+	return (0);
+}*/

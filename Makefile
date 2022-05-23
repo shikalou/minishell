@@ -6,7 +6,7 @@
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 16:12:42 by ldinaut           #+#    #+#              #
-#    Updated: 2022/05/23 16:58:36 by ldinaut          ###   ########.fr        #
+#    Updated: 2022/05/23 17:35:43 by ldinaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS		=	$(addprefix srcs/, $(SRCS_FILES))
 
 CC			=	gcc
 
-LIB			=	-lreadline
+LIB			=	-lreadline -Llibft -lft
 
 CFLAGS		=	-Wall -Wextra -Werror -I./includes
 
@@ -31,13 +31,16 @@ DEP			=	$(OBJS:%.o=%.d)
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJS)
+	make -C libft
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB)
 
 clean	:
+	make -C libft clean
 	rm -rf $(OBJS) $(DEP)
 	rm -rf objs/
 
 fclean	:	clean
+	make -C libft fclean
 	rm -rf $(NAME)
 
 re		:	fclean all
