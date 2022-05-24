@@ -1,23 +1,56 @@
 #include "minishell.h"
 
-int	ft_parsing(char *cmd)
+int	ft_checkquotes(char *cmd)
 {
-	char	**splitted;
+	int	i;
+	int	check_s;
+	int	check_d;
 
-	splitted = ft_split(cmd, ' ');
-	printf("%s\n", splitted[0]);
-	return (0);
+	i = 0;
+	check_s = 0;
+	check_d = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '\'' && check_s == 0)
+			check_s++;
+		else if (cmd[i] == '\'' && check_s > 0)
+			check_s--;
+		else if (cmd[i] == '\"'&& check_d ==0)
+			check_d++;
+		else if (cmd[i] == '\"' && check_d > 0)
+			check_d--;
+		i++;
+	}
+	return(check_d + check_s);
 }
 
+int	ft_parsing(char *cmd)
+{
+	if (ft_checkquotes(cmd) != 0)
+	{
+		write(2, "Error syntax\n", 13);
+		return (0);
+	}
+	return (1);
+}
 
-int	main()
+void	shellmini(void)
 {
 	char *cmd;
+	
 	while (1)
 	{
 		cmd = readline("nelson et zor minishell$ ");
+		add_history(cmd);
 		printf("%s\n", cmd);
-		ft_parsing(cmd);
+		if(!ft_parsing(cmd))
+			continue ;
 	}
+
+}
+
+int	main()
+{
+	shellmini();
 	return (0);
 }
