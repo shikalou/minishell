@@ -5,48 +5,45 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/05/23 16:12:42 by ldinaut           #+#    #+#              #
-#    Updated: 2022/05/24 18:08:01 by ldinaut          ###   ########.fr        #
+#    Created: 2021/12/08 16:42:54 by ldinaut           #+#    #+#              #
+#    Updated: 2022/03/04 18:08:35 by ldinaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	minishell
+NAME	=	libftprintf.a
 
-SRCS_FILES	=	main.c
+SRCS	=	ft_printf.c\
+		ft_putc.c\
+		ft_putd.c\
+		ft_putnbrhexa_fd.c\
+		ft_putnbr_p.c\
+		ft_puts.c\
+		ft_putunbr_fd.c\
+		ft_countnb.c\
+		ft_countnb_hex.c\
+		ft_countunb.c \
+		print.c
 
-SRCS		=	$(addprefix srcs/, $(SRCS_FILES))
+CC	=	clang
 
-CC			=	gcc
+CFLAGS	=	-Wall -Wextra -Werror
 
-LIB			=	-lreadline -Llibft -lft
+OBJS	=	$(SRCS:.c=.o)
 
-CFLAGS		=	-Wall -Wextra -Werror -g3 -I./includes
+$(NAME)	:	${OBJS}
+			ar rcs $(NAME) $(OBJS)
 
-OBJS_FILES	=	$(SRCS_FILES:%.c=%.o)
+all	:	$(NAME)
 
-OBJS		=	$(addprefix objs/, $(OBJS_FILES))
-
-DEP			=	$(OBJS:%.o=%.d)
-
-all		:	$(NAME)
-
-$(NAME)	:	$(OBJS)
-	make -C libft
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB)
+.c.o	:
+	$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
 
 clean	:
-	make -C libft clean
-	rm -rf $(OBJS) $(DEP)
-	rm -rf objs/
+	rm -rf $(OBJS)
 
 fclean	:	clean
-	make -C libft fclean
 	rm -rf $(NAME)
 
-re		:	fclean all
-
-objs/%.o	: srcs/%.c includes/minishell.h
-	mkdir -p objs
-	$(CC) $(CFLAGS) -MMD -o $@ -c $<
+re	:	fclean all
 
 .PHONY: all clean fclean re
