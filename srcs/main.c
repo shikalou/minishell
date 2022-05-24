@@ -52,5 +52,6 @@ void	shellmini(void)
 int	main()
 {
 	shellmini();
+//	printf("slt les gars\n");
 	return (0);
 }
