@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/05/25 16:16:50 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/05/25 16:37:32 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ char	*check_spe_char(char *cmd)
 			else if (cmd[i] == '<' && cmd[i + 1] == '<' && (charisalphaorspace(cmd[i + 2]) == 1))
 			{	
 				// on ajoute les espaces specifiques au heredoc a cet endroit la de la str
-				cmd = add_space_heredoc(cmd, i);
+				cmd = add_space_hereapp(cmd, i);
 			}
 			//si on est dans le cas du >> : meme chose que pour le heredoc
 			else if (cmd[i] == '>' && cmd[i + 1] == '>' && (charisalphaorspace(cmd[i + 2]) == 1))
-					cmd = add_space_append(cmd, i);
+					cmd = add_space_hereapp(cmd, i);
 			//else on rentre dans aucune de nos categories == il y a une erreur syntax car un 
 			// | ou < ou > est mal utilise, sans rien derriere donc on quit return NULL
 			else
