@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/05/25 16:37:32 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/05/25 17:42:28 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,23 @@ char	*check_spe_char(char *cmd)
 		{
 			// si ce char est < ou > ou | et que le char suivant est alpha ou espace
 			// donc i + 1 n'est pas > ou < ou | mais existe (sinon charisalpha renvoie 0)
-			if (cmd[i] == '<' || cmd[i] == '>' || cmd[i] == '|' && (charisalphaorspace(cmd[i + 1]) == 1))
+			if ((cmd[i] == '<' || cmd[i] == '>' || cmd[i] == '|') && (charisalphaorspace(cmd[i + 1]) == 1))
 			{
 				// check de l'erreur pour la pipe en debut de prompt
 				if (cmd[i] == '|' && i == 0)
 					return (NULL);
 				// si le char d'apres n'est pas espace 
-				if (cmd[i + 1] != ' ')
+				else if (cmd[i + 1] != ' ')
 				{
 					//on ajoute deux espaces directement a notre str avant(si i > 0) et apres cmd[i]
 					cmd = add_space(cmd, i);
 				}
-				// ensuite verification que ca s'est bien passe ET qu'il y a quelque chose apres ' '
-				if (cmd[i + 1] != ' ' || (charisalpha(cmd[i + 2]) == 0))
+				else if (cmd[i + 1] == ' ' && (charisalpha(cmd[i + 2]) == 1))
+					i++;
+				// ensuite verification que ca s'est bien passe OU qu'il y a bien quelque chose apres ' '
+				else if (cmd[i] != ' ' || (charisalpha(cmd[i + 3]) == 0))
 				{
+					printf("toto\n");
 					// sinon on quit du coup avec return NULL 
 					return (NULL);
 				}
@@ -100,7 +103,10 @@ char	*check_spe_char(char *cmd)
 			//else on rentre dans aucune de nos categories == il y a une erreur syntax car un 
 			// | ou < ou > est mal utilise, sans rien derriere donc on quit return NULL
 			else
+			{
+				printf("tata\n");
 				return (NULL);
+			}
 		}
 		// ici, on va checker la len_tmp (la len avant nos changement eventuels de cmd si on add_space)
 		// donc SI la len actuelle de cmd est differente de la len de tmp
@@ -165,7 +171,7 @@ int	ft_parsing(char *cmd)
 	cmd_split = ft_split(cmd, ' ');
 	while (cmd_split[i])
 	{
-		ft_printf("%s\n", cmd_split[i]);
+		printf("%s\n", cmd_split[i]);
 		i++;
 	}
 /*	if (!ft_check_pipe(cmd_split))

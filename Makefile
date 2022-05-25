@@ -6,13 +6,13 @@
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 16:12:42 by ldinaut           #+#    #+#              #
-#    Updated: 2022/05/25 15:58:06 by mcouppe          ###   ########.fr        #
+#    Updated: 2022/05/25 17:08:55 by mcouppe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
-SRCS_FILES	=	main.c
+SRCS_FILES	=	main.c utils_parsing.c
 
 SRCS		=	$(addprefix srcs/, $(SRCS_FILES))
 

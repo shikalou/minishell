@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:46:20 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/05/25 16:37:51 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/05/25 17:27:11 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	charisalphaorspace(char c)
 {
+	if (!c)
+		return (0);
 	if ((c >= '0' && c <= '9') || c == ' ' || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
 		return (1);
 	else
@@ -22,6 +24,8 @@ int	charisalphaorspace(char c)
 
 int	charisalpha(char c)
 {
+	if (!c)
+		return (0);
 	if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
 		return (1);
 	else
@@ -36,21 +40,12 @@ char	*add_space(char *cmd, int index)
 
 	i = -1;
 	j = 0;
-	if (index != 0)
-		new = malloc(sizeof(char) * (ft_strlen(cmd) + 2 + 1));
-	else
-		new = malloc(sizeof(char) * (ft_strlen(cmd) + 1 + 1));
+	new = malloc(sizeof(char) * (ft_strlen(cmd) + 2 + 1));
 	if (!new)
 		return (NULL);
 	while (cmd[++i])
 	{
-		if (index == 0 && i == index)
-		{
-			new[j] = cmd[i];
-			j++;
-			new[j] = ' ';
-		}
-		else if (index != 0 && i == index)
+		if (i == index)
 		{
 			new[j] = ' ';
 			new[j + 1] = cmd[i];
@@ -74,23 +69,12 @@ char	*add_space_hereapp(char *cmd, int index)
 
 	i = -1;
 	j = 0;
-	if (index != 0)
-		new = malloc(sizeof(char) * (ft_strlen(cmd) + 2 +1));
-	else
-		new = malloc(sizeof(char) * (ft_strlen(cmd) + 1 + 1));
+	new = malloc(sizeof(char) * (ft_strlen(cmd) + 2 +1));
 	if (!new)
 		return (NULL);
 	while(cmd[++i])
 	{
-		if (index == 0 && i == index)
-		{
-			new[j] = cmd[i];
-			new[j + 1] = cmd[i + 1];
-			new[j + 2] = ' ';
-			j += 2;
-			i++;
-		}
-		else if (index != 0 && i == index)
+		if (i == index)
 		{
 			new[j] = ' ';
 			new[j + 1] = cmd[i];
