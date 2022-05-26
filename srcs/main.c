@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/05/25 17:42:28 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/05/26 12:29:33 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@
 		--> >> append
 	else
 		error syntax
-	
+
 	~	~	~	~	~	~	~
-	
+
 ******* multiples < > >> etc dans la str :
-	
-	
+
+
 
 */
 
@@ -65,7 +65,12 @@ char	*check_spe_char(char *cmd)
 */
 	while (cmd[++i])
 	{
-		//Si l'on croise un char | , <  ou > 
+		if (cmd[i] == '"')
+		{
+			while (cmd[++i] != '"')
+				;
+		}
+		//Si l'on croise un char | , <  ou >
 		if (cmd[i] == '|' || cmd[i] == '>' || cmd[i] == '<')
 		{
 			// si ce char est < ou > ou | et que le char suivant est alpha ou espace
@@ -75,7 +80,7 @@ char	*check_spe_char(char *cmd)
 				// check de l'erreur pour la pipe en debut de prompt
 				if (cmd[i] == '|' && i == 0)
 					return (NULL);
-				// si le char d'apres n'est pas espace 
+				// si le char d'apres n'est pas espace
 				else if (cmd[i + 1] != ' ')
 				{
 					//on ajoute deux espaces directement a notre str avant(si i > 0) et apres cmd[i]
@@ -86,25 +91,23 @@ char	*check_spe_char(char *cmd)
 				// ensuite verification que ca s'est bien passe OU qu'il y a bien quelque chose apres ' '
 				else if (cmd[i] != ' ' || (charisalpha(cmd[i + 3]) == 0))
 				{
-					printf("toto\n");
-					// sinon on quit du coup avec return NULL 
+					// sinon on quit du coup avec return NULL
 					return (NULL);
 				}
 			}
 			// si on est dans le cas du << et qu'il y a bien un char autre que < , > , | juste apres
 			else if (cmd[i] == '<' && cmd[i + 1] == '<' && (charisalphaorspace(cmd[i + 2]) == 1))
-			{	
+			{
 				// on ajoute les espaces specifiques au heredoc a cet endroit la de la str
 				cmd = add_space_hereapp(cmd, i);
 			}
 			//si on est dans le cas du >> : meme chose que pour le heredoc
 			else if (cmd[i] == '>' && cmd[i + 1] == '>' && (charisalphaorspace(cmd[i + 2]) == 1))
 					cmd = add_space_hereapp(cmd, i);
-			//else on rentre dans aucune de nos categories == il y a une erreur syntax car un 
+			//else on rentre dans aucune de nos categories == il y a une erreur syntax car un
 			// | ou < ou > est mal utilise, sans rien derriere donc on quit return NULL
 			else
 			{
-				printf("tata\n");
 				return (NULL);
 			}
 		}
@@ -152,10 +155,10 @@ int	ft_checkquotes(char *cmd)
 
 int	ft_parsing(char *cmd)
 {
-	char **cmd_split;
-	int		i;
+	//char **cmd_split;
+	// int		i;
 
-	i = 0;
+	// i = 0;
 	if (ft_checkquotes(cmd) != 0)
 	{
 		write(2, "Error syntax\n", 13);
@@ -168,12 +171,12 @@ int	ft_parsing(char *cmd)
 		write(2, "Error syntax\n", 13);
 		return (0);
 	}
-	cmd_split = ft_split(cmd, ' ');
-	while (cmd_split[i])
-	{
-		printf("%s\n", cmd_split[i]);
-		i++;
-	}
+	//cmd_split = ft_split(cmd, ' ');
+	// while (cmd_split[i])
+	// {
+	// 	printf("%s\n", cmd_split[i]);
+	// 	i++;
+	// }
 /*	if (!ft_check_pipe(cmd_split))
 	{
 		write(2, "Error syntax\n", 13);
@@ -195,6 +198,7 @@ void	shellmini(void)
 		if(!ft_parsing(cmd))
 			continue ;
 	}
+	free(cmd);
 }
 
 int	main()
