@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/05/26 12:29:33 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/26 17:46:38 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,7 @@ char	*check_spe_char(char *cmd)
 			//else on rentre dans aucune de nos categories == il y a une erreur syntax car un
 			// | ou < ou > est mal utilise, sans rien derriere donc on quit return NULL
 			else
-			{
 				return (NULL);
-			}
 		}
 		// ici, on va checker la len_tmp (la len avant nos changement eventuels de cmd si on add_space)
 		// donc SI la len actuelle de cmd est differente de la len de tmp
@@ -155,10 +153,9 @@ int	ft_checkquotes(char *cmd)
 
 int	ft_parsing(char *cmd)
 {
-	//char **cmd_split;
-	// int		i;
+	char **cmd_split;
+	int		i;
 
-	// i = 0;
 	if (ft_checkquotes(cmd) != 0)
 	{
 		write(2, "Error syntax\n", 13);
@@ -171,17 +168,13 @@ int	ft_parsing(char *cmd)
 		write(2, "Error syntax\n", 13);
 		return (0);
 	}
-	//cmd_split = ft_split(cmd, ' ');
-	// while (cmd_split[i])
-	// {
-	// 	printf("%s\n", cmd_split[i]);
-	// 	i++;
-	// }
-/*	if (!ft_check_pipe(cmd_split))
+	cmd_split = ft_split_du_futur(cmd, '|');
+	i = 0;
+	while (cmd_split[i])
 	{
-		write(2, "Error syntax\n", 13);
-		return (0);
-	}*/
+		printf("%s\n", cmd_split[i]);
+		i++;
+	}
 	return (1);
 }
 
@@ -195,8 +188,7 @@ void	shellmini(void)
 		if (!cmd)
 			return ;
 		add_history(cmd);
-		if(!ft_parsing(cmd))
-			continue ;
+		ft_parsing(cmd);
 	}
 	free(cmd);
 }

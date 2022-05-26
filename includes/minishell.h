@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/25 18:00:46 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/26 14:20:53 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+
+char	**ft_split_du_futur(char const *s1, char c);
 
 /* parsing */
 char	*add_space(char *cmd, int index);
