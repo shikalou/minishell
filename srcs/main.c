@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/05/27 16:37:15 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:01:50 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,8 @@ int	ft_checkquotes(char *cmd)
 }
 
 
-int	ft_parsing(char *cmd)
+int	ft_parsing(char *cmd, t_global *global)
 {
-	char **cmd_split;
 	int		i;
 
 	if (ft_checkquotes(cmd) != 0)
@@ -96,17 +95,18 @@ int	ft_parsing(char *cmd)
 		write(2, "Error syntax\n", 13);
 		return (0);
 	}
-	cmd_split = ft_split_du_futur(cmd, '|');
-	i = 0;
-	while (cmd_split[i])
+	global->input = ft_split_du_futur(cmd, '|');
+	i = -1;
+	printf("avant\n");
+	while (global->input[++i] != NULL)
 	{
-		printf("%s\n", cmd_split[i]);
-		i++;
+		printf("%s\n", global->input[i]);
 	}
+	printf("apres\n");
 	return (1);
 }
 
-void	shellmini(void)
+void	shellmini(t_global *global)
 {
 	char *cmd;
 
@@ -116,14 +116,18 @@ void	shellmini(void)
 		if (!cmd)
 			return ;
 		add_history(cmd);
-		ft_parsing(cmd);
+		ft_parsing(cmd, global);
 	}
-	free(cmd);
+//	free(cmd);
 }
 
 int	main()
 {
-	shellmini();
+	t_global *global;
+	
+	global = malloc(sizeof(t_global));
+	shellmini(global);
 	printf("\nslt les gars\n");
+	/*free global*/
 	return (0);
 }

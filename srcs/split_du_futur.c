@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/26 18:06:01 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/30 18:42:00 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,25 @@ static char	**ft_test(char **strs, const char *s1, char c)
 	int	i;
 	int	j;
 	int	l;
+	int	check;
 
 	i = 0;
 	j = 0;
+	check = 0;
 	while (s1 && s1[i])
 	{
 		l = 0;
+		check = 0;
 		if (s1[i])
 		{
 			while (s1[i] && s1[i] != c)
 			{
-				if (s1[i] == '"')
+				if (s1[i] == '"' && check == 0)
 				{
-					while (s1[++i] && s1[i] != '"')
-						strs[j][l++] = s1[i];
+					check++;
+					strs[j][l++] = s1[i++];
+					while (s1[i] && s1[i] != '"')
+						strs[j][l++] = s1[i++];
 				}
 				else
 					strs[j][l++] = s1[i++];
@@ -67,9 +72,11 @@ static int	ft_count_char(char const *s1, int i, char c)
 	{
 		if (s1[i] == '"')
 		{
-			while (s1[++i] != '"')
+			i++;
+			while (s1[i] != '"')
 			{
 				k++;
+				i++;	
 			}
 			k++;
 		}
@@ -137,3 +144,19 @@ char	**ft_split_du_futur(char const *s1, char c)
 	ft_test(strs, s1, c);
 	return (strs);
 }
+
+/*int main()
+{
+	char	**split;
+	char *hihi = "lol | lil | \"merde test|test\" mdrr | ahahaha | \"connard | salopiaud \" oui oui | nn non";
+	printf("%s\n", hihi);
+	split = ft_split_du_futur(hihi, '|');
+	int i;
+	i = 0;
+	while (split[i])
+	{
+		printf("%s\n", split[i]);
+		i++;
+	}
+	return 0;
+}*/
