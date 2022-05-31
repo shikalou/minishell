@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/30 18:42:00 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/05/31 14:37:26 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	**ft_test(char **strs, const char *s1, char c)
 		}
 		j++;
 	}
-	strs[j + 1] = NULL;
+	strs[j] = NULL;
 	return (strs);
 }
 
@@ -76,7 +76,7 @@ static int	ft_count_char(char const *s1, int i, char c)
 			while (s1[i] != '"')
 			{
 				k++;
-				i++;	
+				i++;
 			}
 			k++;
 		}

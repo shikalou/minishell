@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/05/30 17:01:50 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/05/31 15:08:38 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*check_spe_char(char *cmd)
 			len_tmp = ft_strlen(cmd);
 		}
 	}
+
 	return (cmd);
 }
 
@@ -96,13 +97,14 @@ int	ft_parsing(char *cmd, t_global *global)
 		return (0);
 	}
 	global->input = ft_split_du_futur(cmd, '|');
-	i = -1;
-	printf("avant\n");
-	while (global->input[++i] != NULL)
+	i = 0;
+	//printf("avant\n");
+	while (global->input[i])
 	{
 		printf("%s\n", global->input[i]);
+		i++;
 	}
-	printf("apres\n");
+	//printf("apres\n");
 	return (1);
 }
 
@@ -118,14 +120,18 @@ void	shellmini(t_global *global)
 		add_history(cmd);
 		ft_parsing(cmd, global);
 	}
-//	free(cmd);
+	free(cmd);
 }
 
 int	main()
 {
 	t_global *global;
-	
+
 	global = malloc(sizeof(t_global));
+	char *test = getcwd(NULL, 10000);
+	char *test2 = getenv("PATH");
+	printf("%s\n", test);
+	printf("test2= %s\n", test2);
 	shellmini(global);
 	printf("\nslt les gars\n");
 	/*free global*/
