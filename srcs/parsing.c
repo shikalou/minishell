@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/31 16:52:45 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:14:59 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*check_spe_char(char *cmd)
 			len_tmp = ft_strlen(cmd);
 		}
 	}
-
 	return (cmd);
 }
 
@@ -77,9 +76,8 @@ int	ft_checkquotes(char *cmd)
 			check_d--;
 		i++;
 	}
-	return(check_d + check_s);
+	return (check_d + check_s);
 }
-
 
 int	ft_parsing(char *cmd, t_big_struct *big_struct)
 {

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/31 16:58:16 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:08:14 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,27 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-typedef	struct	s_env_lst
+typedef struct s_env_lst
 {
-	int		index;
-	char	*line;
-	struct s_env_lst *next;
-} t_env_lst;
+	int					index;
+	char				*line;
+	struct s_env_lst	*next;
+}	t_env_lst;
 
-typedef	struct	s_cmd_lst
+typedef struct s_cmd_lst
 {
-	int			index;
-	char		*command;
+	int					index;
+	char				*command;
 	struct s_cmd_lst	*next;
 }	t_cmd_lst;
 
-typedef struct	s_big_struct
+typedef struct s_big_struct
 {
-	char	**input;
-	char	*absolut_path;
+	char		**input;
+	char		*absolut_path;
 	t_env_lst	*env_lst;
 	t_cmd_lst	*cmd_lst;
 }	t_big_struct;
-
 
 t_big_struct	*ft_init_big_struct(char **envp);
 
@@ -49,21 +48,20 @@ t_cmd_lst		*ft_lstnew_cmd(int i, char *cmd);
 void			ft_lstadd_back_cmd(t_cmd_lst **alst, t_cmd_lst *new);
 
 t_env_lst		*ft_init_env_lst(char **envp);
-t_env_lst		*ft_lstnew_env(int	i, char *env_line);
+t_env_lst		*ft_lstnew_env(int i, char *env_line);
 void			ft_lstadd_back_env(t_env_lst **alst, t_env_lst *new);
 
-
-char	**ft_split_du_futur(char const *s1, char c);
+char			**ft_split_du_futur(char const *s1, char c);
 
 /* parsing */
-char	*add_space(char *cmd, int index);
-char	*add_space_hereapp(char *cmd, int index);
-char	*check_spe_char(char *cmd);
+char			*add_space(char *cmd, int index);
+char			*add_space_hereapp(char *cmd, int index);
+char			*check_spe_char(char *cmd);
 
-int		charisalphaorspace(char c);
-int		charisalpha(char c);
-int		ft_parsing(char *cmd, t_big_struct *big_struct);
+int				charisalphaorspace(char c);
+int				charisalpha(char c);
+int				ft_parsing(char *cmd, t_big_struct *big_struct);
 
-void	shellmini(t_big_struct *global);
+void			shellmini(t_big_struct *global);
 
 #endif

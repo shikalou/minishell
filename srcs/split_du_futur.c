@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/31 14:37:26 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:13:01 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ char	**ft_split_du_futur(char const *s1, char c)
 /*int main()
 {
 	char	**split;
-	char *hihi = "lol | lil | \"merde test|test\" mdrr | ahahaha | \"connard | salopiaud \" oui oui | nn non";
+	char *hihi = "lol | lil | \"merde test|test\"ui oui | nn non";
 	printf("%s\n", hihi);
 	split = ft_split_du_futur(hihi, '|');
 	int i;

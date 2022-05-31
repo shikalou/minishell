@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/05/31 16:56:20 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:04:03 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	shellmini(t_big_struct *big_struct)
 {
-	char *cmd;
+	char	*cmd;
 
 	while (1)
 	{
@@ -29,7 +29,7 @@ void	shellmini(t_big_struct *big_struct)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_big_struct *big_struct;
+	t_big_struct	*big_struct;
 
 	(void)ac;
 	(void)av;

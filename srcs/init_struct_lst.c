@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/31 16:57:39 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:13:57 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 t_cmd_lst	*ft_init_cmd_lst(char **input)
 {
-	int	i;
+	int			i;
 	t_cmd_lst	*begin;
 
 	i = 0;
 	begin = ft_lstnew_cmd(i, input[i]);
 	while (input[++i])
 		ft_lstadd_back_cmd(&begin, ft_lstnew_cmd(i, input[i]));
-	while(begin)
+	while (begin)
 	{
 		printf("index = %d cmd = %s\n", begin->index, begin->command);
 		begin = begin->next;
@@ -31,8 +31,8 @@ t_cmd_lst	*ft_init_cmd_lst(char **input)
 
 t_env_lst	*ft_init_env_lst(char **envp)
 {
-	int	i;
-	t_env_lst *begin;
+	int			i;
+	t_env_lst	*begin;
 
 	i = 0;
 	begin = ft_lstnew_env(i, envp[i]);
@@ -43,7 +43,7 @@ t_env_lst	*ft_init_env_lst(char **envp)
 
 t_big_struct	*ft_init_big_struct(char **envp)
 {
-	t_big_struct *big_struct;
+	t_big_struct	*big_struct;
 
 	big_struct = malloc(sizeof(t_big_struct));
 	if (!big_struct)
