@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:46:20 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/05/31 17:11:48 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:26:07 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,9 @@ char	*add_space_hereapp(char *cmd, int index)
 		if (i == index)
 		{
 			new[j] = ' ';
-			new[j + 1] = cmd[i];
-			new[j + 2] = cmd[i + 1];
-			new[j + 3] = ' ';
-			j += 3;
-			i++;
+			new[++j] = cmd[i];
+			new[++j] = cmd[++i];
+			new[++j] = ' ';
 		}
 		else
 			new[j] = cmd[i];

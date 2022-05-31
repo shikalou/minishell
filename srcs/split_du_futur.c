@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/31 17:13:01 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:51:03 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,39 +25,31 @@ static void	ft_free(char **strs, int j)
 	free(strs);
 }
 
-static char	**ft_test(char **strs, const char *s1, char c)
+static char	**ft_test(char **strs, const char *s1, char c, int check)
 {
 	int	i;
 	int	j;
 	int	l;
-	int	check;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	check = 0;
-	while (s1 && s1[i])
+	while (s1 && s1[++i])
 	{
 		l = 0;
 		check = 0;
-		if (s1[i])
+		while (s1[i] && s1[i] != c)
 		{
-			while (s1[i] && s1[i] != c)
+			if (s1[i] == '"' && check == 0)
 			{
-				if (s1[i] == '"' && check == 0)
-				{
-					check++;
-					strs[j][l++] = s1[i++];
-					while (s1[i] && s1[i] != '"')
-						strs[j][l++] = s1[i++];
-				}
-				else
+				check++;
+				strs[j][l++] = s1[i++];
+				while (s1[i] && s1[i] != '"')
 					strs[j][l++] = s1[i++];
 			}
-			strs[j][l] = '\0';
-			while (s1[i] && s1[i] == c)
-				i++;
+			else
+				strs[j][l++] = s1[i++];
 		}
-		j++;
+		strs[j++][l] = '\0';
 	}
 	strs[j] = NULL;
 	return (strs);
@@ -93,8 +85,6 @@ static int	ft_count_strs(char const *s1, char c)
 
 	i = 0;
 	k = 0;
-	if (!s1)
-		return (0);
 	while (s1[i])
 	{
 		while (s1[i] && s1[i] == c)
@@ -141,7 +131,7 @@ char	**ft_split_du_futur(char const *s1, char c)
 		if (!strs[j])
 			ft_free(strs, j);
 	}
-	ft_test(strs, s1, c);
+	ft_test(strs, s1, c, 0);
 	return (strs);
 }
 
