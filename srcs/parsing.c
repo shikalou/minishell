@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/01 14:50:32 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/01 15:35:29 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ char	*check_spe_char(char *cmd)
 	len_tmp = ft_strlen(cmd);
 	while (cmd[++i])
 	{
-		if (cmd[i] == '"')
+	/*	if (cmd[i] == '"')
 		{
 			while (cmd[++i] != '"')
 				;
-		}
+		}*/
 		if (cmd[i] == '|' || cmd[i] == '>' || cmd[i] == '<')
 		{
 			if ((cmd[i] == '<' || cmd[i] == '>' || cmd[i] == '|') && (charisalphaorspace(cmd[i + 1]) == 1))
@@ -61,20 +61,25 @@ int	ft_checkquotes(char *cmd)
 	int	check_s;
 	int	check_d;
 
-	i = 0;
+	i = -1;
 	check_s = 0;
 	check_d = 0;
-	while (cmd[i])
+	while (cmd[++i])
 	{
-		if (cmd[i] == '\'' && check_s == 0)
-			check_s++;
-		else if (cmd[i] == '\'' && check_s > 0)
-			check_s--;
-		else if (cmd[i] == '\"' && check_d == 0)
-			check_d++;
-		else if (cmd[i] == '\"' && check_d > 0)
-			check_d--;
-		i++;
+		if (cmd[i] &&cmd[i] == '\'')
+		{
+			while (cmd[i] && cmd[++i] && cmd[i] != '\'')
+				;
+			if (!cmd[i])
+				check_s++;
+		}
+		if (cmd[i] && cmd[i] == '\"')
+		{
+			while (cmd[i] && cmd[++i] && cmd[i] != '\"')
+				;
+			if (!cmd[i])
+				check_d++;
+		}
 	}
 	return (check_d + check_s);
 }
@@ -88,13 +93,16 @@ int	ft_parsing(char *cmd, t_big_struct *big_struct)
 		write(2, "Error syntax\n", 13);
 		return (0);
 	}
+	printf("before spe char\n");
 	cmd = check_spe_char(cmd);
 	if (!cmd)
 	{
 		write(2, "Error syntax\n", 13);
 		return (0);
 	}
+	printf("after spe char\n");
 	big_struct->input = ft_split_du_futur(cmd, '|');
+	printf("after split ???\n");
 	i = 0;
 	while (big_struct->input[i])
 	{

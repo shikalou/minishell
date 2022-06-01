@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_du_futur.c                                   :+:      :+:    :+:   */
+/*   oui.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/01 17:19:58 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:41:22 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ static int	ft_split_quotes(const char *s1, int i)
 
 	k = 0;
 	d = s1[i];
-	while(s1[i] && s1[++i] != d)
+	while(s1[++i] != d)
 		k++;
-	printf("\t\t*************\nk in split_quotes = %d\n", k);
 	return (k);
 }
 
@@ -44,9 +43,10 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 	int	j;
 	int	l;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	while (s1 && s1[i] && s1[i + 1])
+	printf("debut test\n");
+	while (s1 && s1[++i])
 	{
 		l = 0;
 		check = 0;
@@ -54,17 +54,14 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 		{
 			if (s1[i] == '"' || s1[i] == '\'')
 			{
-				check = i + ft_split_quotes(s1, i);
+				check = i +  ft_split_quotes(s1, i);
 				while (s1[i] && (i < check))
-				{
 					strs[j][l++] = s1[i++];
-				}
 			}
 			else
 				strs[j][l++] = s1[i++];
 		}
 		strs[j++][l] = '\0';
-		i++;
 	}
 	printf("fin test\n");
 	strs[j] = NULL;
@@ -87,7 +84,7 @@ static int	ft_count_char(char const *s1, int i, char c)
 		k++;
 		i++;
 	}
-	printf("fin count char k = %d\n", k);
+	printf("fin count char \n");
 	return (k);
 }
 
@@ -110,15 +107,13 @@ static int	ft_count_strs(char const *s1, char c)
 			{
 				if (s1[i] && (s1[i] == '"' || s1[i] == '\''))
 				{
-					printf("FIRST i = %d, s1[i] = %c\n", i, s1[i]);
-					i += (ft_split_quotes(s1, i) + 1);
-					printf("SECOND i = %d, s1[i] = %c\n", i ,s1[i]);
+					i += ft_split_quotes(s1, i);
 				}
 				i++;
 			}
 		}
 	}
-	printf("fin count strs k = %d\n", k);
+	printf("fin count strs\n");
 	return (k);
 }
 
