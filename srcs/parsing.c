@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/31 17:14:59 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:50:32 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ char	*check_spe_char(char *cmd)
 					return (NULL);
 				else if (cmd[i + 1] != ' ')
 					cmd = add_space(cmd, i);
-				else if (cmd[i + 1] == ' ' && (charisalpha(cmd[i + 2]) == 1))
+				else if ((cmd[i + 1] == ' ') && (charisalpha_aug(cmd, (i + 1)) == 0))
 					i++;
-				else if (cmd[i] != ' ' || (charisalpha(cmd[i + 3]) == 0))
+				else if ((cmd[i + 1] = ' ') || (charisalpha_aug(cmd, (i + 1)) == 1))
 					return (NULL);
 			}
 			else if (cmd[i] == '<' && cmd[i + 1] == '<' && (charisalphaorspace(cmd[i + 2]) == 1))
