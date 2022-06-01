@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/01 17:19:58 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/01 18:42:47 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int	ft_split_quotes(const char *s1, int i)
 	d = s1[i];
 	while(s1[i] && s1[++i] != d)
 		k++;
-	printf("\t\t*************\nk in split_quotes = %d\n", k);
 	return (k);
 }
 
@@ -54,11 +53,9 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 		{
 			if (s1[i] == '"' || s1[i] == '\'')
 			{
-				check = i + ft_split_quotes(s1, i);
-				while (s1[i] && (i < check))
-				{
+				check = i + (ft_split_quotes(s1, i) + 1);
+				while (s1[i] && (i <= check))
 					strs[j][l++] = s1[i++];
-				}
 			}
 			else
 				strs[j][l++] = s1[i++];
@@ -66,7 +63,6 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 		strs[j++][l] = '\0';
 		i++;
 	}
-	printf("fin test\n");
 	strs[j] = NULL;
 	return (strs);
 }
@@ -76,18 +72,16 @@ static int	ft_count_char(char const *s1, int i, char c)
 	int	k;
 
 	k = 0;
-	printf("debut count char\n");
 	while (s1[i] && s1[i] != c)
 	{
 		if (s1[i] == '"' || s1[i] == '\'')
 		{
-			k += ft_split_quotes(s1, i);
-			i += ft_split_quotes(s1, i);
+			k += (ft_split_quotes(s1, i) + 1);
+			i += (ft_split_quotes(s1, i) + 1);
 		}
 		k++;
 		i++;
 	}
-	printf("fin count char k = %d\n", k);
 	return (k);
 }
 
@@ -98,7 +92,6 @@ static int	ft_count_strs(char const *s1, char c)
 
 	i = 0;
 	k = 0;
-	printf("debut count strs\n");
 	while (s1[i])
 	{
 		while (s1[i] && s1[i] == c)
@@ -109,16 +102,11 @@ static int	ft_count_strs(char const *s1, char c)
 			while (s1[i] && s1[i] != c)
 			{
 				if (s1[i] && (s1[i] == '"' || s1[i] == '\''))
-				{
-					printf("FIRST i = %d, s1[i] = %c\n", i, s1[i]);
 					i += (ft_split_quotes(s1, i) + 1);
-					printf("SECOND i = %d, s1[i] = %c\n", i ,s1[i]);
-				}
 				i++;
 			}
 		}
 	}
-	printf("fin count strs k = %d\n", k);
 	return (k);
 }
 
@@ -143,7 +131,7 @@ char	**ft_split_du_futur(char const *s1, char c)
 		if (s1[i] != c)
 			l = ft_count_char(s1, i, c);
 		strs[j] = malloc(sizeof(char) * (l + 1));
-		i += l + 1;
+		i += l;
 		if (!strs[j])
 			ft_free(strs, j);
 	}

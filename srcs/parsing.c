@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/01 15:35:29 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/01 18:40:14 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,13 @@ int	ft_parsing(char *cmd, t_big_struct *big_struct)
 		write(2, "Error syntax\n", 13);
 		return (0);
 	}
-	printf("before spe char\n");
 	cmd = check_spe_char(cmd);
 	if (!cmd)
 	{
 		write(2, "Error syntax\n", 13);
 		return (0);
 	}
-	printf("after spe char\n");
 	big_struct->input = ft_split_du_futur(cmd, '|');
-	printf("after split ???\n");
 	i = 0;
 	while (big_struct->input[i])
 	{
