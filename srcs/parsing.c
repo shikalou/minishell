@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/02 14:00:06 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/02 15:46:55 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,12 @@ int	ft_parsing(char *cmd, t_big_struct *big_struct)
 		return (0);
 	}
 	big_struct->input = ft_split_du_futur(cmd, '|');
-	// i = 0;
-	// while (big_struct->input[i])
-	// {
-	// 	printf("%s\n", big_struct->input[i]);
-	// 	i++;
-	// }
+	i = 0;
+	while (big_struct->input[i])
+	{
+		printf("%s\n", big_struct->input[i]);
+		i++;
+	}
 	big_struct->cmd_lst = ft_init_cmd_lst(big_struct->input);
 	return (1);
 }

@@ -6,14 +6,14 @@
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 16:12:42 by ldinaut           #+#    #+#              #
-#    Updated: 2022/06/02 13:22:58 by ldinaut          ###   ########.fr        #
+#    Updated: 2022/06/02 15:34:48 by mcouppe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 SRCS_FILES	=	main.c utils_parsing.c split_du_futur.c lst_utils.c \
-				init_struct_lst.c parsing.c execution.c
+				init_struct_lst.c parsing.c execution.c exec_utils.c \
 
 SRCS		=	$(addprefix srcs/, $(SRCS_FILES))
 
