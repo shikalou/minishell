@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:46:20 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/01 14:48:06 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:06:45 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@ int	charisalphaorspace(char c)
 {
 	if (!c)
 		return (0);
-	if ((c >= 32 && c < 127 ))
+	if (((c >= 32 && c < 60) || c == 61 || (c > 62 && c < 127)))
 		return (1);
 	else
 		return (0);
 }
 
-int	charisalpha_aug(char *cmd, int index)
+int	charisalpha_aug(char *cmd, int index, int end)
 {
-	while (cmd[++index] != '\0')
+	index++;
+	while (index < end)
 	{
 		if (cmd[index] != ' ')
 			return (0);
+		else
+			index++;
 	}
 	return (1);
 }

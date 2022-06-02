@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/01 14:49:06 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:23:42 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,11 @@ char			*check_spe_char(char *cmd);
 
 int				charisalphaorspace(char c);
 int				charisalpha(char c);
-int				charisalpha_aug(char *cmd, int index);
+int				charisalpha_aug(char *cmd, int index, int end);
 int				ft_parsing(char *cmd, t_big_struct *big_struct);
+int				ft_split_quotes(const char *s1, int i);
 
-void			shellmini(t_big_struct *global);
+void			shellmini(t_big_struct *big_struct);
+void			ft_exec(t_big_struct *big_struct);
 
 #endif

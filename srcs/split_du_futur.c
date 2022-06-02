@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/01 18:42:47 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:53:01 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_split_quotes(const char *s1, int i)
+int	ft_split_quotes(const char *s1, int i)
 {
 	int	k;
 	char	d;
@@ -49,7 +49,7 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 	{
 		l = 0;
 		check = 0;
-		while (s1[i] && s1[i] != c)
+		while (s1[i] && s1[i] != c && s1[i + 1])
 		{
 			if (s1[i] == '"' || s1[i] == '\'')
 			{
@@ -60,6 +60,8 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 			else
 				strs[j][l++] = s1[i++];
 		}
+		if (!s1[i + 1])
+			strs[j][l++] = s1[i];
 		strs[j++][l] = '\0';
 		i++;
 	}
