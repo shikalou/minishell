@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/02 16:36:29 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/03 13:51:00 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ char			**ft_split_du_futur(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
 char			*check_spe_char(char *cmd);
-int				charisalphaorspace(char c);
-int				charisalpha(char c);
-int				charisalpha_aug(char *cmd, int index, int end);
+int				check_char(char c);
+int				check_str(char *cmd, int index, int end);
+int				check_char_basic(char c);
 int				ft_split_quotes(const char *s1, int i);
 
 /********************************************************/

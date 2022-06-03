@@ -6,23 +6,23 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:46:20 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/02 13:06:45 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/03 14:25:44 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	charisalphaorspace(char c)
+int	check_chevron(char c)
 {
 	if (!c)
 		return (0);
-	if (((c >= 32 && c < 60) || c == 61 || (c > 62 && c < 127)))
+	if (((c >= 32 && c < '<') || c == 61 || (c > '<' && c < 127)))
 		return (1);
 	else
 		return (0);
 }
 
-int	charisalpha_aug(char *cmd, int index, int end)
+int	check_str(char *cmd, int index, int end)
 {
 	index++;
 	while (index < end)
@@ -35,11 +35,11 @@ int	charisalpha_aug(char *cmd, int index, int end)
 	return (1);
 }
 
-int	charisalpha(char c)
+int	check_char(char c)
 {
 	if (!c)
-		return (0);
-	if (c >= 33 && c < 127)
+		return (1);
+	if ((c >= 32 && c < 127))
 		return (1);
 	else
 		return (0);
