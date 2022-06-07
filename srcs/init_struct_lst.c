@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/02 14:00:15 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/07 20:08:55 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,11 @@ t_cmd_lst	*ft_init_cmd_lst(char **input)
 {
 	int			i;
 	t_cmd_lst	*begin;
-	//t_cmd_lst	*begin_tmp;
 
 	i = 0;
 	begin = ft_lstnew_cmd(i, input[i]);
-	//begin_tmp = begin;
 	while (input[++i])
 		ft_lstadd_back_cmd(&begin, ft_lstnew_cmd(i, input[i]));
-	/*while (begin)
-	{
-		printf("index = %d cmd = %s\n", begin->index, begin->command);
-		begin = begin->next;
-	}*/
 	return (begin);
 }
 

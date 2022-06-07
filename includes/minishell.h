@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/07 14:06:14 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/07 20:02:39 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,17 @@ void			ft_lstadd_back_env(t_env_lst **alst, t_env_lst *new);
 /*************PARSING************************************/
 /********************************************************/
 int				ft_parsing(char *cmd, t_big_struct *big_struct);
+
+/*		--> PARSING QUOTES			*/
 void			parsing_quotes(t_big_struct *big_struct);
+
+char			*extended_dollar(char *cmd, t_big_struct *big_struct);
+char			*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index);
+char			*get_env_lst(char *cmd, int i, int j);
+char			*strtrim_aug(char *cmd);
+int				ft_len_dollar(char *cmd, int i);
+int				ft_memchr_aug(char *s, int i, char c);
+int				strtrim_size(char *cmd);
 
 /*		--> UTILS PARSING			*/
 char			**ft_split_du_futur(char const *s1, char c);

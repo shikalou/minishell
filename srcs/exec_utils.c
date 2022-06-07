@@ -6,12 +6,11 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/03 15:39:05 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/07 20:19:32 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 /*
 	besoin d'adapter les strnstr aux quotes d'ou ajout du split quotes 
@@ -65,20 +64,15 @@ char	*ft_strnstr_exec(char *s1, char *s2, size_t n)
 		{
 			if (s2[j + 1] == '\0')
 				return (&((char *)s1)[temp]);
-			else
-			{
-				i++;
-				j++;
-			}
+			i++;
+			j++;
 		}
-		i = temp;
-		i++;
+		i = temp + 1;
 	}
 	return (NULL);
 }
 
-
-char	*ft_strnstr_heredoc(char *s1, char *s2, size_t n, size_t i)
+char	*ft_strnstr_hd(char *s1, char *s2, size_t n, size_t i)
 {
 	size_t	j;
 	size_t	temp;
@@ -104,4 +98,3 @@ char	*ft_strnstr_heredoc(char *s1, char *s2, size_t n, size_t i)
 	}
 	return (NULL);
 }
-

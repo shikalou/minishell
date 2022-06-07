@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/02 12:53:01 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/07 20:08:34 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	ft_split_quotes(const char *s1, int i)
 {
-	int	k;
+	int		k;
 	char	d;
 
 	k = 0;
 	d = s1[i];
-	while(s1[i] && s1[++i] != d)
+	while (s1[i] && s1[++i] != d)
 		k++;
 	return (k);
 }
@@ -39,9 +39,9 @@ static void	ft_free(char **strs, int j)
 
 static char	**ft_test(char **strs, const char *s1, char c, int check)
 {
-	int	i;
-	int	j;
-	int	l;
+	int		i;
+	int		j;
+	int		l;
 
 	i = 0;
 	j = 0;
