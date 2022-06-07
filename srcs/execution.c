@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/07 20:20:35 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/07 20:45:04 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_heredoc(t_big_struct *big_struct)
 		{
 			while (get_next_heredoc(head->command, "<<", i) > 0)
 			{
-				printf("strnstr = %s\n ", ft_strnstr_heredoc(head->command, "<<", ft_strlen(head->command), i));
+				printf("strnstr = %s\n ", ft_strnstr_hd(head->command, "<<", ft_strlen(head->command), i));
 				i = (get_next_heredoc(head->command, "<<", i));
 			}
 		}

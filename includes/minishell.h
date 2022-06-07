@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/07 20:02:39 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/07 20:44:39 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void			ft_pwd(t_big_struct *big_struct);
 /*		--> HEREDOC, APPEND & REDIREC		*/
 void			ft_heredoc(t_big_struct *big_struct);
 /*			->utils				*/
-char			*ft_strnstr_heredoc(char *s1, char *s2, size_t n, size_t i);
+char			*ft_strnstr_hd(char *s1, char *s2, size_t n, size_t i);
 int				get_next_heredoc(char *s1, char *s2, int i);
 
 /********************************************************/

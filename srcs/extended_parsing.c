@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/07 20:16:03 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/07 21:30:38 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,23 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 {
 	int		i;
 	int		j;
+//	int		k;
 
 	i = 0;
 	j = 0;
+//	k = 0;
 	(void)big_struct;
 	while (cmd[i])
 	{
 		if (cmd[i] == '"')
 		{
 			i++;
-			while (cmd[i] != '"')
+			while (cmd[i] && cmd[i] != '"')
 			{
+				printf("CHECK 1\tcmd[%d] = %c et index = %d\n", i, cmd[i], index);
 				if (cmd[i] == '$' && i == index)
 				{
+					printf("CHECK 2\tcmd[%d] = %c\n", i, cmd[i]);
 					j = i;
 					while (cmd[j] && (cmd[j] != ' ' || cmd[j] != '\0'
 							|| cmd[j] != '"'))
@@ -62,6 +66,9 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				}
 				i++;
 			}
+			if (cmd[i] && cmd[i] == '"')
+				i++;
+			printf("CHECK 3\tcmd[%d] = %c\n", i, cmd[i]);
 		}
 		else if (cmd[i] == '\'' && ft_memchr_aug(cmd, i, '$') == 1)
 		// on interprete pas
@@ -69,6 +76,19 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 			i++;
 			while (cmd[i] && cmd[i] != '\'')
 				i++;
+			if (cmd[i] && cmd[i] == '\'')
+				i++;
+		/*	k = i;
+			printf("k first = %d\n i here = %d\n", k, i);
+			while (cmd[k] && cmd[k] != '$')
+				k++;
+			printf("k second = %d\n", k);
+			if (cmd[k] == '$')
+			{
+				index = k;
+				printf("donc index = %d\n", index);
+			}
+			*/	
 		}
 		else if (cmd[i] == '$' && i == index)
 			// on interprete
