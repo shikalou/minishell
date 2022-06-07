@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/03 13:51:00 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/07 14:06:14 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,14 @@ void			ft_lstadd_back_env(t_env_lst **alst, t_env_lst *new);
 /*************PARSING************************************/
 /********************************************************/
 int				ft_parsing(char *cmd, t_big_struct *big_struct);
+void			parsing_quotes(t_big_struct *big_struct);
 
 /*		--> UTILS PARSING			*/
 char			**ft_split_du_futur(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
 char			*check_spe_char(char *cmd);
+char			*strtrim_aug(char *cmd);
 int				check_char(char c);
 int				check_str(char *cmd, int index, int end);
 int				check_char_basic(char c);
