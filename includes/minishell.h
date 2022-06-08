@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/07 20:44:39 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/08 12:40:17 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void			parsing_quotes(t_big_struct *big_struct);
 
 char			*extended_dollar(char *cmd, t_big_struct *big_struct);
 char			*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index);
-char			*get_env_lst(char *cmd, int i, int j);
+char			*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct);
 char			*strtrim_aug(char *cmd);
 int				ft_len_dollar(char *cmd, int i);
 int				ft_memchr_aug(char *s, int i, char c);

@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/07 21:30:38 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/08 15:37:45 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,41 @@
 				donc on va le faire petit a petit
 */
 
-char	*get_env_lst(char *cmd, int i, int j)
+char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
 {
-	(void)cmd;
-	(void)i;
-	(void)j;
-	return ("mcouppe");
+	(void)big_struct;
+	char	name[j];
+	t_env_lst	*head;
+	int		k;
+
+	k = 0;
+	head = big_struct->env_lst;
+	while(i < j)
+	{
+		if (cmd[i] && ((ft_isalnum(cmd[i]) == 1) || cmd[i] == '_'))
+			name[k++] = cmd[i];
+		i++;
+	}
+	name[k] = '\0';
+	while (head)
+	{
+		if (ft_memcmp(head->line, name, k) == 0 && (head->line)[k] == '=')
+			return((head->line)+ (k + 1));
+		head = head->next;
+	}
+	return (NULL);
 }
 
 char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 {
 	int		i;
 	int		j;
-//	int		k;
+	int		k;
+	char	*ret_void;
 
 	i = 0;
 	j = 0;
-//	k = 0;
-	(void)big_struct;
+	k = 0;
 	while (cmd[i])
 	{
 		if (cmd[i] == '"')
@@ -50,54 +67,58 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 			i++;
 			while (cmd[i] && cmd[i] != '"')
 			{
-				printf("CHECK 1\tcmd[%d] = %c et index = %d\n", i, cmd[i], index);
 				if (cmd[i] == '$' && i == index)
 				{
-					printf("CHECK 2\tcmd[%d] = %c\n", i, cmd[i]);
 					j = i;
-					while (cmd[j] && (cmd[j] != ' ' || cmd[j] != '\0'
-							|| cmd[j] != '"'))
+					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
+							&& cmd[j] != '"'))
 						j++;
 					/*		on interprete
 					on prend le  *char de $ jusqu'a ' ' ou '\0'
 					on return une fonction qui le cherche dans env_lst
 					*/
-					return (get_env_lst(cmd, i, (j - i)));
+					return (get_env_lst(cmd, (i + 1), j, big_struct));
 				}
 				i++;
 			}
 			if (cmd[i] && cmd[i] == '"')
 				i++;
-			printf("CHECK 3\tcmd[%d] = %c\n", i, cmd[i]);
 		}
 		else if (cmd[i] == '\'' && ft_memchr_aug(cmd, i, '$') == 1)
 		// on interprete pas
 		{
 			i++;
 			while (cmd[i] && cmd[i] != '\'')
+			{
+				if (cmd[i] == '$')
+				{
+					j = i;
+					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
+							&& cmd[j] != '"'))
+							j++;
+					ret_void = malloc(sizeof(char) * (j - i) + 1);
+					if (!ret_void)
+						return (NULL);
+					j = i;
+					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
+							&& cmd[j] != '"'))
+						ret_void[k++] = cmd[j++];
+					ret_void[k] = '\0';
+					return(ret_void);
+				}
 				i++;
+			}
 			if (cmd[i] && cmd[i] == '\'')
 				i++;
-		/*	k = i;
-			printf("k first = %d\n i here = %d\n", k, i);
-			while (cmd[k] && cmd[k] != '$')
-				k++;
-			printf("k second = %d\n", k);
-			if (cmd[k] == '$')
-			{
-				index = k;
-				printf("donc index = %d\n", index);
-			}
-			*/	
 		}
 		else if (cmd[i] == '$' && i == index)
 			// on interprete
 		{
 			j = i;
-			while (cmd[j] && (cmd[j] != ' ' || cmd[j] != '\0' || cmd[j] != '\''
-					|| cmd[j] != '"'))
+			while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '\''
+					&& cmd[j] != '"'))
 				j++;
-			return (get_env_lst(cmd, i, (j - i)));
+			return (get_env_lst(cmd, (i), j, big_struct));
 		}
 		else
 			i++;
@@ -127,21 +148,28 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 			env_var = ft_get_env_var(big_struct, cmd, i);
 			if (env_var == NULL && cmd[i])
 			{
-				while (cmd[i] && (cmd[i] != ' ' || cmd[i] != '\''
-						|| cmd[i] != '"'))
-					new_cmd[j++] = cmd[i++];
+				new_cmd =  ft_strjoin(new_cmd, NULL);
+				i += ft_len_dollar(cmd , i);
+		/*		while (cmd[i] && (cmd[i] != ' ' && cmd[i] != '\''
+						&& cmd[i] != '"'))
+					new_cmd[j++] = cmd[i++];*/
 			}
 			else
 			{
+				printf("\n\t\tCHECK 3\tenv var = %s\n", env_var);
 				new_cmd = ft_strjoin(new_cmd, env_var);
-				i += ft_len_dollar(cmd, i);
+				i += (ft_len_dollar(cmd, i));
 				j += ft_strlen(env_var);
+				printf("\n\t\tCHECK 4\t cmd[%d] = %c\n", i, cmd[i]);
 			}
 		}
 		else
+		{
 			new_cmd[j++] = cmd[i++];
+		}
 	}
 	free(cmd);
+	printf("\n\n\t\t\tCHECK 5\nnew_cmd = %s\n\n", new_cmd);
 	return (new_cmd);
 }
 
