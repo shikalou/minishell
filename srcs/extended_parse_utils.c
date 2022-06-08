@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:49:15 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/08 15:06:06 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/08 16:05:37 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,14 @@ int	ft_len_dollar(char *cmd, int i)
 	{
 		if (cmd[i] == '$')
 		{
-			while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\''
+			if (cmd[i] && cmd[i] != ' ' && cmd[i] != '\''
 				&& cmd[i] != '"')
+			{
+				i++;
+				j++;
+			}
+			while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\''
+				&& cmd[i] != '"' && cmd[i] != '$')
 			{
 				i++;
 				j++;

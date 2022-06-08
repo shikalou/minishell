@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 00:28:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/25 17:59:41 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/08 16:49:59 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	ft_strlen(const char *str)
 	i = 0;
 	if (!str)
 		return (i);
-	while (str[i] != '\0')
+	while (str && str[i] != '\0')
 		i++;
 	return (i);
 }

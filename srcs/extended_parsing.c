@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/08 15:37:45 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/08 16:55:38 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,11 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				if (cmd[i] == '$' && i == index)
 				{
 					j = i;
-					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
+					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '"'))
+						j++;
+					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
+							&& cmd[j] != '"' && cmd[j] != '$'))
 						j++;
 					/*		on interprete
 					on prend le  *char de $ jusqu'a ' ' ou '\0'
@@ -93,15 +96,21 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				if (cmd[i] == '$')
 				{
 					j = i;
-					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
+					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '"'))
+						j++;
+					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
+							&& cmd[j] != '"' && cmd[j] != '$'))
 							j++;
 					ret_void = malloc(sizeof(char) * (j - i) + 1);
 					if (!ret_void)
 						return (NULL);
 					j = i;
-					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
+					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '"'))
+						j++;
+					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
+							&& cmd[j] != '"' && cmd[j] != '$'))
 						ret_void[k++] = cmd[j++];
 					ret_void[k] = '\0';
 					return(ret_void);
@@ -115,8 +124,11 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 			// on interprete
 		{
 			j = i;
-			while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '\''
+			if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 					&& cmd[j] != '"'))
+				j++;
+			while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '\''
+					&& cmd[j] != '"' && cmd[j] != '$'))
 				j++;
 			return (get_env_lst(cmd, (i), j, big_struct));
 		}
@@ -135,11 +147,19 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 
 	i = 0;
 	j = 0;
-	while (cmd[i] && cmd[i] != '$')
-		i++;
+	if (cmd[i] && cmd[i] == '$')
+		i = 1;
+	else
+	{	
+		while (cmd[i] && cmd[i] != '$')
+			i++;
+	}
 	new_cmd = malloc(sizeof(char) * i);
 	if (!new_cmd)
 		return (NULL);
+	new_cmd = NULL;
+/*	if (i == 1 && cmd[i] == '$')
+		new_cmd[0] = '\0';*/
 	i = 0;
 	while (cmd[i])
 	{
@@ -156,11 +176,11 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 			}
 			else
 			{
-				printf("\n\t\tCHECK 3\tenv var = %s\n", env_var);
+		//		printf("\n\t\tCHECK 3\tenv var = %s\n", env_var);
 				new_cmd = ft_strjoin(new_cmd, env_var);
 				i += (ft_len_dollar(cmd, i));
 				j += ft_strlen(env_var);
-				printf("\n\t\tCHECK 4\t cmd[%d] = %c\n", i, cmd[i]);
+		//		printf("\n\t\tCHECK 4\t cmd[%d] = %c\n", i, cmd[i]);
 			}
 		}
 		else
@@ -169,7 +189,7 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 		}
 	}
 	free(cmd);
-	printf("\n\n\t\t\tCHECK 5\nnew_cmd = %s\n\n", new_cmd);
+//	printf("\n\n\t\t\tCHECK 5\nnew_cmd = %s\n\n", new_cmd);
 	return (new_cmd);
 }
 
