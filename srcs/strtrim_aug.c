@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strtrim_aug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/09 13:09:32 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/09 17:26:15 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	strtrim_size(char *cmd)
 	{
 		if (cmd[i] == '"')
 		{
-			printf("\n\nCHECK 1 cmd[%d] = %c\n", i, cmd[i]);
+		//	printf("\n\nCHECK 1 cmd[%d] = %c\n", i, cmd[i]);
 			j += 2;
 			i++;
 			while (cmd[i] && cmd[i] != '"')
@@ -33,7 +33,7 @@ int	strtrim_size(char *cmd)
 		}
 		else if (cmd[i] == '\'')
 		{
-			printf("\n\nCHECK 2 cmd[%d] = %c\n", i, cmd[i]);
+		//	printf("\n\nCHECK 2 cmd[%d] = %c\n", i, cmd[i]);
 			j += 2;
 			i++;
 			while (cmd[i] && cmd[i] != '\'')
@@ -60,7 +60,7 @@ char	*strtrim_aug(char *cmd)
 		return (NULL);
 	if (size == 0)
 		new_cmd = NULL;
-	while ( cmd && cmd[i])
+	while (cmd && cmd[i])
 	{
 		if (cmd[i] == '"')
 		{

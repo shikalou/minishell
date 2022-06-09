@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extended_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/09 13:26:54 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/09 17:22:19 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	- recuperer une str avec la variable d'environnement ciblee
 	- probleme  = si on a plusieurs variable d'environnement
 		solution possible = rappeler ft_get_env_var a chaque fois qu'il
-				    y a un $ 
+				    y a un $
 				    du coup il faut lui donner en param le i de cmd[i]
 				    pour savoir ou on en est dans cmd
 
@@ -109,6 +109,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '"'))
 						j++;
+					ret_void[k++] = cmd[i];
 					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '"' && cmd[j] != '$'))
 						ret_void[k++] = cmd[j++];
@@ -147,17 +148,17 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 
 	i = 0;
 	j = 0;
-	if (cmd[i] && cmd[i] == '$')
+/*	if (cmd[i] && cmd[i] == '$')
 		i = 1;
 	else
-	{	
+	{*/
 		while (cmd[i] && cmd[i] != '$')
 			i++;
-	}
-	new_cmd = malloc(sizeof(char) * i);
+	//}
+	new_cmd = malloc(sizeof(char) * i + 1);
 	if (!new_cmd)
 		return (NULL);
-	new_cmd = NULL;
+	//new_cmd = NULL;
 	if (i == 1 && cmd[i] == '$')
 		new_cmd[0] = '\0';
 	i = 0;
@@ -168,19 +169,16 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 			env_var = ft_get_env_var(big_struct, cmd, i);
 			if (env_var == NULL && cmd[i])
 			{
-				new_cmd =  ft_strjoin(new_cmd, NULL);
+				new_cmd[j] = '\0';
+				new_cmd = ft_strjoin(new_cmd, NULL);
 				i += ft_len_dollar(cmd , i);
-		/*		while (cmd[i] && (cmd[i] != ' ' && cmd[i] != '\''
-						&& cmd[i] != '"'))
-					new_cmd[j++] = cmd[i++];*/
 			}
 			else
 			{
-		//		printf("\n\t\tCHECK 3\tenv var = %s\n", env_var);
+				new_cmd[j] = '\0';
 				new_cmd = ft_strjoin(new_cmd, env_var);
 				i += (ft_len_dollar(cmd, i));
 				j += ft_strlen(env_var);
-		//		printf("\n\t\tCHECK 4\t cmd[%d] = %c\n", i, cmd[i]);
 			}
 		}
 		else
@@ -190,8 +188,8 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 			j++;
 		}
 	}
+	new_cmd[j] = '\0';
 	free(cmd);
-//	printf("\n\n\t\t\tCHECK 5\nnew_cmd = %s\n\n", new_cmd);
 	return (new_cmd);
 }
 

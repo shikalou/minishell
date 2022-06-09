@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/09 13:13:52 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/09 17:45:01 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 
 	i = 0;
 	j = 0;
+	if (s1 && s1[i] && !(s1[i + 1]))
+	{
+		strs[j][i] = s1[i];
+		i++;
+		strs[j][i] = '\0';
+		j++;
+	}
 	while (s1 && s1[i] && s1[i + 1])
 	{
 		l = 0;
@@ -60,11 +67,12 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 			else
 				strs[j][l++] = s1[i++];
 		}
-		if (!s1[i + 1])
+		if (s1[i] && !(s1[i + 1]))
 			strs[j][l++] = s1[i];
 		strs[j][l] = '\0';
 		j++;
-		i++;
+		if (s1[i])
+			i++;
 	}
 	strs[j] = NULL;
 	return (strs);
@@ -95,7 +103,7 @@ static int	ft_count_strs(char const *s1, char c)
 
 	i = 0;
 	k = 0;
-	while (s1[i])
+	while (s1 && s1[i])
 	{
 		while (s1[i] && s1[i] == c)
 			i++;
