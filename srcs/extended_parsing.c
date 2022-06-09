@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/08 16:55:38 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/09 13:26:54 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,10 +158,10 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 	if (!new_cmd)
 		return (NULL);
 	new_cmd = NULL;
-/*	if (i == 1 && cmd[i] == '$')
-		new_cmd[0] = '\0';*/
+	if (i == 1 && cmd[i] == '$')
+		new_cmd[0] = '\0';
 	i = 0;
-	while (cmd[i])
+	while (cmd && cmd[i])
 	{
 		if (cmd[i] == '$')
 		{
@@ -185,7 +185,9 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 		}
 		else
 		{
-			new_cmd[j++] = cmd[i++];
+			new_cmd[j] = cmd[i];
+			i++;
+			j++;
 		}
 	}
 	free(cmd);

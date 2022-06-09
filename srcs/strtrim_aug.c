@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/08 16:47:20 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/09 13:09:32 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@ int	strtrim_size(char *cmd)
 	j = 0;
 	if (!cmd)
 		return (i);
-	while (cmd[i] != '\0')
+	while (cmd && cmd[i] != '\0')
 	{
 		if (cmd[i] == '"')
 		{
+			printf("\n\nCHECK 1 cmd[%d] = %c\n", i, cmd[i]);
 			j += 2;
 			i++;
 			while (cmd[i] && cmd[i] != '"')
 				i++;
 		}
-		else if (cmd[i] != '\'')
+		else if (cmd[i] == '\'')
 		{
+			printf("\n\nCHECK 2 cmd[%d] = %c\n", i, cmd[i]);
 			j += 2;
 			i++;
 			while (cmd[i] && cmd[i] != '\'')
@@ -39,6 +41,7 @@ int	strtrim_size(char *cmd)
 		}
 		i++;
 	}
+//	printf("IN TRIM_SIZE %d - %d \n", i , j);
 	return (i - j);
 }
 
@@ -55,6 +58,8 @@ char	*strtrim_aug(char *cmd)
 	new_cmd = malloc(sizeof(char) * size + 1);
 	if (!new_cmd)
 		return (NULL);
+	if (size == 0)
+		new_cmd = NULL;
 	while ( cmd && cmd[i])
 	{
 		if (cmd[i] == '"')
@@ -77,6 +82,7 @@ char	*strtrim_aug(char *cmd)
 		i++;
 	}
 	new_cmd[j] = '\0';
+//	printf("IN STRTRIM\n\tnew_cmd = %s\tcmd = %s\n", new_cmd, cmd);
 	if (cmd)
 		free(cmd);
 	return (new_cmd);

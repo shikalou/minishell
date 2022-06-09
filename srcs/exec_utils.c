@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/07 20:19:32 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/09 12:49:39 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,17 @@ char	*ft_strnstr_exec(char *s1, char *s2, size_t n)
 	size_t	temp;
 
 	i = 0;
-	if (s2[0] == '\0')
-		return ((char *)s1);
-	while (s1[i])
+	if ((!s2 || s2[0] == '\0') && s1)
+		return (s1);
+	while (s1 && s1[i])
 	{
 		j = 0;
 		if (s1[i] == '"' || s1[i] == '\'')
 			i += (ft_split_quotes(s1, i) + 1);
 		temp = i;
-		while (s1[i] && s1[i] == s2[j] && i < n)
+		while (s1[i] && s2[j] && s1[i] == s2[j] && i < n)
 		{
-			if (s2[j + 1] == '\0')
+			if (!s2[j + 1] || s2[j + 1] == '\0')
 				return (&((char *)s1)[temp]);
 			i++;
 			j++;

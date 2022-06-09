@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/08 16:29:49 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/09 13:09:05 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,18 @@ void	ft_exec(t_big_struct *big_struct)
 
 	head = big_struct->cmd_lst;
 	head_tmp = big_struct->cmd_lst;
-	while (head_tmp)
+	while (head_tmp && head_tmp->command)
 	{
 		printf("%s\n", head_tmp->command);
 		head_tmp = head_tmp->next;
 	}
-	if (ft_strnstr_exec(head->command, "<<", ft_strlen(head->command)))
+	if (head->command && ft_strnstr_exec(head->command, "<<", ft_strlen(head->command)))
 		ft_heredoc(big_struct);
-	while (head)
+	while (head && head->command)
 	{
 	//	if (head->next)
 	//		big_struct->pipefd = pipe();
-		if (ft_strnstr_exec(head->command, "pwd", ft_strlen(head->command)))
+		if (head->command && ft_strnstr_exec(head->command, "pwd", ft_strlen(head->command)))
 			ft_pwd(big_struct);
 		head = head->next;
 	}
