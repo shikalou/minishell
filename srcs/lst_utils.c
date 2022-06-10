@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/05/31 17:12:37 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/10 19:02:44 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,19 @@ void	ft_lstadd_back_env(t_env_lst **alst, t_env_lst *new)
 		temp->next = new;
 	}
 }
+/*
+void	ft_lstclear(t_list **lst)
+{
+	t_list	*lst_tmp;
+
+	lst_tmp = (*lst);
+	if (!lst)
+		return ;
+	while ((*lst) != NULL)
+	{
+		lst_tmp = (*lst)->next;
+		free(*lst);
+		(*lst) = lst_tmp;
+	}
+	free(lst);
+}*/

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/02 13:21:37 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/10 19:00:59 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	shellmini(big_struct);
 	printf("\nslt les gars\n");
-	/*free big_struct*/
+	free(big_struct->env_lst);
+	free(big_struct->cmd_lst);
+	free(big_struct);
 	return (0);
 }
