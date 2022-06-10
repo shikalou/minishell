@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/10 16:54:53 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/10 17:30:36 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,15 +153,18 @@ int	get_right_size(char *cmd, t_big_struct *big_struct)
 		if (cmd[i] == '$')
 		{
 			count++;
+			printf("len_dollar = %d et env_var = %ld\n", ft_len_dollar(cmd, i), ft_strlen(ft_get_env_var(big_struct, cmd, i)));
 			count += ft_strlen(ft_get_env_var(big_struct, cmd, i));
+			if (ft_strlen(ft_get_env_var(big_struct, cmd, i)) == 0)
+				count += ft_len_dollar(cmd, i);
 			i += ft_len_dollar(cmd, i);
-			printf("(if) count = %d, i = %d\n", count, i);
+			//printf("(if) count = %d, i = %d\n", count, i);
 		}
 		else
 		{
 			count++;
 			i++;
-			printf("(else) count = %d, i = %d\n", count, i);
+		//	printf("(else) count = %d, i = %d\n", count, i);
 		}
 	}
 	printf("get_right_size = %d\n", count);
@@ -200,7 +203,7 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 			printf("strlen de env_var %ld\n", ft_strlen(env_var));
 			if (env_var == NULL && cmd[i])
 			{
-				printf("hihuhuhu\n");
+				//printf("hihuhuhu\n");
 				new_cmd[j++] = cmd[i++];
 				//ft_strlcat(new_cmd, NULL, 1000);
 				//i += ft_len_dollar(cmd, i);
@@ -215,7 +218,7 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 		}
 		else
 		{
-			printf("cmd[%d] = %c\n", i, cmd[i]);
+			//printf("cmd[%d] = %c\n", i, cmd[i]);
 			new_cmd[j] = cmd[i];
 			i++;
 			j++;
