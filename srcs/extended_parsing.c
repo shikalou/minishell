@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/10 17:30:36 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/10 17:51:39 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 							&& cmd[j] != '\'' && cmd[j] != '$'))
 						ret_void[k++] = cmd[j++];
 					ret_void[k] = '\0';
-					printf("\n\n\tRET VOID EST EGAL A = %s\n", ret_void);
+					//printf("\n\n\tRET VOID EST EGAL A = %s\n", ret_void);
 					return(ret_void);
 				}
 				i++;
@@ -137,7 +137,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 		else
 			i++;
 	}
-	printf("env_var est NULL ????????????????????????????????????????????????\n");
+	//printf("env_var est NULL ????????????????????????????????????????????????\n");
 	return (NULL);
 }
 
@@ -153,7 +153,6 @@ int	get_right_size(char *cmd, t_big_struct *big_struct)
 		if (cmd[i] == '$')
 		{
 			count++;
-			printf("len_dollar = %d et env_var = %ld\n", ft_len_dollar(cmd, i), ft_strlen(ft_get_env_var(big_struct, cmd, i)));
 			count += ft_strlen(ft_get_env_var(big_struct, cmd, i));
 			if (ft_strlen(ft_get_env_var(big_struct, cmd, i)) == 0)
 				count += ft_len_dollar(cmd, i);
@@ -167,7 +166,7 @@ int	get_right_size(char *cmd, t_big_struct *big_struct)
 		//	printf("(else) count = %d, i = %d\n", count, i);
 		}
 	}
-	printf("get_right_size = %d\n", count);
+//	printf("get_right_size = %d\n", count);
 	return (count);
 }
 
@@ -200,13 +199,13 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 		if (cmd[i] == '$')
 		{
 			env_var = ft_get_env_var(big_struct, cmd, i);
-			printf("strlen de env_var %ld\n", ft_strlen(env_var));
+//			printf("strlen de env_var %ld\n", ft_strlen(env_var));
 			if (env_var == NULL && cmd[i])
 			{
 				//printf("hihuhuhu\n");
-				new_cmd[j++] = cmd[i++];
+		//		new_cmd[j++] = cmd[i++];
 				//ft_strlcat(new_cmd, NULL, 1000);
-				//i += ft_len_dollar(cmd, i);
+				i += ft_len_dollar(cmd, i);
 			}
 			else
 			{

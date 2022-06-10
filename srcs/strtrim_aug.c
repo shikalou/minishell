@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/10 16:52:19 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/10 17:39:50 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	strtrim_size(char *cmd)
 	{
 		if (cmd[i] == '"')
 		{
-			printf("\n\nCHECK 1 cmd[%d] = %c\n", i, cmd[i]);
+//			printf("\n\nCHECK 1 cmd[%d] = %c\n", i, cmd[i]);
 			j += 2;
 			i++;
 			while (cmd[i] && cmd[i] != '"')
@@ -33,17 +33,17 @@ int	strtrim_size(char *cmd)
 		}
 		else if (cmd[i] == '\'')
 		{
-			printf("\n\nCHECK 2 cmd[%d] = %c\n", i, cmd[i]);
+//			printf("\n\nCHECK 2 cmd[%d] = %c\n", i, cmd[i]);
 			j += 2;
 			i++;
 			while (cmd[i] && cmd[i] != '\'')
 				i++;
-			printf("-----> cmd[%d] %c\n",i, cmd[i]);
+//			printf("-----> cmd[%d] %c\n",i, cmd[i]);
 		}
 		i++;
-		printf("while i = %d\n", i);
+//		printf("while i = %d\n", i);
 	}
-	printf("IN TRIM_SIZE %d - %d \n", i , j);
+//	printf("IN TRIM_SIZE %d - %d \n", i , j);
 	return (i - j);
 }
 
@@ -54,7 +54,7 @@ char	*strtrim_aug(char *cmd)
 	int		j;
 	int		size;
 
-	printf("in stritrim cmd = %s\n", cmd);
+//	printf("in stritrim cmd = %s\n", cmd);
 	size = strtrim_size(cmd);
 	i = 0;
 	j = 0;
