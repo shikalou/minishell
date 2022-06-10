@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldinaut <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 16:52:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2021/11/25 19:42:49 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/10 16:33:47 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		return (ft_strlen(src) + size);
 	while (dst[i])
 		i++;
-	while (src[j] && i < (size - 1))
+	while (src && src[j] && i < (size - 1))
 	{
 		dst[i] = src[j];
 		i++;
@@ -43,7 +43,7 @@ int	main()
 	char src[] = "blabla";
 	char src2[] = "blabla";
 	size_t size = 9;
-	
+
 	printf("vrai : %zu\n", strlcat(dst, src, size));
 	printf("dest apres : %s\n", dst);
 	printf("moi : %zu\n", ft_strlcat(dst2, src2, size));

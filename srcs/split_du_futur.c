@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/09 17:45:01 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/10 13:05:42 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 
 	i = 0;
 	j = 0;
-	if (s1 && s1[i] && !(s1[i + 1]))
-	{
-		strs[j][i] = s1[i];
-		i++;
-		strs[j][i] = '\0';
-		j++;
-	}
-	while (s1 && s1[i] && s1[i + 1])
+	// if (s1 && s1[i] && !(s1[i + 1]))
+	// {
+	// 	strs[j][i] = s1[i];
+	// 	i++;
+	// 	strs[j][i] = '\0';
+	// 	j++;
+	// }
+	while (s1 && s1[i] /*&& s1[i + 1]*/)
 	{
 		l = 0;
 		check = 0;

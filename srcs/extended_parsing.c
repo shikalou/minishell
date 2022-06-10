@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/09 17:22:19 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/10 16:54:53 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,23 +97,24 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				{
 					j = i;
 					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '"'))
+							&& cmd[j] != '\''))
 						j++;
 					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '"' && cmd[j] != '$'))
+							&& cmd[j] != '\'' && cmd[j] != '$'))
 							j++;
 					ret_void = malloc(sizeof(char) * (j - i) + 1);
 					if (!ret_void)
 						return (NULL);
 					j = i;
 					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '"'))
+							&& cmd[j] != '\''))
 						j++;
 					ret_void[k++] = cmd[i];
 					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '"' && cmd[j] != '$'))
+							&& cmd[j] != '\'' && cmd[j] != '$'))
 						ret_void[k++] = cmd[j++];
 					ret_void[k] = '\0';
+					printf("\n\n\tRET VOID EST EGAL A = %s\n", ret_void);
 					return(ret_void);
 				}
 				i++;
@@ -136,7 +137,35 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 		else
 			i++;
 	}
+	printf("env_var est NULL ????????????????????????????????????????????????\n");
 	return (NULL);
+}
+
+int	get_right_size(char *cmd, t_big_struct *big_struct)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (cmd && cmd[i])
+	{
+		if (cmd[i] == '$')
+		{
+			count++;
+			count += ft_strlen(ft_get_env_var(big_struct, cmd, i));
+			i += ft_len_dollar(cmd, i);
+			printf("(if) count = %d, i = %d\n", count, i);
+		}
+		else
+		{
+			count++;
+			i++;
+			printf("(else) count = %d, i = %d\n", count, i);
+		}
+	}
+	printf("get_right_size = %d\n", count);
+	return (count);
 }
 
 char	*extended_dollar(char *cmd, t_big_struct *big_struct)
@@ -152,37 +181,41 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 		i = 1;
 	else
 	{*/
-		while (cmd[i] && cmd[i] != '$')
-			i++;
+		// while (cmd[i] && cmd[i] != '$')
+		// 	i++;
 	//}
+	i = get_right_size(cmd, big_struct);
 	new_cmd = malloc(sizeof(char) * i + 1);
 	if (!new_cmd)
 		return (NULL);
 	//new_cmd = NULL;
-	if (i == 1 && cmd[i] == '$')
-		new_cmd[0] = '\0';
+	// if (i == 1 && cmd[i] == '$')
+	// 	new_cmd[0] = '\0';
 	i = 0;
 	while (cmd && cmd[i])
 	{
 		if (cmd[i] == '$')
 		{
 			env_var = ft_get_env_var(big_struct, cmd, i);
+			printf("strlen de env_var %ld\n", ft_strlen(env_var));
 			if (env_var == NULL && cmd[i])
 			{
-				new_cmd[j] = '\0';
-				new_cmd = ft_strjoin(new_cmd, NULL);
-				i += ft_len_dollar(cmd , i);
+				printf("hihuhuhu\n");
+				new_cmd[j++] = cmd[i++];
+				//ft_strlcat(new_cmd, NULL, 1000);
+				//i += ft_len_dollar(cmd, i);
 			}
 			else
 			{
 				new_cmd[j] = '\0';
-				new_cmd = ft_strjoin(new_cmd, env_var);
+				ft_strlcat(new_cmd, env_var, (ft_strlen(new_cmd) + ft_strlen(env_var) + 1));
 				i += (ft_len_dollar(cmd, i));
 				j += ft_strlen(env_var);
 			}
 		}
 		else
 		{
+			printf("cmd[%d] = %c\n", i, cmd[i]);
 			new_cmd[j] = cmd[i];
 			i++;
 			j++;
