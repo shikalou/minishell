@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/10 17:39:50 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/13 15:26:29 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ char	*strtrim_aug(char *cmd)
 	new_cmd = malloc(sizeof(char) * size + 1);
 	if (!new_cmd)
 		return (NULL);
-	if (size == 0)
-		new_cmd = NULL;
 	while (cmd && cmd[i])
 	{
 		if (cmd[i] == '"')

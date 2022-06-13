@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/13 14:36:14 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/13 16:01:33 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ void	parsing_quotes(t_big_struct *big_struct)
 	t_cmd_lst	*head;
 
 	head = big_struct->cmd_lst;
-	while (head)
+	while (head && head->command)
 	{
 		//regarder si besoin de checker le return NULL malloc
 		if (ft_memchr(head->command, '$', ft_strlen(head->command)))
