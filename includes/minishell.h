@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/13 13:52:33 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/13 17:32:08 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_big_struct
 {
 	char		**input;
 	char		*absolut_path;
+	int		pipefd[2];
 	t_env_lst	*env_lst;
 	t_cmd_lst	*cmd_lst;
 }	t_big_struct;

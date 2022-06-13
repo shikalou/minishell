@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/09 13:09:05 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/13 17:44:46 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,25 @@ void	ft_heredoc(t_big_struct *big_struct)
 		head = head->next;
 	}
 }
+void	ft_exec_pipe(t_big_struct *big_struct)
+{
+	t_cmd_lst	*head;
+	char		**spaced_cmd;
 
+	spaced_cmd = ft_split(head->command, ' ');
+	head = big_struct->cmd_lst;
+	pipe(big_struct->pipefd);
+	if ()
+	while (head && head->command)
+	{
+			
+	}
+}
 void	ft_exec(t_big_struct *big_struct)
 {
 	t_cmd_lst	*head;
 	t_cmd_lst	*head_tmp;
+	char		**spaced_cmd;
 
 	head = big_struct->cmd_lst;
 	head_tmp = big_struct->cmd_lst;
@@ -53,13 +67,21 @@ void	ft_exec(t_big_struct *big_struct)
 	}
 	if (head->command && ft_strnstr_exec(head->command, "<<", ft_strlen(head->command)))
 		ft_heredoc(big_struct);
-	while (head && head->command)
+	if (head && head->next)
+		ft_exec_pipe(big_struct);
+	else
 	{
-	//	if (head->next)
+		while (head && head->command)
+		{
+			spaced_cmd = ft_split(head->command, ' ');
 	//		big_struct->pipefd = pipe();
-		if (head->command && ft_strnstr_exec(head->command, "pwd", ft_strlen(head->command)))
-			ft_pwd(big_struct);
-		head = head->next;
+			if (head->command && ft_memcmp(head->command, "pwd", ft_strlen(head->command)) == 0)
+				ft_pwd(big_struct);
+			else if (head->command && ft_memcmp(head->command, "echo", 4) == 0)
+				printf("echoooooo lol\n");
+	//		ft_free_spaced(spaced_cmd);
+			head = head->next;
+		}
 	}
 }
 
