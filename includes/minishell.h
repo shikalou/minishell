@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/10 18:58:32 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/13 13:52:33 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ t_big_struct	*ft_init_big_struct(char **envp);
 t_cmd_lst		*ft_init_cmd_lst(char **input);
 t_cmd_lst		*ft_lstnew_cmd(int i, char *cmd);
 void			ft_lstadd_back_cmd(t_cmd_lst **alst, t_cmd_lst *new);
-//void			ft_lstclear_cmd(t_cmd_lst *cmd_lst);
+void			ft_lstclear_cmd(t_cmd_lst *cmd_lst);
 
 /*		--> INIT ENV_LST			*/
 t_env_lst		*ft_init_env_lst(char **envp);
 t_env_lst		*ft_lstnew_env(int i, char *env_line);
 void			ft_lstadd_back_env(t_env_lst **alst, t_env_lst *new);
-//void			ft_lstclear_env(t_env_lst *env_lst);
+void			ft_lstclear_env(t_env_lst *env_lst);
 
 /********************************************************/
 /*************PARSING************************************/

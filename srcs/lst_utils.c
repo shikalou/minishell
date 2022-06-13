@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/10 19:02:44 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/13 13:53:57 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,41 @@ void	ft_lstadd_back_env(t_env_lst **alst, t_env_lst *new)
 		temp->next = new;
 	}
 }
+
+void	ft_lstclear_env(t_env_lst *env_lst)
+{
+	t_env_lst	*lst_tmp;
+
+	lst_tmp = env_lst;
+	if (!env_lst)
+		return ;
+	while (env_lst != NULL)
+	{
+		lst_tmp = env_lst->next;
+		free(env_lst);
+		env_lst = lst_tmp;
+	}
+	free(env_lst);
+}
+
+void	ft_lstclear_cmd(t_cmd_lst *cmd_lst)
+{
+	t_cmd_lst	*lst_tmp;
+
+	lst_tmp = cmd_lst;
+	if (!cmd_lst)
+		return ;
+	while (cmd_lst != NULL)
+	{
+		lst_tmp = cmd_lst->next;
+		if(cmd_lst->command)
+			free(cmd_lst->command);
+		free(cmd_lst);
+		cmd_lst = lst_tmp;
+	}
+	free(cmd_lst);
+}
+
 /*
 void	ft_lstclear(t_list **lst)
 {

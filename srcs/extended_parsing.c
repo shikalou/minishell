@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/10 17:51:39 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/13 14:36:14 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 {
 	int		i;
 	int		j;
-	int		k;
-	char	*ret_void;
+//	int		k;
+//	char	*ret_void;
 
 	i = 0;
 	j = 0;
-	k = 0;
+//	k = 0;
 	while (cmd[i])
 	{
 		if (cmd[i] == '"')
@@ -76,6 +76,8 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '"' && cmd[j] != '$'))
 						j++;
+					if ((j - i) == 1)
+						return("$");
 					/*		on interprete
 					on prend le  *char de $ jusqu'a ' ' ou '\0'
 					on return une fonction qui le cherche dans env_lst
@@ -90,10 +92,10 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 		else if (cmd[i] == '\'' && ft_memchr_aug(cmd, i, '$') == 1)
 		// on interprete pas
 		{
-			i++;
+		/*	i++;
 			while (cmd[i] && cmd[i] != '\'')
 			{
-				if (cmd[i] == '$')
+				if (cmd[i] == '$' && i == index)
 				{
 					j = i;
 					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
@@ -102,6 +104,8 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '\'' && cmd[j] != '$'))
 							j++;
+					if ((j - i) ==  0)
+						i--;
 					ret_void = malloc(sizeof(char) * (j - i) + 1);
 					if (!ret_void)
 						return (NULL);
@@ -120,7 +124,8 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				i++;
 			}
 			if (cmd[i] && cmd[i] == '\'')
-				i++;
+				i++;*/
+			return("anticonstitutionnellement");
 		}
 		else if (cmd[i] == '$' && i == index)
 			// on interprete
@@ -202,10 +207,16 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 //			printf("strlen de env_var %ld\n", ft_strlen(env_var));
 			if (env_var == NULL && cmd[i])
 			{
-				//printf("hihuhuhu\n");
+			//	printf("hihuhuhu\n");
 		//		new_cmd[j++] = cmd[i++];
 				//ft_strlcat(new_cmd, NULL, 1000);
 				i += ft_len_dollar(cmd, i);
+			}
+			else if(ft_memcmp(env_var, "anticonstitutionnellement", ft_strlen(env_var)) == 0)
+			{
+				new_cmd[j++] = cmd[i++];
+				while (cmd[i] != '$' && cmd[i] != '\'' && cmd[i] != ' ' && cmd[i] != '\0')
+					new_cmd[j++] = cmd[i++];
 			}
 			else
 			{
@@ -238,7 +249,8 @@ void	parsing_quotes(t_big_struct *big_struct)
 		//regarder si besoin de checker le return NULL malloc
 		if (ft_memchr(head->command, '$', ft_strlen(head->command)))
 			head->command = extended_dollar(head->command, big_struct);
-		head->command = strtrim_aug(head->command);
+		if (head->command && head->command[0] != '\0')
+			head->command = strtrim_aug(head->command);
 		head = head->next;
 	}
 }
