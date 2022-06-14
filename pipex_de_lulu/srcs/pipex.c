@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 15:11:09 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/14 12:15:24 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/14 16:53:04 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	ft_exec_one(t_cmd *cmd, char **argv, char **envp)
 	pid = fork();
 	if (pid < 0)
 		perror("fork");
-	else if (pid == 0)
 	{
 		if (ft_find_check_path(cmd) != NULL)
 		{

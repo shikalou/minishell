@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/14 13:37:38 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/14 16:38:58 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include "../libft/libft.h"
 
 typedef struct s_env_lst
@@ -97,6 +98,8 @@ int				ft_split_quotes(const char *s1, int i);
 /*************EXECUTION**********************************/
 /********************************************************/
 void			ft_exec(t_big_struct *big_struct);
+int				ft_simple_exec(t_big_struct *big_struct);
+int				ft_check_builtin(t_big_struct *big_struct);
 
 /*		--> UTILS ALL				*/
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
@@ -105,7 +108,8 @@ char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 char			*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd);
 
 /*		--> BUILTIN				*/
-void			ft_pwd(t_big_struct *big_struct);
+void			ft_pwd(t_big_struct *big_struct, char *command);
+void			ft_echo(t_big_struct *big_struct, char *command);
 
 /*		--> HEREDOC, APPEND & REDIREC		*/
 void			ft_heredoc(t_big_struct *big_struct);
