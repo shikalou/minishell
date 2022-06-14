@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/13 17:32:08 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:37:38 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 
 typedef struct s_env_lst
@@ -36,7 +37,11 @@ typedef struct s_cmd_lst
 typedef struct s_big_struct
 {
 	char		**input;
+	char		**envp;
+	char		**path;
+	char		**spaced_cmd;
 	char		*absolut_path;
+	char		*cmd_updated;
 	int		pipefd[2];
 	t_env_lst	*env_lst;
 	t_cmd_lst	*cmd_lst;
@@ -95,6 +100,9 @@ void			ft_exec(t_big_struct *big_struct);
 
 /*		--> UTILS ALL				*/
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
+
+/*		--> UTILS EXEC				*/
+char			*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd);
 
 /*		--> BUILTIN				*/
 void			ft_pwd(t_big_struct *big_struct);

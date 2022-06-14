@@ -6,11 +6,26 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/13 16:06:57 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:46:11 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
 
 void	shellmini(t_big_struct *big_struct)
 {
@@ -29,6 +44,10 @@ void	shellmini(t_big_struct *big_struct)
 				ft_lstclear_cmd(big_struct->cmd_lst);
 			if (big_struct->input)
 				free(big_struct->input);
+			ft_free_tab(big_struct->spaced_cmd);
+			ft_free_tab(big_struct->path);
+		//	ft_free_tab(big_struct->envp);
+			free(big_struct->cmd_updated);
 		}
 	}
 	free(cmd);

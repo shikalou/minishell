@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/09 12:49:39 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:30:25 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	besoin d'adapter les strnstr aux quotes d'ou ajout du split quotes 
+	besoin d'adapter les strnstr aux quotes d'ou ajout du split quotes
 	ex = "pwd" ne doit pas s'exec , "pwd" pwd --> doit s'exec
 */
 int	get_next_heredoc(char *s1, char *s2, int i)
@@ -97,4 +97,29 @@ char	*ft_strnstr_hd(char *s1, char *s2, size_t n, size_t i)
 		i++;
 	}
 	return (NULL);
+}
+
+char	*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	/*if (ft_strchr(cmd->arg_path[0], '/'))
+		return (ft_check_slash(cmd));
+	else
+	{*/
+		while (big_struct->path[i] != NULL)
+		{
+			temp = ft_strjoin(big_struct->path[i], "/");
+			big_struct->cmd_updated = ft_strjoin(temp, spaced_cmd[0]);
+			free(temp);
+			printf("\t\t\t\t%s\n", big_struct->cmd_updated);
+			if (big_struct->cmd_updated && access(big_struct->cmd_updated, X_OK) == 0)
+				return (big_struct->cmd_updated);
+			i++;
+			free(big_struct->cmd_updated);
+		}
+		return (NULL);
+	//}
 }
