@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/13 16:01:33 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:34:35 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,9 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 {
 	int		i;
 	int		j;
-//	int		k;
-//	char	*ret_void;
 
 	i = 0;
 	j = 0;
-//	k = 0;
 	while (cmd[i])
 	{
 		if (cmd[i] == '"')
@@ -76,12 +73,12 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '"' && cmd[j] != '$'))
 						j++;
+					if(cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
+						return("0");
+					/*	FONCTION $? A IMPLEMENT	*/
 					if ((j - i) == 1)
 						return("$");
-					/*		on interprete
-					on prend le  *char de $ jusqu'a ' ' ou '\0'
-					on return une fonction qui le cherche dans env_lst
-					*/
+					/*		on interprete*/
 					return (get_env_lst(cmd, (i + 1), j, big_struct));
 				}
 				i++;
@@ -91,42 +88,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 		}
 		else if (cmd[i] == '\'' && ft_memchr_aug(cmd, i, '$') == 1)
 		// on interprete pas
-		{
-		/*	i++;
-			while (cmd[i] && cmd[i] != '\'')
-			{
-				if (cmd[i] == '$' && i == index)
-				{
-					j = i;
-					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '\''))
-						j++;
-					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '\'' && cmd[j] != '$'))
-							j++;
-					if ((j - i) ==  0)
-						i--;
-					ret_void = malloc(sizeof(char) * (j - i) + 1);
-					if (!ret_void)
-						return (NULL);
-					j = i;
-					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '\''))
-						j++;
-					ret_void[k++] = cmd[i];
-					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '\'' && cmd[j] != '$'))
-						ret_void[k++] = cmd[j++];
-					ret_void[k] = '\0';
-					//printf("\n\n\tRET VOID EST EGAL A = %s\n", ret_void);
-					return(ret_void);
-				}
-				i++;
-			}
-			if (cmd[i] && cmd[i] == '\'')
-				i++;*/
 			return("anticonstitutionnellement");
-		}
 		else if (cmd[i] == '$' && i == index)
 			// on interprete
 		{
@@ -137,6 +99,9 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 			while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '\''
 					&& cmd[j] != '"' && cmd[j] != '$'))
 				j++;
+			//	FONCTION $? A IMPLEMENT
+			if (cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
+				return ("0");
 			return (get_env_lst(cmd, (i), j, big_struct));
 		}
 		else
@@ -184,20 +149,10 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 
 	i = 0;
 	j = 0;
-/*	if (cmd[i] && cmd[i] == '$')
-		i = 1;
-	else
-	{*/
-		// while (cmd[i] && cmd[i] != '$')
-		// 	i++;
-	//}
 	i = get_right_size(cmd, big_struct);
 	new_cmd = malloc(sizeof(char) * i + 1);
 	if (!new_cmd)
 		return (NULL);
-	//new_cmd = NULL;
-	// if (i == 1 && cmd[i] == '$')
-	// 	new_cmd[0] = '\0';
 	i = 0;
 	while (cmd && cmd[i])
 	{

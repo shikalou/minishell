@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/14 13:46:11 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:42:36 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_free_tab(char **tab)
 	i = 0;
 	if (!tab)
 		return ;
-	while (tab[i])
+	while (tab && tab[i])
 	{
 		free(tab[i]);
 		i++;
@@ -45,9 +45,10 @@ void	shellmini(t_big_struct *big_struct)
 			if (big_struct->input)
 				free(big_struct->input);
 			ft_free_tab(big_struct->spaced_cmd);
-			ft_free_tab(big_struct->path);
+		//	ft_free_tab(big_struct->path);
 		//	ft_free_tab(big_struct->envp);
-			free(big_struct->cmd_updated);
+			if (big_struct->cmd_updated)
+				free(big_struct->cmd_updated);
 		}
 	}
 	free(cmd);
@@ -72,6 +73,7 @@ int	main(int ac, char **av, char **envp)
 /*	while (big_struct->input[i])
 		free(big_struct->input[i++]);*/
 	//free(big_struct->cmd_lst);
+	ft_free_tab(big_struct->path);
 	free(big_struct);
 	return (0);
 }

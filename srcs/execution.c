@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/14 13:51:36 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:48:54 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ void	ft_exec_pipe(t_big_struct *big_struct)
 			perror("execve");
 			printf("apres le execve ?????\n");
 		}
+		else
+		{
+			printf("\t\tLOOOOOL\n");
+			return ;
+		}
 	}
 }
 
@@ -86,8 +91,8 @@ void	ft_exec(t_big_struct *big_struct)
 		ft_exec_pipe(big_struct);
 		wait(NULL);
 	}
-	else
-	{
+/*	else
+	{*/
 		while (head && head->command)
 		{
 		//	spaced_cmd = ft_split(head->command, ' ');
@@ -99,7 +104,7 @@ void	ft_exec(t_big_struct *big_struct)
 	//		ft_free_spaced(spaced_cmd);
 			head = head->next;
 		}
-	}
+//	}
 	printf("on sort ou pas ?\n");
 }
 
