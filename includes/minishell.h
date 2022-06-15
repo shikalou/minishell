@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/15 13:39:53 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/15 19:03:01 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_big_struct
 	char		**spaced_cmd;
 	char		*absolut_path;
 	char		*cmd_updated;
-	int		pipefd[2];
+	int			pipefd[2];
 	t_env_lst	*env_lst;
 	t_cmd_lst	*cmd_lst;
 }	t_big_struct;
@@ -62,6 +62,7 @@ t_cmd_lst		*ft_init_cmd_lst(char **input);
 t_cmd_lst		*ft_lstnew_cmd(int i, char *cmd);
 void			ft_lstadd_back_cmd(t_cmd_lst **alst, t_cmd_lst *new);
 void			ft_lstclear_cmd(t_cmd_lst *cmd_lst);
+int				ft_lstsize_cmd(t_cmd_lst *lst);
 
 /*		--> INIT ENV_LST			*/
 t_env_lst		*ft_init_env_lst(char **envp);
@@ -100,18 +101,25 @@ int				ft_split_quotes(const char *s1, int i);
 /*************EXECUTION**********************************/
 /********************************************************/
 void			ft_exec(t_big_struct *big_struct);
+void			ft_multi_pipe(t_big_struct *big_struct);
+void			first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+void			middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+void			last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_simple_exec(t_big_struct *big_struct);
 int				ft_check_builtin(t_big_struct *big_struct);
 
 /*		--> UTILS ALL				*/
+void			ft_free_tab(char **tab);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 
 /*		--> UTILS EXEC				*/
+void			ft_wait(int	max);
 char			*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd);
+char			*ft_check_slash(t_big_struct *big_struct);
 
 /*		--> BUILTIN				*/
-void			ft_pwd(t_big_struct *big_struct, char *command);
-void			ft_echo(t_big_struct *big_struct, char *command);
+void			ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+void			ft_echo(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 
 /*		--> HEREDOC, APPEND & REDIREC		*/
 void			ft_heredoc(t_big_struct *big_struct);
