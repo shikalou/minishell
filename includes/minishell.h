@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/14 16:38:58 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:39:53 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_cmd_lst
 {
 	int					index;
 	char				*command;
+	int					fd_in;
+	int					fd_out;
 	struct s_cmd_lst	*next;
 }	t_cmd_lst;
 

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/14 17:23:34 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:39:58 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int	ft_simple_exec(t_big_struct *big_struct)
 	{
 		if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 		{
+		//	dup2(big_struct->cmd_lst->fd_in, 0);
 			execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
+		//	dup2(big_struct->cmd_lst->fd_out, 1);
 			perror("execve");
 		}
 		exit(1);
@@ -67,7 +69,7 @@ int	ft_check_builtin(t_big_struct *big_struct)
 		{
 			if (head->command && ft_memcmp(head->command, "pwd", ft_strlen(head->command)) == 0)
 			{
-				ft_pwd(big_struct, head->command);
+				ft_pwd(big_struct, head);
 				return (1);
 			}
 			else if (head->command && ft_memcmp(head->command, "echo", 4) == 0)
@@ -79,6 +81,39 @@ int	ft_check_builtin(t_big_struct *big_struct)
 			head = head->next;
 		}
 		return (0);
+}
+
+void	ft_multi_pipe(t_big_struct *big_struct)
+{
+	t_cmd_lst	*head;
+	//int			n_cmd;
+
+	head = big_struct->cmd_lst;
+	//n_cmd = ft_lstsize(cmd_lst);
+	if (big_struct->spaced_cmd != NULL)
+		free(big_struct->spaced_cmd);
+	big_struct->spaced_cmd = ft_split(head->command, ' ');
+	// commande simple
+	if (ft_check_builtin(big_struct))
+			;
+	else
+			ft_simple_exec(big_struct);
+	head = head->next;
+	while (head->next)
+	{
+		if (big_struct->spaced_cmd != NULL)
+			free(big_struct->spaced_cmd);
+		big_struct->spaced_cmd = ft_split(head->command, ' ');
+		// premiere exec (builtin ou non)
+		// boucle while sur liste size -2 pour celles du milieu si il y a (pipe dans la fonction avec fd_temp)
+		// exec last (pas de pipe du coup)
+		head = head->next;
+	}
+		// if (chck builtin)
+		// else if (check exec)
+		// 	ft_multi_exec(big_struct);
+		// else
+		//	command not found
 }
 
 void	ft_exec(t_big_struct *big_struct)
@@ -106,13 +141,6 @@ void	ft_exec(t_big_struct *big_struct)
 	}
 	else if (head && head->next)
 	{
-		// if spaced cmd
-		//	free spaced_cmd;
-		// spaced cmd = ft_split(head-cmd)
-		// if (chck builtin)
-		// else if (check exec)
-		// 	ft_multi_exec(big_struct);
-		// else
-		//	command not found
+		ft_multi_pipe(big_struct);
 	}
 }
