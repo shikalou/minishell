@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/15 18:34:30 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/16 17:34:57 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ t_big_struct	*ft_init_big_struct(char **envp)
 	big_struct->cmd_lst = NULL;
 	big_struct->cmd_updated = NULL;
 	big_struct->spaced_cmd = NULL;
+	big_struct->spaced_par = NULL;
 	return (big_struct);
 }

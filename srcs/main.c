@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/15 19:11:41 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/16 18:41:53 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void	shellmini(t_big_struct *big_struct)
 			{
 				ft_free_tab(big_struct->spaced_cmd);
 				big_struct->spaced_cmd = NULL;
+			}
+			if (big_struct->spaced_par)
+			{
+				ft_free_tab(big_struct->spaced_par);
+				big_struct->spaced_par = NULL;
 			}
 		//	ft_free_tab(big_struct->path);
 		//	ft_free_tab(big_struct->envp);

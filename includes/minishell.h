@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/16 16:23:42 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/16 17:34:18 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_big_struct
 	char		**envp;
 	char		**path;
 	char		**spaced_cmd;
+	char		**spaced_par;
 	char		*absolut_path;
 	char		*cmd_updated;
 	int			pipefd[2];

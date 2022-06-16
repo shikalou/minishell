@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/15 19:05:30 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/16 18:29:23 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ void	ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 void	ft_echo(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
 	(void)big_struct;
-	ft_putstr_fd(cmd_lst->command + 5, cmd_lst->fd_out);
+	ft_putendl_fd(cmd_lst->command + 5, cmd_lst->fd_out);
 }
