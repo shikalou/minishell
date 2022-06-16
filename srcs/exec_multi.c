@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/15 19:13:46 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/16 13:35:14 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,12 @@ void	ft_multi_pipe(t_big_struct *big_struct)
 	head = head->next;
 	while (i < (n_cmd - 2))
 	{
-		middle_exec(big_struct, head);
+		if (!ft_check_builtin(big_struct))
+			middle_exec(big_struct, head);
 		i++;
 		head = head->next;
 	}
-	last_exec(big_struct, head);
+	if (!ft_check_builtin(big_struct))
+		last_exec(big_struct, head);
 	ft_wait(n_cmd);
 }

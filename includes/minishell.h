@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/15 19:03:01 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/16 16:23:42 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <fcntl.h>
 # include "../libft/libft.h"
 
 typedef struct s_env_lst
@@ -86,6 +87,9 @@ int				ft_len_dollar(char *cmd, int i);
 int				ft_memchr_aug(char *s, int i, char c);
 int				strtrim_size(char *cmd);
 
+/*		--> PARSING REDIRECTIONS	*/
+void			parsing_redirection(t_big_struct *big_struct);
+
 /*		--> UTILS PARSING			*/
 char			**ft_split_du_futur(char const *s1, char c);
 char			*add_space(char *cmd, int index);
@@ -105,7 +109,7 @@ void			ft_multi_pipe(t_big_struct *big_struct);
 void			first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-int				ft_simple_exec(t_big_struct *big_struct);
+int				ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_check_builtin(t_big_struct *big_struct);
 
 /*		--> UTILS ALL				*/
