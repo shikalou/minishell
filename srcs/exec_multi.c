@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/16 13:35:14 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/17 12:02:40 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,17 +137,23 @@ void	ft_multi_pipe(t_big_struct *big_struct)
 	i = 0;
 	n_cmd = ft_lstsize_cmd(big_struct->cmd_lst);
 	pipe(big_struct->pipefd);
-	if (!ft_check_builtin(big_struct))
+	printf("\tbjr\n");
+	if (!ft_check_builtin(big_struct, head->command))
 		first_exec(big_struct, head);
 	head = head->next;
+	printf("\t here head->command == %s, n_cmd == %d\n", head->command, n_cmd);
 	while (i < (n_cmd - 2))
 	{
-		if (!ft_check_builtin(big_struct))
+		printf("\t ici ????\n");
+		if (!ft_check_builtin(big_struct, head->command))
 			middle_exec(big_struct, head);
 		i++;
 		head = head->next;
 	}
-	if (!ft_check_builtin(big_struct))
+	if (!ft_check_builtin(big_struct, head->command))
+	{
+		printf("\t last check fd_in = %d fd_out = %d \n", head->fd_in, head->fd_out);
 		last_exec(big_struct, head);
+	}
 	ft_wait(n_cmd);
 }

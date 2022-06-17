@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/16 17:34:18 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/17 12:00:56 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void			first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-int				ft_check_builtin(t_big_struct *big_struct);
+int				ft_check_builtin(t_big_struct *big_struct, char *cmd);
 
 /*		--> UTILS ALL				*/
 void			ft_free_tab(char **tab);

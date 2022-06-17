@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/14 14:34:35 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/17 11:24:39 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,10 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				if (cmd[i] == '$' && i == index)
 				{
 					j = i;
-					if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '"'))
-						j++;
+					j++;
 					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '"' && cmd[j] != '$'))
+							&& cmd[j] != '"' && cmd[j] != '$'
+							&& cmd[j] != '\''))
 						j++;
 					if(cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
 						return("0");
@@ -102,6 +101,8 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 			//	FONCTION $? A IMPLEMENT
 			if (cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
 				return ("0");
+			if ((j - i) == 1)
+				return("$");
 			return (get_env_lst(cmd, (i), j, big_struct));
 		}
 		else
@@ -159,14 +160,8 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 		if (cmd[i] == '$')
 		{
 			env_var = ft_get_env_var(big_struct, cmd, i);
-//			printf("strlen de env_var %ld\n", ft_strlen(env_var));
 			if (env_var == NULL && cmd[i])
-			{
-			//	printf("hihuhuhu\n");
-		//		new_cmd[j++] = cmd[i++];
-				//ft_strlcat(new_cmd, NULL, 1000);
 				i += ft_len_dollar(cmd, i);
-			}
 			else if(ft_memcmp(env_var, "anticonstitutionnellement", ft_strlen(env_var)) == 0)
 			{
 				new_cmd[j++] = cmd[i++];
@@ -183,7 +178,6 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 		}
 		else
 		{
-			//printf("cmd[%d] = %c\n", i, cmd[i]);
 			new_cmd[j] = cmd[i];
 			i++;
 			j++;

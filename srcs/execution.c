@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/16 16:25:29 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/17 11:59:08 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,30 @@ int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	return (0);
 }
 
-int	ft_check_builtin(t_big_struct *big_struct)
+int	ft_check_builtin(t_big_struct *big_struct, char *cmd)
 {
 	t_cmd_lst *head;
 
 	head = big_struct->cmd_lst;
 	while (head && head->command)
+	{
+		if (ft_memcmp(head->command, cmd, ft_strlen(cmd)) == 0)
 		{
-			if (head->command && ft_memcmp(head->command, "pwd", ft_strlen(head->command)) == 0)
+			if (cmd && ft_memcmp(cmd, "pwd", ft_strlen(cmd)) == 0)
 			{
 				ft_pwd(big_struct, head);
 				return (1);
 			}
-			else if (head->command && ft_memcmp(head->command, "echo", 4) == 0)
+			else if (cmd && ft_memcmp(cmd, "echo", 4) == 0)
 			{
 				ft_echo(big_struct, head);
 				return (1);
 			}
 			//else if (les prochains builtins :D )
-			head = head->next;
 		}
-		return (0);
+		head = head->next;
+	}
+	return (0);
 }
 
 void	ft_exec(t_big_struct *big_struct)
@@ -94,14 +97,14 @@ void	ft_exec(t_big_struct *big_struct)
 	head_tmp = big_struct->cmd_lst;
 	while (head_tmp && head_tmp->command)
 	{
-		printf("%s\n", head_tmp->command);
+		printf("\thead of exec =%s\n", head_tmp->command);
 		head_tmp = head_tmp->next;
 	}
 	if (head->command && ft_strnstr_exec(head->command, "<<", ft_strlen(head->command)))
 		ft_heredoc(big_struct);
 	if (head && !head->next)
 	{
-		if (ft_check_builtin(big_struct))
+		if (ft_check_builtin(big_struct, head->command))
 			return ;
 		else
 			ft_simple_exec(big_struct, head);

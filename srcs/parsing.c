@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/16 11:48:01 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/17 11:41:29 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*check_spe_char(char *cmd)
 		}
 		if (cmd[i] == '|' || cmd[i] == '>' || cmd[i] == '<')
 		{
-			if (cmd[i] != cmd[i + 1])
+			if (cmd[i +1] && cmd[i] != cmd[i + 1])
 			{
 				if (cmd[i] == '|' && check_str(cmd, 0, i) == 1)
 					return (NULL);
@@ -89,6 +89,37 @@ int	ft_checkquotes(char *cmd)
 	return (check_d + check_s);
 }
 
+int	check_after_pipe(char *cmd)
+{
+	int	j;
+	int	i;
+
+	if (!cmd)
+		return (1);
+	i = 0;
+	j = 0;
+	while (cmd && cmd[i])
+	{
+		if (cmd[i] == '|')
+		{
+			i++;
+			while (cmd && cmd[i] != '\0')
+			{
+				if (ft_isalnum(cmd[i]) == 1)
+					j++;
+				i++;
+			}
+			printf("\tcheck pipe j = %d\n", j);
+			if (j == 0)
+				return (1);
+			else
+				i = (i - j) - 1;
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	ft_parsing(char *cmd, t_big_struct *big_struct)
 {
 	if (ft_checkquotes(cmd) != 0)
@@ -97,7 +128,7 @@ int	ft_parsing(char *cmd, t_big_struct *big_struct)
 		return (0);
 	}
 	cmd = check_spe_char(cmd);
-	if (!cmd)
+	if (!cmd || (check_after_pipe(cmd) == 1))
 	{
 		write(2, "Error syntax\n", 13);
 		return (0);
