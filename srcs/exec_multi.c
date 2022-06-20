@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/20 10:43:40 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/20 16:43:40 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,18 @@ void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 			else
 				dup2(big_struct->pipefd[0], 0);
 			dup2(cmd_lst->fd_out, 1);
-			execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
+			if (!ft_check_builtin(big_struct, cmd_lst))
+				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
 		}
+		ft_free_bs(big_struct);
 		exit(1);
 	}
 	//free(big_struct->spaced_cmd);
 	close(big_struct->pipefd[0]);
-	//close fd out si on l'a mofidie
-	//close fd_in si on l'a modifie
+	if (cmd_lst->fd_in != 0)
+		close(cmd_lst->fd_in);
+	if (cmd_lst->fd_out != 1)
+		close(cmd_lst->fd_out);
 }
 
 void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
@@ -71,15 +75,19 @@ void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 				close(big_struct->pipefd[0]);
 				dup2(big_struct->pipefd[1], 1);
 			}
-			execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
+			if (!ft_check_builtin(big_struct, cmd_lst))
+				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
 			perror("execve");
 		}
+		ft_free_bs(big_struct);
 		exit(1);
 	}
 	close(big_struct->pipefd[1]);
 	close(fd_temp);
-	// close fd_in si modifie
-	// close fd_out si modifie
+	if (cmd_lst->fd_in != 0)
+		close(cmd_lst->fd_in);
+	if (cmd_lst->fd_out != 1)
+		close(cmd_lst->fd_out);
 }
 
 void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
@@ -105,14 +113,18 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 				close(big_struct->pipefd[0]);
 				dup2(big_struct->pipefd[1], 1);
 			}
-			execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
+			if (!ft_check_builtin(big_struct, cmd_lst))
+				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
 			perror("execve");
 		}
+		ft_free_bs(big_struct);
 		exit(1);
 	}
 	close(big_struct->pipefd[1]);
-	//close fd out si on l'a mofidie
-	//close fd_in si on l'a modifie
+	if (cmd_lst->fd_in != 0)
+		close(cmd_lst->fd_in);
+	if (cmd_lst->fd_out != 1)
+		close(cmd_lst->fd_out);
 }
 
 void	ft_wait(int	max)
@@ -137,21 +149,14 @@ void	ft_multi_pipe(t_big_struct *big_struct)
 	i = 0;
 	n_cmd = ft_lstsize_cmd(big_struct->cmd_lst);
 	pipe(big_struct->pipefd);
-	if (!ft_check_builtin(big_struct, head->command))
-		first_exec(big_struct, head);
+	first_exec(big_struct, head);
 	head = head->next;
 	while (i < (n_cmd - 2))
 	{
-		if (!ft_check_builtin(big_struct, head->command))
-			middle_exec(big_struct, head);
+		middle_exec(big_struct, head);
 		i++;
 		head = head->next;
 	}
-	/*
-		echo lol | wc --> pblm avec last_exec parce que 
-		jusqu'ici tout est ok 
-	*/
-	if (!ft_check_builtin(big_struct, head->command))
-		last_exec(big_struct, head);
+	last_exec(big_struct, head);
 	ft_wait(n_cmd);
 }

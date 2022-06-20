@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/17 11:59:08 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/20 17:04:51 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,8 @@ void	ft_heredoc(t_big_struct *big_struct)
 int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
 	int			pid;
-	int			i;
 
-	i = 0;
 	big_struct->spaced_cmd = ft_split(big_struct->cmd_lst->command, ' ');
-	while (big_struct->spaced_cmd[i] != NULL)
-	{
-		printf("space_cmd[%d] = %s\n", i, big_struct->spaced_cmd[i]);
-		i++;
-	}
-	printf("FD OUT DANS EXEC SI;PLE%d\n", big_struct->cmd_lst->fd_out);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -54,37 +46,36 @@ int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		{
 			dup2(cmd_lst->fd_in, 0);
 			dup2(cmd_lst->fd_out, 1);
-			execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
-			perror("execve");
+			if (!ft_check_builtin(big_struct, cmd_lst))
+			{
+				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
+				perror("execve");
+			}
 		}
+		//ft_free_tab(big_struct->spaced_cmd);
+		//ft_free_bs(big_struct);
 		exit(1);
 	}
+	if (cmd_lst->fd_in != 0)
+		close(cmd_lst->fd_in);
+	if (cmd_lst->fd_out != 1)
+		close(cmd_lst->fd_out);
 	return (0);
 }
 
-int	ft_check_builtin(t_big_struct *big_struct, char *cmd)
+int	ft_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
-	t_cmd_lst *head;
-
-	head = big_struct->cmd_lst;
-	while (head && head->command)
+	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "pwd", ft_strlen(big_struct->spaced_cmd[0])) == 0)
 	{
-		if (ft_memcmp(head->command, cmd, ft_strlen(cmd)) == 0)
-		{
-			if (cmd && ft_memcmp(cmd, "pwd", ft_strlen(cmd)) == 0)
-			{
-				ft_pwd(big_struct, head);
-				return (1);
-			}
-			else if (cmd && ft_memcmp(cmd, "echo", 4) == 0)
-			{
-				ft_echo(big_struct, head);
-				return (1);
-			}
-			//else if (les prochains builtins :D )
-		}
-		head = head->next;
+		ft_pwd(big_struct, cmd_lst);
+		return (1);
 	}
+	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "echo", ft_strlen(big_struct->spaced_cmd[0])) == 0)
+	{
+		ft_echo(big_struct, cmd_lst);
+		return (1);
+	}
+	//else if (les prochains builtins :D )
 	return (0);
 }
 
@@ -97,17 +88,13 @@ void	ft_exec(t_big_struct *big_struct)
 	head_tmp = big_struct->cmd_lst;
 	while (head_tmp && head_tmp->command)
 	{
-		printf("\thead of exec =%s\n", head_tmp->command);
 		head_tmp = head_tmp->next;
 	}
 	if (head->command && ft_strnstr_exec(head->command, "<<", ft_strlen(head->command)))
 		ft_heredoc(big_struct);
 	if (head && !head->next)
 	{
-		if (ft_check_builtin(big_struct, head->command))
-			return ;
-		else
-			ft_simple_exec(big_struct, head);
+		ft_simple_exec(big_struct, head);
 		wait(NULL);
 	}
 	else if (head && head->next)

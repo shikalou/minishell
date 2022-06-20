@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/16 18:43:02 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/20 15:51:03 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,17 @@ void	parsing_redirection(t_big_struct *big_struct)
 					printf("%s : %s\n", strerror(errno), big_struct->spaced_par[i + 1]);
 				k = ft_strlen(cmd_lst->command);
 				free(cmd_lst->command);
-				cmd_lst->command = update_flux(big_struct, "<", k, i - 1);
+				cmd_lst->command = update_flux(big_struct, ">", k, i - 1);
+			}
+			else if (ft_memcmp(big_struct->spaced_par[i], ">>", ft_strlen(big_struct->spaced_par[i])) == 0)
+			{
+				i++;
+				cmd_lst->fd_out = open(big_struct->spaced_par[i], O_CREAT | O_WRONLY | O_APPEND, 0644);
+				if (cmd_lst->fd_out == -1)
+					printf("%s : %s\n", strerror(errno), big_struct->spaced_par[i + 1]);
+				k = ft_strlen(cmd_lst->command);
+				free(cmd_lst->command);
+				cmd_lst->command = update_flux(big_struct, ">>", k, i - 1);
 			}
 			i++;
 		}

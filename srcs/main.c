@@ -6,26 +6,11 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/16 18:41:53 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/20 16:47:19 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return ;
-	while (tab && tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
 
 void	shellmini(t_big_struct *big_struct)
 {
@@ -54,8 +39,6 @@ void	shellmini(t_big_struct *big_struct)
 				ft_free_tab(big_struct->spaced_par);
 				big_struct->spaced_par = NULL;
 			}
-		//	ft_free_tab(big_struct->path);
-		//	ft_free_tab(big_struct->envp);
 			if (big_struct->cmd_updated)
 				free(big_struct->cmd_updated);
 		}
@@ -66,22 +49,15 @@ void	shellmini(t_big_struct *big_struct)
 int	main(int ac, char **av, char **envp)
 {
 	t_big_struct	*big_struct;
-//	int		i;
 
 	(void)ac;
 	(void)av;
-//	i = 0;
 	big_struct = ft_init_big_struct(envp);
 	if (!big_struct)
 		return (1);
 	shellmini(big_struct);
 	printf("\nslt les gars\n");
-	ft_lstclear_env(big_struct->env_lst);
-//	ft_lstclear_cmd(big_struct->cmd_lst);
 	free(big_struct->absolut_path);
-/*	while (big_struct->input[i])
-		free(big_struct->input[i++]);*/
-	//free(big_struct->cmd_lst);
 	ft_free_tab(big_struct->path);
 	free(big_struct);
 	return (0);
