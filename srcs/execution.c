@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/20 17:04:51 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/20 23:46:25 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,30 @@ int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 int	ft_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
-	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "pwd", ft_strlen(big_struct->spaced_cmd[0])) == 0)
+	size_t	size;
+
+	printf("in check builtin\n cmd_lst->command == %s, spaced_cmd = %s\n", cmd_lst->command, big_struct->spaced_cmd[0]);
+	ft_putstr_fd("test ds checkbuiltin\n", cmd_lst->fd_out);
+	size = ft_strlen(big_struct->spaced_cmd[0]);
+	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "pwd", size) == 0)
 	{
 		ft_pwd(big_struct, cmd_lst);
 		return (1);
 	}
-	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "echo", ft_strlen(big_struct->spaced_cmd[0])) == 0)
+	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "echo", size) == 0)
 	{
+		printf("tEsT eChO\n");
 		ft_echo(big_struct, cmd_lst);
 		return (1);
 	}
+	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "export", size) == 0)
+	{
+		printf("oui\n");
+		ft_export(big_struct, cmd_lst);
+		return (1);
+	}
+	/*else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "unset", size) == 0)
+		return (ft_unset(big_struct, cmd_lst));*/
 	//else if (les prochains builtins :D )
 	return (0);
 }

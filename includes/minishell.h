@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/20 16:29:03 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/20 22:50:39 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,12 @@ char			*ft_check_slash(t_big_struct *big_struct);
 /*		--> BUILTIN				*/
 void			ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			ft_echo(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_export(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_unset(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+/*			->utils				*/
+char			*get_export_var(char *cmd, int start, t_big_struct *big_struct);
+int				check_var_in_env(char *cmd, int start, t_env_lst *env_lst);
+int				get_export_size(char *cmd, int start);
 
 /*		--> HEREDOC, APPEND & REDIREC		*/
 void			ft_heredoc(t_big_struct *big_struct);
