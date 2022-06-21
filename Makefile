@@ -6,7 +6,7 @@
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 16:12:42 by ldinaut           #+#    #+#              #
-#    Updated: 2022/06/20 22:52:07 by mcouppe          ###   ########.fr        #
+#    Updated: 2022/06/21 14:39:58 by ldinaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		=	minishell
 SRCS_FILES	=	main.c utils_parsing.c split_du_futur.c lst_utils.c \
 			init_struct_lst.c parsing.c execution.c exec_utils.c \
 			extended_parsing.c extended_parse_utils.c strtrim_aug.c \
-			builtins.c exec_multi.c redirection.c ft_free.c builtins_bis.c \
+			builtins.c exec_multi.c redirection.c ft_free.c builtins_bis.c
 
 SRCS		=	$(addprefix srcs/, $(SRCS_FILES))
 

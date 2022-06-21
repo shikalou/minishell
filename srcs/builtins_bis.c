@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_bis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:34:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/20 23:40:32 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/21 14:18:21 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,11 @@ int	ft_export(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	else
 		printf("fo update var existante\n");
 	head = big_struct->env_lst;
-	while (head)
+	/*while (head)
 	{
 		printf("%s\n", head->line);
 		head = head->next;
-	}
+	}*/
 //	free(var_exported);
 	return (1);
 }

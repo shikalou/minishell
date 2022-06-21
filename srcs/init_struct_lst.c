@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/16 17:34:57 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/21 18:01:15 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_big_struct	*ft_init_big_struct(char **envp)
 	if (!big_struct)
 		return (NULL);
 	big_struct->input = NULL;
-	big_struct->absolut_path = getcwd(NULL, 0);
+	big_struct->absolut_path = NULL;
 	big_struct->env_lst = ft_init_env_lst(envp);
 	big_struct->envp = envp;
 	big_struct->path = ft_recover_path(envp);

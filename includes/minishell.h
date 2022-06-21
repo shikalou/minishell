@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/20 22:50:39 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/21 18:07:15 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void			first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_first_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 
 /*		--> UTILS ALL				*/
@@ -126,8 +127,10 @@ char			*ft_check_slash(t_big_struct *big_struct);
 /*		--> BUILTIN				*/
 void			ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			ft_echo(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+void			ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_export(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_unset(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+
 /*			->utils				*/
 char			*get_export_var(char *cmd, int start, t_big_struct *big_struct);
 int				check_var_in_env(char *cmd, int start, t_env_lst *env_lst);
