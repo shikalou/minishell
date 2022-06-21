@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/17 11:24:39 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/21 23:32:47 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				if (cmd[i] == '$' && i == index)
 				{
 					j = i;
+					printf("test lol\n");
 					j++;
 					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '"' && cmd[j] != '$'
@@ -78,6 +79,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 					if ((j - i) == 1)
 						return("$");
 					/*		on interprete*/
+					
 					return (get_env_lst(cmd, (i + 1), j, big_struct));
 				}
 				i++;

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/13 15:26:29 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/22 00:00:57 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	strtrim_size(char *cmd)
 	{
 		if (cmd[i] == '"')
 		{
-//			printf("\n\nCHECK 1 cmd[%d] = %c\n", i, cmd[i]);
 			j += 2;
 			i++;
 			while (cmd[i] && cmd[i] != '"')
@@ -33,17 +32,13 @@ int	strtrim_size(char *cmd)
 		}
 		else if (cmd[i] == '\'')
 		{
-//			printf("\n\nCHECK 2 cmd[%d] = %c\n", i, cmd[i]);
 			j += 2;
 			i++;
 			while (cmd[i] && cmd[i] != '\'')
 				i++;
-//			printf("-----> cmd[%d] %c\n",i, cmd[i]);
 		}
 		i++;
-//		printf("while i = %d\n", i);
 	}
-//	printf("IN TRIM_SIZE %d - %d \n", i , j);
 	return (i - j);
 }
 
@@ -54,10 +49,11 @@ char	*strtrim_aug(char *cmd)
 	int		j;
 	int		size;
 
-//	printf("in stritrim cmd = %s\n", cmd);
 	size = strtrim_size(cmd);
 	i = 0;
 	j = 0;
+	if(ft_strnstr(cmd, "export ", 7) != NULL)
+		return (cmd);
 	new_cmd = malloc(sizeof(char) * size + 1);
 	if (!new_cmd)
 		return (NULL);
@@ -83,7 +79,6 @@ char	*strtrim_aug(char *cmd)
 		i++;
 	}
 	new_cmd[j] = '\0';
-//	printf("IN STRTRIM\n\tnew_cmd = %s\tcmd = %s\n", new_cmd, cmd);
 	if (cmd)
 		free(cmd);
 	return (new_cmd);

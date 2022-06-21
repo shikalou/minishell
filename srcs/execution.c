@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/21 18:13:20 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/21 19:32:55 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,7 @@ int	ft_first_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 	size = ft_strlen(big_struct->spaced_cmd[0]);
 	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "export", size) == 0)
-	{
-		ft_export(big_struct, cmd_lst);
-		return (1);
-	}
+		return (ft_export(big_struct, cmd_lst));
 	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "cd", size) == 0)
 	{
 		ft_cd(big_struct, cmd_lst);
@@ -108,14 +105,14 @@ int	ft_first_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 void	ft_exec(t_big_struct *big_struct)
 {
 	t_cmd_lst	*head;
-	t_cmd_lst	*head_tmp;
+//	t_cmd_lst	*head_tmp;
 
 	head = big_struct->cmd_lst;
-	head_tmp = big_struct->cmd_lst;
+/*	head_tmp = big_struct->cmd_lst;
 	while (head_tmp && head_tmp->command)
 	{
 		head_tmp = head_tmp->next;
-	}
+	}*/
 	if (head->command && ft_strnstr_exec(head->command, "<<", ft_strlen(head->command)))
 		ft_heredoc(big_struct);
 	if (head && !head->next)

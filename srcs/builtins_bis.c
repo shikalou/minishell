@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:34:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/21 14:18:21 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/21 20:30:14 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int	ft_export(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 	i = 0;
 	j = 6;
-	ft_putstr_fd("TEST", cmd_lst->fd_out);
 	head = big_struct->env_lst;
 	while (head)
 	{
