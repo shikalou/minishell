@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/21 19:32:55 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:35:07 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,17 @@ int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	int			pid;
 
 	big_struct->spaced_cmd = ft_split(big_struct->cmd_lst->command, ' ');
-	if (!ft_first_check_builtin(big_struct, cmd_lst))
+	if (!ft_check_builtin(big_struct, cmd_lst))
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			if (!ft_check_builtin(big_struct, cmd_lst))
+			if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 			{
-				if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
-				{
-					dup2(cmd_lst->fd_in, 0);
-					dup2(cmd_lst->fd_out, 1);
-					execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
-					perror("execve");
-				}
+				dup2(cmd_lst->fd_in, 0);
+				dup2(cmd_lst->fd_out, 1);
+				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
+				perror("execve");
 			}
 			//ft_free_tab(big_struct->spaced_cmd);
 			//ft_free_bs(big_struct);
@@ -68,39 +65,30 @@ int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 int	ft_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
-	size_t	size;
-
-	size = ft_strlen(big_struct->spaced_cmd[0]);
-	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "pwd", size) == 0)
+	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "pwd", 3) == 0)
 	{
 		ft_pwd(big_struct, cmd_lst);
 		return (1);
 	}
-	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "echo", size) == 0)
+	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "echo", 4) == 0)
 	{
 		ft_echo(big_struct, cmd_lst);
 		return (1);
 	}
-	return (0);
-}
-
-int	ft_first_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
-{
-	size_t	size;
-
-	size = ft_strlen(big_struct->spaced_cmd[0]);
-	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "export", size) == 0)
-		return (ft_export(big_struct, cmd_lst));
-	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "cd", size) == 0)
+	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "cd", 2) == 0)
 	{
 		ft_cd(big_struct, cmd_lst);
 		return (1);
 	}
+	/*if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "export", size) == 0)
+		return (ft_export(big_struct, cmd_lst));*/
+
 	/*else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "unset", size) == 0)
 		return (ft_unset(big_struct, cmd_lst));*/
 	//else if (les prochains builtins :D )
 	return (0);
 }
+
 
 void	ft_exec(t_big_struct *big_struct)
 {

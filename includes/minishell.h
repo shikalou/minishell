@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/22 00:03:07 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:34:33 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void			first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-int				ft_first_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 
 /*		--> UTILS ALL				*/
@@ -132,7 +131,11 @@ int				ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst);
 int				ft_unset(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 
 /*			->utils				*/
+void			ft_update_oldpwd(t_big_struct *big_struct);
 char			**ft_split_export(char *cmd);
+char			*ft_get_home(t_big_struct *big_struct, char *env);
+int				ft_count_tab(char **tab);
+int				ft_check_echo_n(char *s);
 /*char			*get_export_var(char *cmd, int start, t_big_struct *big_struct);
 int				check_var_in_env(char *cmd, int start, t_env_lst *env_lst);
 int				get_export_size(char *cmd, int start);
