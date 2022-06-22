@@ -6,18 +6,73 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/22 12:31:52 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/22 14:44:30 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*void	ft_update_export(t_big_struct *big_s, char **var)
+void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 {
 	int		i;
+	int		j;
+	t_env_lst	*env;
+	size_t		len_name;
+	size_t		len_var;
 
-	i = 0;
-}*/
+	i = -1;
+	j = 0;
+	len_name = ft_strlen(var[0]);
+	len_var = ft_strlen(var[1]);
+	env = big_s->env_lst;
+	while (env != NULL)
+	{
+		if ((ft_memcmp(env->line, var[0], len_name) == 0)
+			&& (ft_memcmp(var[0], "PATH", len_name) != 0))
+		{
+			free(env->line);
+			if (ft_strchr(var[1], '"') == 0)
+				env->line = ft_strdup(cmd);
+			else
+			{
+				env->line = malloc(1 * len_name + len_var);
+				while (++i < len_name)
+					env_line[i] = var[0][i];
+				env_line[i++] = '=';
+				while (++j < (len_var - 1))
+				{
+					env_line[i] = var[1][j];
+					i++;
+				}
+				env_line[i] = '\0';
+			}
+		}
+		env = env->next;
+	}
+}
+
+void	ft_new_env_var(t_big_struct *big_s, char **split_exp)
+{
+	t_env_lst	*env;
+
+	env = big_s->env_lst;
+/*
+	cmp entre env->line[0] genre*/
+	while (env != NULL && split_exp[0][0] > env->line[0])
+		env = env->next;
+	if split_exp[0][0] == env->line[0]
+	{
+		while (env != NULL && split_exp[0][1] > env->line[1])
+			env= env->next;
+	}
+/*
+	faudrait un lst_new et lst add_back d'un  bail vide au bout de env 
+	et la ou on trouve que c l'emplacement de la var exportee on remplace 
+	et on remplace ainsi de suite
+	avec une var temp
+	--> dc il fo un env tmp;
+*/	
+}
 
 void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 {
@@ -33,13 +88,14 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 	{
 		if (ft_memcmp(env->line, var[0], ft_strlen(var[0])) == 0)
 		{
-	//		ft_update_export(big_s, var);
+			ft_update_export(big_s, var, split_exp[2]);
 			return ;
 		}
 		env = env->next;
 	}
 	// si on est tjrs la c'est que var[0] n'existait pas dans env_lst
 	// donc il faut la creer et l'addback en ordre ascii
+	ft_new_env_var(big_s, split_exp);
 }
 
 void	ft_print_export_env(t_big_struct *big_s)
