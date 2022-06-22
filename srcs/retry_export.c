@@ -6,19 +6,23 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/22 14:44:30 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:55:22 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+	add ft_swap libft
+*/
 
 void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 {
 	int		i;
 	int		j;
 	t_env_lst	*env;
-	size_t		len_name;
-	size_t		len_var;
+	int		len_name;
+	int		len_var;
 
 	i = -1;
 	j = 0;
@@ -37,42 +41,43 @@ void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 			{
 				env->line = malloc(1 * len_name + len_var);
 				while (++i < len_name)
-					env_line[i] = var[0][i];
-				env_line[i++] = '=';
+					env->line[i] = var[0][i];
+				env->line[i++] = '=';
 				while (++j < (len_var - 1))
 				{
-					env_line[i] = var[1][j];
+					env->line[i] = var[1][j];
 					i++;
 				}
-				env_line[i] = '\0';
+				env->line[i] = '\0';
 			}
 		}
 		env = env->next;
 	}
 }
 
-void	ft_new_env_var(t_big_struct *big_s, char **split_exp)
+/*void	ft_new_env_var(t_big_struct *big_s, char **split_exp)
 {
 	t_env_lst	*env;
+	t_env_lst	*env_tmp;
+	t_env_lst	*new;
+	int		i;
 
 	env = big_s->env_lst;
-/*
-	cmp entre env->line[0] genre*/
-	while (env != NULL && split_exp[0][0] > env->line[0])
-		env = env->next;
-	if split_exp[0][0] == env->line[0]
-	{
-		while (env != NULL && split_exp[0][1] > env->line[1])
-			env= env->next;
-	}
-/*
+	env_tmp = big_s->env_lst;
+	i = 0;
+*
+	cmp entre env->line[0] genre*
+*
 	faudrait un lst_new et lst add_back d'un  bail vide au bout de env 
 	et la ou on trouve que c l'emplacement de la var exportee on remplace 
 	et on remplace ainsi de suite
 	avec une var temp
 	--> dc il fo un env tmp;
-*/	
-}
+*
+	if (ft_strchr(split_exp[1], '"') != 0)
+		ft_remv_qt_exp(split_exp[1]);
+	new = ft_lstnew_env(i, split_exp[1]);
+}*/
 
 void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 {
@@ -95,19 +100,95 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 	}
 	// si on est tjrs la c'est que var[0] n'existait pas dans env_lst
 	// donc il faut la creer et l'addback en ordre ascii
-	ft_new_env_var(big_s, split_exp);
+//	ft_new_env_var(big_s, split_exp);
+}
+
+void	sort_n_print_exp(char **env_strs)
+{
+	int		i;
+	int		j;
+	int		size;
+//	char		**env_tmp;
+
+	i = 1;
+	size = 0;
+	while(env_strs && env_strs[size])
+		size++;
+//	env_tmp = env_strs;
+	while (i < size -1)
+	{
+		j = i + 1;
+		while (j < size)
+		{
+			if (ft_strncmp(env_strs[i], env_strs[j], ft_strlen(env_strs[i])) > 0)
+				ft_swap(env_strs, i, j);
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (env_strs && env_strs[i])
+	{
+		printf("export  %s\n", env_strs[i]);
+		i++;
+	}
 }
 
 void	ft_print_export_env(t_big_struct *big_s)
 {
 	t_env_lst	*env;
+	t_env_lst	*env_tmp;
+	char		**env_strs;
+	int		i;
 
+	i = 0;
 	env = big_s->env_lst;
-	while (env && env != NULL)
+	env_tmp = big_s->env_lst;
+	env_strs = malloc(sizeof(char *) * ft_lstsize_env(env) + 1);
+	if (!env_strs)
+		return ;
+	while (env_tmp != NULL)
+	{
+		env_strs[i] = ft_strdup(env->line);
+		if (!env_strs[i])
+		{
+			ft_free_tab(env_strs);
+			return ;
+		}
+		i++;
+		env_tmp = env_tmp->next;
+	}
+	env_strs[i] = NULL;
+	sort_n_print_exp(env_strs);
+	ft_free_tab(env_strs);
+/*
+	print en ordre ascii*/
+//	env_tmp = env_tmp->next;
+	/*while (env != NULL)
+	{
+		while (env_tmp != NULL && env_tmp[i] >= env[i])
+		{
+			if (env_tmp[i] == env[i])
+				i++;
+			if (env_tmp[i] &&  env_tmp[i] <= env[i])
+			{
+				printf("export  %s\n", env_tmp->line);
+				i = 0;
+			}
+			env_tmp = env_tmp->next;
+		}
+		env = env->next;
+	}*/
+/*	while (env != NULL)
+	{
+		if (env_tmp[i])
+		env = env->next;
+	}*/
+/*	while (env && env != NULL)
 	{
 		printf("export  %s\n", env->line);
 		env = env->next;
-	}
+	}**/
 }
 
 int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)

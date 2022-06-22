@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/15 16:05:39 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:19:57 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,20 @@ void	ft_lstclear_cmd(t_cmd_lst *cmd_lst)
 
 int	ft_lstsize_cmd(t_cmd_lst *lst)
 {
-	int	i;
+	int		i;
+
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+
+int	ft_lstsize_env(t_env_lst *lst)
+{
+	int		i;
 
 	i = 0;
 	while (lst)
