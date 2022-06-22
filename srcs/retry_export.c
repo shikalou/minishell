@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/22 18:17:08 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:52:28 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,20 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 //	ft_new_env_var(big_s, split_exp);
 }
 
+void	ft_swap(char **strs, int i, int j)
+{
+	char	*tmp;
+
+/*	tmp = ft_strdup(strs[i]);
+	free(strs[i]);
+	strs[i] = ft_strdup(strs[j]);
+	free(strs[j]);
+	strs[j] = ft_strdup(tmp);*/
+	tmp = strs[i];
+	strs[i] = strs[j];
+	strs[j] = tmp;
+}
+
 void	sort_n_print_exp(char **env_strs)
 {
 	int		i;
@@ -120,8 +134,12 @@ void	sort_n_print_exp(char **env_strs)
 		j = i + 1;
 		while (j < size)
 		{
+		//	prblm w strncmp c pas la bonne fonction a utiliser
 			if (ft_strncmp(env_strs[i], env_strs[j], ft_strlen(env_strs[i])) > 0)
+			{
+			//	printf("env_strs[i] = %s\nenvstrs[j] = %s\n", env_strs[i], env_strs[j]);
 				ft_swap(env_strs, i, j);
+			}
 			j++;
 		}
 		i++;
@@ -159,6 +177,7 @@ void	ft_print_export_env(t_big_struct *big_s)
 		env_tmp = env_tmp->next;
 	}
 	env_strs[i] = NULL;
+	printf("allo\n");
 	sort_n_print_exp(env_strs);
 	ft_free_tab(env_strs);
 /*
