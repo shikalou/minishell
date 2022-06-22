@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/22 18:18:08 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/23 00:29:24 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,10 @@ void			first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-int				ft_check_builtin(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_builtin_out_fork(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_builtin_in_fork(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+
 
 /*		--> UTILS ALL				*/
 void			ft_free_tab(char **tab);

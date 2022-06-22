@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/22 17:36:11 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/23 00:31:10 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		else
 			dup2(big_struct->pipefd[0], 0);
 		dup2(cmd_lst->fd_out, 1);
-		if (!ft_check_builtin(big_struct, cmd_lst))
+		if (!ft_check_builtin_multi(big_struct, cmd_lst))
 		{
 			if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
@@ -73,7 +73,7 @@ void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 			close(big_struct->pipefd[0]);
 			dup2(big_struct->pipefd[1], 1);
 		}
-		if (!ft_check_builtin(big_struct, cmd_lst))
+		if (!ft_check_builtin_multi(big_struct, cmd_lst))
 		{
 			if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 			{
@@ -113,7 +113,7 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 			close(big_struct->pipefd[0]);
 			dup2(big_struct->pipefd[1], 1);
 		}
-		if (!ft_check_builtin(big_struct, cmd_lst))
+		if (!ft_check_builtin_multi(big_struct, cmd_lst))
 		{
 			if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 			{
