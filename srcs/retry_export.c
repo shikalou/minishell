@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   retry_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/22 17:55:22 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:17:08 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,11 +201,11 @@ int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	1)	X--> parser la cmd
 			[genre de split sur ' ' first apres le 'export' (split[0])puis entre
 			 NAME et suite avec le ' = ' +++ apres le '=' 2 solutions : si "
-			 split[2] == "tout ce qu'il y a ds quote" 
+			 split[2] == "tout ce qu'il y a ds quote"
 			 else split[2] == toutcequ'ilyaavant ' ' et le reste on ignore.]
 			 au fur et a mesure on peut voir :
 	2)	X-->est ce qu'il y a des param > 0 = truc + env---> ca c ok
-						1 = export var solo 
+						1 = export var solo
 						2 = total
 	3)	O-->check split[1] avant le '=' s'il existe deja dans env
 			> si oui env_lst = ft_modif(split[1], env_lst)
