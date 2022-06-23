@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:08:11 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/22 17:14:19 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/23 18:31:42 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void	ft_update_oldpwd(t_big_struct *big_struct)
 		if (ft_memcmp(env_lst->line, "OLDPWD=", 7) == 0)
 		{
 			str = getcwd(NULL, 0);
+			free(env_lst->line);
 			env_lst->line = ft_strjoin("OLDPWD=", str);
+			free(str);
 			return ;
 		}
 		env_lst = env_lst->next;

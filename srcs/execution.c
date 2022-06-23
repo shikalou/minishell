@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 13:02:22 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/23 18:25:40 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
 				perror("execve");
 			}
-			//ft_free_tab(big_struct->spaced_cmd);
-			//ft_free_bs(big_struct);
+			ft_free_tab(big_struct->spaced_cmd);
+			ft_free_child(big_struct);
 			exit(1);
 		}
 	}
