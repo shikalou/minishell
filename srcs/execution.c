@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 00:43:12 by macbook          ###   ########.fr       */
+/*   Updated: 2022/06/23 13:02:22 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_heredoc(t_big_struct *big_struct)
 {
-	int		i;
+	int			i;
 	t_cmd_lst	*head;
 
 	i = 0;
@@ -36,23 +36,20 @@ void	ft_heredoc(t_big_struct *big_struct)
 
 int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
-	pid_t			pid;
+	pid_t	pid;
 
 	big_struct->spaced_cmd = ft_split(big_struct->cmd_lst->command, ' ');
-	if (!ft_builtin_out_fork(big_struct, cmd_lst))
+	if (!ft_check_builtin_multi(big_struct, cmd_lst))
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			dup2(cmd_lst->fd_in, 0);
-			dup2(cmd_lst->fd_out, 1);
-			if (!ft_builtin_in_fork(big_struct, cmd_lst))
+			if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 			{
-				if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
-				{
-					execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
-					perror("execve");
-				}
+				dup2(cmd_lst->fd_in, 0);
+				dup2(cmd_lst->fd_out, 1);
+				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
+				perror("execve");
 			}
 			//ft_free_tab(big_struct->spaced_cmd);
 			//ft_free_bs(big_struct);

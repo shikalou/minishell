@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/20 16:45:53 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:19:35 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
-void	ft_free_bs(t_big_struct *big_struct)
+void	ft_free_child(t_big_struct *big_struct)
 {
 	if (big_struct->absolut_path)
 		free(big_struct->absolut_path);
@@ -35,7 +35,8 @@ void	ft_free_bs(t_big_struct *big_struct)
 		ft_free_tab(big_struct->spaced_par);
 	if (big_struct->input)
 		ft_free_tab(big_struct->input);
+	ft_free_tab(big_struct->path);
 	ft_lstclear_cmd(big_struct->cmd_lst);
 	ft_lstclear_env(big_struct->env_lst);
-
+	free(big_struct);
 }

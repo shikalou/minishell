@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/21 18:01:15 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:10:53 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ t_cmd_lst	*ft_init_cmd_lst(char **input)
 	t_cmd_lst	*begin;
 
 	i = 0;
-	begin = ft_lstnew_cmd(i, input[i]);
+	begin = ft_lstnew_cmd(i, ft_strdup(input[i]));
 	while (input[++i])
 	{
-		ft_lstadd_back_cmd(&begin, ft_lstnew_cmd(i, input[i]));
+		ft_lstadd_back_cmd(&begin, ft_lstnew_cmd(i, ft_strdup(input[i])));
 	}
 	return (begin);
 }
@@ -32,9 +32,9 @@ t_env_lst	*ft_init_env_lst(char **envp)
 	t_env_lst	*begin;
 
 	i = 0;
-	begin = ft_lstnew_env(i, envp[i]);
+	begin = ft_lstnew_env(i, ft_strdup(envp[i]));
 	while (envp[++i])
-		ft_lstadd_back_env(&begin, ft_lstnew_env(i, envp[i]));
+		ft_lstadd_back_env(&begin, ft_lstnew_env(i, ft_strdup(envp[i])));
 	return (begin);
 }
 
@@ -65,8 +65,8 @@ t_big_struct	*ft_init_big_struct(char **envp)
 		return (NULL);
 	big_struct->input = NULL;
 	big_struct->absolut_path = NULL;
-	big_struct->env_lst = ft_init_env_lst(envp);
 	big_struct->envp = envp;
+	big_struct->env_lst = ft_init_env_lst(envp);
 	big_struct->path = ft_recover_path(envp);
 	big_struct->cmd_lst = NULL;
 	big_struct->cmd_updated = NULL;

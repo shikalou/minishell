@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test-redirection.c                                 :+:      :+:    :+:   */
+/*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/20 15:51:03 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:36:31 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	parsing_redirection(t_big_struct *big_struct)
 				free(cmd_lst->command);
 				cmd_lst->command = update_flux(big_struct, ">>", k, i - 1);
 			}
+			ft_free_tab(big_struct->spaced_par);
+			big_struct->spaced_par = NULL;
 			i++;
 		}
 		cmd_lst = cmd_lst->next;

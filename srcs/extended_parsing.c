@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/21 23:32:47 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:48:26 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 					if ((j - i) == 1)
 						return("$");
 					/*		on interprete*/
-					
+
 					return (get_env_lst(cmd, (i + 1), j, big_struct));
 				}
 				i++;
@@ -193,15 +193,18 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 void	parsing_quotes(t_big_struct *big_struct)
 {
 	t_cmd_lst	*head;
+	char		*tmp;
 
 	head = big_struct->cmd_lst;
 	while (head && head->command)
 	{
-		//regarder si besoin de checker le return NULL malloc
 		if (ft_memchr(head->command, '$', ft_strlen(head->command)))
 			head->command = extended_dollar(head->command, big_struct);
 		if (head->command && head->command[0] != '\0')
-			head->command = strtrim_aug(head->command);
+		{
+			tmp = head->command;
+			head->command = strtrim_aug(tmp);
+		}
 		head = head->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/22 17:19:57 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:12:25 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	ft_lstclear_env(t_env_lst *env_lst)
 	while (env_lst != NULL)
 	{
 		lst_tmp = env_lst->next;
+		free(env_lst->line);
 		free(env_lst);
 		env_lst = lst_tmp;
 	}
@@ -96,8 +97,7 @@ void	ft_lstclear_cmd(t_cmd_lst *cmd_lst)
 	while (cmd_lst != NULL)
 	{
 		lst_tmp = cmd_lst->next;
-		if(cmd_lst->command)
-			free(cmd_lst->command);
+		free(cmd_lst->command);
 		free(cmd_lst);
 		cmd_lst = lst_tmp;
 	}

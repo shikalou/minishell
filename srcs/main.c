@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/20 16:47:19 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:26:57 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,15 @@ void	shellmini(t_big_struct *big_struct)
 		{
 			ft_exec(big_struct);
 			if (big_struct->cmd_lst)
+			{
 				ft_lstclear_cmd(big_struct->cmd_lst);
+				big_struct->cmd_lst = NULL;
+			}
 			if (big_struct->input)
-				free(big_struct->input);
+			{
+				ft_free_tab(big_struct->input);
+				big_struct->input = NULL;
+			}
 			if (big_struct->spaced_cmd != NULL)
 			{
 				ft_free_tab(big_struct->spaced_cmd);
@@ -40,7 +46,10 @@ void	shellmini(t_big_struct *big_struct)
 				big_struct->spaced_par = NULL;
 			}
 			if (big_struct->cmd_updated)
+			{
 				free(big_struct->cmd_updated);
+				big_struct->cmd_updated = NULL;
+			}
 		}
 	}
 	free(cmd);
@@ -57,8 +66,6 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	shellmini(big_struct);
 	printf("\nslt les gars\n");
-	free(big_struct->absolut_path);
-	ft_free_tab(big_struct->path);
-	free(big_struct);
+	ft_free_child(big_struct);
 	return (0);
 }

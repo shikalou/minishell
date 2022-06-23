@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 00:29:24 by macbook          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:19:44 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,10 @@ void			middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-int				ft_builtin_out_fork(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-int				ft_builtin_in_fork(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-
 
 /*		--> UTILS ALL				*/
 void			ft_free_tab(char **tab);
-void			ft_free_bs(t_big_struct *big_struct);
+void			ft_free_child(t_big_struct *big_struct);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 
 /*		--> UTILS EXEC				*/
