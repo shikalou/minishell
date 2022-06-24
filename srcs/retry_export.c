@@ -6,15 +6,11 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/22 18:52:28 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/24 21:36:52 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	add ft_swap libft
-*/
 
 void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 {
@@ -34,7 +30,7 @@ void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 		if ((ft_memcmp(env->line, var[0], len_name) == 0)
 			&& (ft_memcmp(var[0], "PATH", len_name) != 0))
 		{
-			free(env->line);
+		//	free(env->line);
 			if (ft_strchr(var[1], '"') == 0)
 				env->line = ft_strdup(cmd);
 			else
@@ -55,17 +51,44 @@ void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 	}
 }
 
-/*void	ft_new_env_var(t_big_struct *big_s, char **split_exp)
+char	*ft_remv_qt_exp(char *var)
+{
+	int		i;
+	int		j;
+	char	*result;
+
+	i = 0;
+	j = 0;
+	result = malloc(sizeof(char) * (ft_strlen(var) - 2) + 1);
+	if (!result)
+		return (NULL);
+	while (var && var[i])
+	{
+		if (var[i] != '"')
+		{
+			result[j] = var[i];
+			j++;
+		}
+		i++;
+	}
+	result[j] = '\0';
+	free(var);
+	return (result);
+}
+
+void	ft_new_env_var(t_big_struct *big_s, char **split_exp)
 {
 	t_env_lst	*env;
-	t_env_lst	*env_tmp;
-	t_env_lst	*new;
+//	t_env_lst	*env_tmp;
+//	t_env_lst	*new;
 	int		i;
 
 	env = big_s->env_lst;
-	env_tmp = big_s->env_lst;
-	i = 0;
-*
+//	env_tmp = big_s->env_lst;
+	i = (ft_lstsize_env(env) - 1);
+//	printf("HERE i = %d\n", i);
+//	new = ft_lstnew_env(i, split_exp[2]);
+/*
 	cmp entre env->line[0] genre*
 *
 	faudrait un lst_new et lst add_back d'un  bail vide au bout de env 
@@ -73,11 +96,20 @@ void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 	et on remplace ainsi de suite
 	avec une var temp
 	--> dc il fo un env tmp;
-*
+*/
 	if (ft_strchr(split_exp[1], '"') != 0)
-		ft_remv_qt_exp(split_exp[1]);
-	new = ft_lstnew_env(i, split_exp[1]);
-}*/
+		split_exp[1] = ft_remv_qt_exp(split_exp[1]);
+//	new = ft_lstnew_env(i, split_exp[1]);
+//	printf("new->line = %s\n", split_exp[1]);
+	ft_lstadd_back_env(&env, ft_lstnew_env(i, split_exp[1]));
+// print de test :
+//	env_tmp = big_s->env_lst;
+/*	while (env_tmp != NULL)
+	{
+		printf("%s\n", env_tmp->line);
+		env_tmp = env_tmp->next;
+	}*/
+}
 
 void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 {
@@ -87,31 +119,26 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 
 //	i = 0;
 	env = big_s->env_lst;
-	var = ft_split(split_exp[2], '=');
+	var = ft_split(split_exp[1], '=');
 	// var [0] == NAME var [1] == value
 	while (env != NULL)
 	{
 		if (ft_memcmp(env->line, var[0], ft_strlen(var[0])) == 0)
 		{
-			ft_update_export(big_s, var, split_exp[2]);
+			ft_update_export(big_s, var, split_exp[1]);
 			return ;
 		}
 		env = env->next;
 	}
+	//printf("test = %s\n", split_exp[1]);
 	// si on est tjrs la c'est que var[0] n'existait pas dans env_lst
-	// donc il faut la creer et l'addback en ordre ascii
-//	ft_new_env_var(big_s, split_exp);
+	ft_new_env_var(big_s, split_exp);
 }
 
 void	ft_swap(char **strs, int i, int j)
 {
 	char	*tmp;
 
-/*	tmp = ft_strdup(strs[i]);
-	free(strs[i]);
-	strs[i] = ft_strdup(strs[j]);
-	free(strs[j]);
-	strs[j] = ft_strdup(tmp);*/
 	tmp = strs[i];
 	strs[i] = strs[j];
 	strs[j] = tmp;
@@ -122,24 +149,18 @@ void	sort_n_print_exp(char **env_strs)
 	int		i;
 	int		j;
 	int		size;
-//	char		**env_tmp;
 
-	i = 1;
+	i = 0;
 	size = 0;
 	while(env_strs && env_strs[size])
 		size++;
-//	env_tmp = env_strs;
 	while (i < size -1)
 	{
 		j = i + 1;
 		while (j < size)
 		{
-		//	prblm w strncmp c pas la bonne fonction a utiliser
 			if (ft_strncmp(env_strs[i], env_strs[j], ft_strlen(env_strs[i])) > 0)
-			{
-			//	printf("env_strs[i] = %s\nenvstrs[j] = %s\n", env_strs[i], env_strs[j]);
 				ft_swap(env_strs, i, j);
-			}
 			j++;
 		}
 		i++;
@@ -155,17 +176,15 @@ void	sort_n_print_exp(char **env_strs)
 void	ft_print_export_env(t_big_struct *big_s)
 {
 	t_env_lst	*env;
-	t_env_lst	*env_tmp;
 	char		**env_strs;
 	int		i;
 
 	i = 0;
 	env = big_s->env_lst;
-	env_tmp = big_s->env_lst;
 	env_strs = malloc(sizeof(char *) * ft_lstsize_env(env) + 1);
 	if (!env_strs)
 		return ;
-	while (env_tmp != NULL)
+	while (env != NULL)
 	{
 		env_strs[i] = ft_strdup(env->line);
 		if (!env_strs[i])
@@ -174,40 +193,11 @@ void	ft_print_export_env(t_big_struct *big_s)
 			return ;
 		}
 		i++;
-		env_tmp = env_tmp->next;
+		env = env->next;
 	}
 	env_strs[i] = NULL;
-	printf("allo\n");
 	sort_n_print_exp(env_strs);
 	ft_free_tab(env_strs);
-/*
-	print en ordre ascii*/
-//	env_tmp = env_tmp->next;
-	/*while (env != NULL)
-	{
-		while (env_tmp != NULL && env_tmp[i] >= env[i])
-		{
-			if (env_tmp[i] == env[i])
-				i++;
-			if (env_tmp[i] &&  env_tmp[i] <= env[i])
-			{
-				printf("export  %s\n", env_tmp->line);
-				i = 0;
-			}
-			env_tmp = env_tmp->next;
-		}
-		env = env->next;
-	}*/
-/*	while (env != NULL)
-	{
-		if (env_tmp[i])
-		env = env->next;
-	}*/
-/*	while (env && env != NULL)
-	{
-		printf("export  %s\n", env->line);
-		env = env->next;
-	}**/
 }
 
 int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
@@ -231,16 +221,13 @@ int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 			> sinon env_lst = ft_lstaddback split[1] +  '=' + split[2]
 	4)	-->check des erreurs
 */
-//	printf("input[%d] = %s\n", 1, big_s->input[0]);
-//	env = big_struct->env_lst;
 	i = 0;
 	split_export = ft_split_export(cmd_lst->command);
-	// ok le split est nickel
 	while (split_export && split_export[i])
 		i++;
 	if (i == 1)
 		ft_print_export_env(big_s);
-	else if(ft_memcmp(split_export[2], "=", ft_strlen(split_export[2])) == 0)
+	else if(ft_memchr(split_export[1], '=', ft_strlen(split_export[1])) != 0)
 		ft_change_env_lst(big_s, split_export);
 	else
 		write(2, "Error syntax\n", 13);
