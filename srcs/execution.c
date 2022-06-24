@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/24 16:32:50 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/24 21:52:57 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 			{
 				dup2(cmd_lst->fd_in, 0);
 				dup2(cmd_lst->fd_out, 1);
+				signal(SIGINT, SIG_DFL);
 				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
 				perror("execve");
 			}
@@ -68,7 +69,7 @@ void	ft_exec(t_big_struct *big_struct)
 	t_cmd_lst	*cmd_lst;
 
 	cmd_lst = big_struct->cmd_lst;
-	//signal(SIGINT, sig_handler);
+	signal(SIGINT, SIG_IGN);
 	if (cmd_lst->command && ft_strnstr_exec(cmd_lst->command, "<<", ft_strlen(cmd_lst->command)))
 		ft_heredoc(big_struct);
 	if (cmd_lst && !cmd_lst->next)
@@ -80,4 +81,5 @@ void	ft_exec(t_big_struct *big_struct)
 	{
 		ft_multi_pipe(big_struct);
 	}
+	signal(SIGINT, sig_handler);
 }
