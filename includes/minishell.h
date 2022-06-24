@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 17:19:44 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/24 16:25:08 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <signal.h>
 # include "../libft/libft.h"
 
 typedef struct s_env_lst
@@ -117,6 +118,7 @@ int				ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 /*		--> UTILS ALL				*/
 void			ft_free_tab(char **tab);
 void			ft_free_child(t_big_struct *big_struct);
+void			ft_free_between(t_big_struct *big_struct);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 
 /*		--> UTILS EXEC				*/
@@ -146,6 +148,9 @@ void			ft_heredoc(t_big_struct *big_struct);
 /*			->utils				*/
 char			*ft_strnstr_hd(char *s1, char *s2, size_t n, size_t i);
 int				get_next_heredoc(char *s1, char *s2, int i);
+
+/*		--> SIGNALS							*/
+void			sig_handler(int intSig);
 
 /********************************************************/
 /********************************************************/

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 18:25:40 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/24 16:32:50 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,18 @@ int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 void	ft_exec(t_big_struct *big_struct)
 {
-	t_cmd_lst	*head;
-//	t_cmd_lst	*head_tmp;
+	t_cmd_lst	*cmd_lst;
 
-	head = big_struct->cmd_lst;
-/*	head_tmp = big_struct->cmd_lst;
-	while (head_tmp && head_tmp->command)
-	{
-		head_tmp = head_tmp->next;
-	}*/
-	if (head->command && ft_strnstr_exec(head->command, "<<", ft_strlen(head->command)))
+	cmd_lst = big_struct->cmd_lst;
+	//signal(SIGINT, sig_handler);
+	if (cmd_lst->command && ft_strnstr_exec(cmd_lst->command, "<<", ft_strlen(cmd_lst->command)))
 		ft_heredoc(big_struct);
-	if (head && !head->next)
+	if (cmd_lst && !cmd_lst->next)
 	{
-		ft_simple_exec(big_struct, head);
+		ft_simple_exec(big_struct, cmd_lst);
 		wait(NULL);
 	}
-	else if (head && head->next)
+	else if (cmd_lst && cmd_lst->next)
 	{
 		ft_multi_pipe(big_struct);
 	}
