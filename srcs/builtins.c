@@ -6,11 +6,17 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 13:03:14 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/27 15:22:13 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_exit(t_big_struct *big_struct)
+{
+	ft_free_tab(big_struct->spaced_cmd);
+	ft_free_child(big_struct);
+}
 
 void	ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
@@ -35,13 +41,18 @@ int	ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		ft_echo(big_struct, cmd_lst);
 		return (1);
 	}
-	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "cd", 2) == 0)
+	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "cd", 2) == 0)
 	{
 		ft_cd(big_struct, cmd_lst);
 		return (1);
 	}
-	if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "export", 6) == 0)
+	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "export", 6) == 0)
 		return (ft_export(big_struct, cmd_lst));
+	else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "exit", 4) == 0)
+	{
+		ft_exit(big_struct);
+		exit(0);
+	}
 	/*else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "unset", size) == 0)
 		return (ft_unset(big_struct, cmd_lst));*/
 	//else if (les prochains builtins :D )

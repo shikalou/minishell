@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 17:20:04 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/27 17:11:07 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		big_struct->spaced_cmd = NULL;
 	}
 	big_struct->spaced_cmd = ft_split(cmd_lst->command, ' ');
-	pid = fork();
-	if (pid == 0)
+	cmd_lst->pid = fork();
+	if (cmd_lst->pid == 0)
 	{
 		if (cmd_lst->fd_in == 0)
 			cmd_lst->fd_in = big_struct->pipefd[0];
@@ -62,8 +62,8 @@ void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	big_struct->spaced_cmd = ft_split(cmd_lst->command, ' ');
 	fd_temp = big_struct->pipefd[0];
 	pipe(big_struct->pipefd);
-	pid = fork();
-	if (pid == 0)
+	cmd_lst->pid = fork();
+	if (cmd_lst->pid == 0)
 	{
 		if (cmd_lst->fd_in == 0)
 			cmd_lst->fd_in = fd_temp;
@@ -105,11 +105,11 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		big_struct->spaced_cmd = NULL;
 	}
 	big_struct->spaced_cmd = ft_split(cmd_lst->command, ' ');
-	pid = fork();
-	if (pid == 0)
+	cmd_lst->pid = fork();
+	if (cmd_lst->pid == 0)
 	{
 		if (cmd_lst->fd_out == 1)
-		{
+		{;kl;lk
 			close(big_struct->pipefd[0]);
 			cmd_lst->fd_out = big_struct->pipefd[1];
 		}
@@ -136,14 +136,14 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		close(cmd_lst->fd_out);
 }
 
-void	ft_wait(int max)
+void	ft_wait(int max, t_big_struct *big_struct)
 {
 	int	i;
 
 	i = 0;
 	while (i < max)
 	{
-		wait(NULL);
+		waitpid(big_struct->pid, &big_struct->status, 0);
 		i++;
 	}
 }
@@ -167,5 +167,5 @@ void	ft_multi_pipe(t_big_struct *big_struct)
 		head = head->next;
 	}
 	last_exec(big_struct, head);
-	ft_wait(n_cmd);
+	ft_wait(n_cmd, big_struct);
 }

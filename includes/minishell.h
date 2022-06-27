@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/24 18:57:57 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:44:25 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_cmd_lst
 	char				*command;
 	int					fd_in;
 	int					fd_out;
+	pid_t				pid;
 	struct s_cmd_lst	*next;
 }	t_cmd_lst;
 
@@ -49,6 +50,7 @@ typedef struct s_big_struct
 	char		*absolut_path;
 	char		*cmd_updated;
 	int			pipefd[2];
+	int			status;
 	t_env_lst	*env_lst;
 	t_cmd_lst	*cmd_lst;
 }	t_big_struct;
@@ -122,7 +124,7 @@ void			ft_free_between(t_big_struct *big_struct);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 
 /*		--> UTILS EXEC				*/
-void			ft_wait(int	max);
+void			ft_wait(int max, t_big_struct *big_struct);
 char			*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd);
 char			*ft_check_slash(t_big_struct *big_struct);
 
@@ -132,6 +134,7 @@ void			ft_echo(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst);
 int				ft_unset(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+void			ft_exit(t_big_struct *big_struct);
 
 /*			->utils				*/
 void			ft_update_oldpwd(t_big_struct *big_struct);
