@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 20:17:01 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/22 00:50:50 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/28 11:59:12 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ void	split_fill_second(char *cmd, char **result, int snd_size, int index)
 		i++;
 	if (cmd[i] == '\0')
 	{
+	/*	if (snd_size == 0)
+		{
+			printf("RESOLUTIONRESOLUTIONRESOLUTION\n");
+			
+		}*/
+		free(result[1]);
 		result[1] = NULL;
 		return ;
 	}
@@ -117,9 +123,8 @@ char	**ft_split_export(char *cmd)
 //			genre ds export LOL="mdr" k vaudra size de LOL="mdr"
 // 	C'est la SECOND SIZE split[1] = LOL="mdr"
 		k = split_export_size(cmd, i);
-		printf("k == %d\n", k);
 	}
-	result = malloc(sizeof(char *) * 2 + 1);
+	result = malloc(sizeof(char *) * (2 + 1));
 	if (!result)
 		return (NULL);
 	result[0] = malloc(sizeof(char) * j + 1);
