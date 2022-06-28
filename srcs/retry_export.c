@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/28 12:43:08 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/28 15:27:32 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 				env->line = ft_strdup(cmd);
 			else
 			{
+				free(env->line);
 				env->line = malloc(1 * len_name + len_var);
 				while (++i < len_name)
 					env->line[i] = var[0][i];
@@ -49,6 +50,7 @@ void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 		}
 		env = env->next;
 	}
+//	ft_free_tab(var);
 }
 
 char	*ft_remv_qt_exp(char *var)
@@ -80,7 +82,7 @@ void	ft_new_env_var(t_big_struct *big_s, char **split_exp)
 {
 	t_env_lst	*env;
 //	t_env_lst	*env_tmp;
-//	t_env_lst	*new;
+	t_env_lst	*new;
 	int		i;
 
 	env = big_s->env_lst;
@@ -99,9 +101,9 @@ void	ft_new_env_var(t_big_struct *big_s, char **split_exp)
 */
 	if (ft_strchr(split_exp[1], '"') != 0)
 		split_exp[1] = ft_remv_qt_exp(split_exp[1]);
-//	new = ft_lstnew_env(i, split_exp[1]);
+	new = ft_lstnew_env(i, split_exp[1]);
 	printf("new->line = %s\n", split_exp[1]);
-	ft_lstadd_back_env(&env, ft_lstnew_env(i, split_exp[1]));
+	ft_lstadd_back_env(&env, new);
 // print de test :
 //	env_tmp = big_s->env_lst;
 /*	while (env_tmp != NULL)
@@ -266,8 +268,9 @@ int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 		write(2, "Error syntax\n", 13);
 //	if (split_export)
 //		ft_free_tab(split_export);
+//	ft_free_tab(split_export);
+//	du coup il faut changer la size OU ajouter un malloc ici ???
 	free(split_export[0]);
-	//if (split_export[1])
-	//	free(split_export[1]);
+	free(split_export);
 	return (1);
 }

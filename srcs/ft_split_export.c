@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 20:17:01 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/28 11:59:12 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/28 14:38:32 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	split_fill_first(char *cmd, char **result, int fst_size)
 
 	i = 0;
 	j = 0;
+	(void)fst_size;
 	while (cmd && cmd[i])
 	{
 		if (cmd[i] == ' ')
@@ -55,7 +56,7 @@ void	split_fill_first(char *cmd, char **result, int fst_size)
 		{
 			while (cmd && cmd[i] && cmd[i] != ' ')
 				result[0][j++] = cmd[i++];
-			result[0][fst_size] = '\0';
+			result[0][j] = '\0';
 			return ;
 		}
 		i++;
@@ -127,6 +128,7 @@ char	**ft_split_export(char *cmd)
 	result = malloc(sizeof(char *) * (2 + 1));
 	if (!result)
 		return (NULL);
+	printf("TESTTESTETSTSTTETETTST\tj = %d k= %d\n", j, k);
 	result[0] = malloc(sizeof(char) * j + 1);
 	if (!result[0])
 	{

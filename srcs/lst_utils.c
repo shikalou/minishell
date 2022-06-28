@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 17:12:25 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 14:34:44 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	ft_lstclear_env(t_env_lst *env_lst)
 	while (env_lst != NULL)
 	{
 		lst_tmp = env_lst->next;
+	//	if (env_lst->line)
 		free(env_lst->line);
 		free(env_lst);
 		env_lst = lst_tmp;
