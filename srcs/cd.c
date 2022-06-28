@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:08:11 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 18:31:42 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:39:06 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_update_oldpwd(t_big_struct *big_struct)
 	}
 }
 
-void	ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
+int	ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
 	int		i;
 	int		ret;
@@ -69,7 +69,7 @@ void	ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	if (len > 2)
 	{
 		ft_putendl_fd("cd: too many arguments", 2);
-		return ;
+		return (1);
 	}
 	if (len == 1)
 	{
@@ -77,12 +77,18 @@ void	ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		home = ft_get_home(big_struct, "HOME=");
 		ret = chdir(home);
 		if (ret != 0)
+		{
 			perror("chdir");
-		return ;
+			return (1);
+		}
+		return (0);
 	}
 	ft_update_oldpwd(big_struct);
 	ret = chdir(big_struct->spaced_cmd[i]);
 	if (ret != 0)
+	{
 		perror("chdir");
-	return ;
+		return (1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/28 11:18:12 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:39:54 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	shellmini(t_big_struct *big_struct)
 	char	*cmd;
 
 	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		cmd = readline("nelson et zor minishell$ ");
@@ -42,7 +43,6 @@ int	main(int ac, char **av, char **envp)
 	if (!big_struct)
 		return (1);
 	shellmini(big_struct);
-
 	printf("\nslt les gars\n");
 	ft_free_child(big_struct);
 	return (0);

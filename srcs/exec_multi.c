@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/28 11:33:06 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 17:21:06 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	{
 		if (cmd_lst->fd_in == 0)
 			cmd_lst->fd_in = big_struct->pipefd[0];
-		if (!ft_check_builtin_multi(big_struct, cmd_lst))
+		if (ft_check_builtin_multi(big_struct, cmd_lst) == 0)
 		{
 			if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 			{
@@ -37,7 +37,7 @@ void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		ft_free_tab(big_struct->spaced_cmd);
 		big_struct->spaced_cmd = NULL;
 		ft_free_child(big_struct);
-		exit(1);
+		exit(127);
 	}
 	// free(big_struct->spaced_cmd);
 	close(big_struct->pipefd[0]);
@@ -49,7 +49,6 @@ void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
-	// pid_t	pid;
 	int		fd_temp;
 
 	if (big_struct->spaced_cmd != NULL)
@@ -70,7 +69,7 @@ void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 			close(big_struct->pipefd[0]);
 			cmd_lst->fd_out = big_struct->pipefd[1];
 		}
-		if (!ft_check_builtin_multi(big_struct, cmd_lst))
+		if (ft_check_builtin_multi(big_struct, cmd_lst) == 0)
 		{
 			if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 			{
@@ -83,7 +82,7 @@ void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		ft_free_tab(big_struct->spaced_cmd);
 		big_struct->spaced_cmd = NULL;
 		ft_free_child(big_struct);
-		exit(1);
+		exit(127);
 	}
 	close(big_struct->pipefd[1]);
 	close(fd_temp);
@@ -109,7 +108,7 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 			close(big_struct->pipefd[0]);
 			cmd_lst->fd_out = big_struct->pipefd[1];
 		}
-		if (!ft_check_builtin_multi(big_struct, cmd_lst))
+		if (ft_check_builtin_multi(big_struct, cmd_lst) == 0)
 		{
 			if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 			{
@@ -123,7 +122,7 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		ft_free_tab(big_struct->spaced_cmd);
 		big_struct->spaced_cmd = NULL;
 		ft_free_child(big_struct);
-		exit(1);
+		exit(127);
 	}
 	close(big_struct->pipefd[1]);
 	if (cmd_lst->fd_in != 0)
@@ -134,22 +133,19 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 void	ft_wait(int max, t_big_struct *big_struct)
 {
-	//int	i;
 	(void)max;
 	t_cmd_lst	*cmd_lst;
 
 	cmd_lst = big_struct->cmd_lst;
-	//i = 0;
-	//while (i < max)
-	//{
-		while (cmd_lst)
-		{
-			waitpid(cmd_lst->pid, &big_struct->status, 0);
-			WEXITSTATUS(big_struct->status);
-			cmd_lst = cmd_lst->next;
-		}
-	//	i++;
-	//}
+	while (cmd_lst)
+	{
+		waitpid(cmd_lst->pid, &big_struct->status, 0);
+		if (WIFSIGNALED(big_struct->status))
+			big_struct->status = WTERMSIG(big_struct->status);
+		else
+			big_struct->status = WEXITSTATUS(big_struct->status);
+		cmd_lst = cmd_lst->next;
+	}
 }
 
 void	ft_multi_pipe(t_big_struct *big_struct)

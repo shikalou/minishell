@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/28 11:26:22 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 14:57:47 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,21 @@ char	*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd)
 		big_struct->status = 9;
 		return (NULL);
 	}
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] == s2[i])
+		{
+			i++;
+		}
+		else
+			return (s1[i] - s2[i]);
+	}
+	return (0);
 }

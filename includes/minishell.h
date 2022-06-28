@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/28 11:10:03 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:40:25 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,12 @@ char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 void			ft_wait(int max, t_big_struct *big_struct);
 char			*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd);
 char			*ft_check_slash(t_big_struct *big_struct);
+int				ft_strcmp(char *s1, char *s2);
 
 /*		--> BUILTIN				*/
-void			ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-void			ft_echo(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-void			ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_echo(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst);
 int				ft_unset(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			ft_exit(t_big_struct *big_struct);

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:44:56 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/27 15:10:00 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:26:06 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	sig_handler(int intSig)
 	{
 		printf("\n");
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		rl_replace_line("", 1);
 		rl_redisplay();
 	}
 }
 
 void	sig_handler_cmd(int intSig)
 {
-	if (intSig == SIGINT)
+	if (intSig == SIGQUIT)
 	{
-		ft_putchar_fd('\n', 1);
+		exit (3);
 	}
 }

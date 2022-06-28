@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/28 11:41:22 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:41:04 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_heredoc(t_big_struct *big_struct)
 int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
 	big_struct->spaced_cmd = ft_split(big_struct->cmd_lst->command, ' ');
-	if (!ft_check_builtin_multi(big_struct, cmd_lst))
+	if (ft_check_builtin_multi(big_struct, cmd_lst) == 0)
 	{
 		cmd_lst->pid = fork();
 		if (cmd_lst->pid == 0)
@@ -45,6 +45,7 @@ int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 			if (ft_find_check_path(big_struct, big_struct->spaced_cmd) != NULL)
 			{
 				signal(SIGINT, SIG_DFL);
+				signal(SIGQUIT, sig_handler_cmd);
 				dup2(cmd_lst->fd_in, 0);
 				dup2(cmd_lst->fd_out, 1);
 				execve(big_struct->cmd_updated, big_struct->spaced_cmd, big_struct->envp);
@@ -74,7 +75,16 @@ void	ft_exec(t_big_struct *big_struct)
 	{
 		ft_simple_exec(big_struct, cmd_lst);
 		waitpid(big_struct->cmd_lst->pid, &big_struct->status, 0);
-		big_struct->status = WEXITSTATUS(big_struct->status);
+		if (WIFSIGNALED(big_struct->status))
+		{
+			if (WCOREDUMP(big_struct->status))
+				printf("Quit (core dumped)\n");
+			big_struct->status = (WTERMSIG(big_struct->status) + 128);
+			if (big_struct->status == 130)
+				printf("\n");
+		}
+		else
+			big_struct->status = WEXITSTATUS(big_struct->status);
 	}
 	else if (cmd_lst && cmd_lst->next)
 	{
