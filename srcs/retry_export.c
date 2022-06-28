@@ -6,13 +6,13 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/28 15:27:32 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:33:42 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
+void	ft_update_export(t_big_struct *big_s, char **var, char **cmd)
 {
 	int		i;
 	int		j;
@@ -30,12 +30,11 @@ void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 		if ((ft_memcmp(env->line, var[0], len_name) == 0)
 			&& (ft_memcmp(var[0], "PATH", len_name) != 0))
 		{
-		//	free(env->line);
+			free(env->line);
 			if (ft_strchr(var[1], '"') == 0)
-				env->line = ft_strdup(cmd);
+				env->line = ft_strdup(cmd[1]);
 			else
 			{
-				free(env->line);
 				env->line = malloc(1 * len_name + len_var);
 				while (++i < len_name)
 					env->line[i] = var[0][i];
@@ -50,7 +49,7 @@ void	ft_update_export(t_big_struct *big_s, char **var, char *cmd)
 		}
 		env = env->next;
 	}
-//	ft_free_tab(var);
+	free(cmd[1]);
 }
 
 char	*ft_remv_qt_exp(char *var)
@@ -78,65 +77,55 @@ char	*ft_remv_qt_exp(char *var)
 	return (result);
 }
 
-void	ft_new_env_var(t_big_struct *big_s, char **split_exp)
+void	ft_new_env_var(t_big_struct *big_s, char **split_exp, int index)
 {
 	t_env_lst	*env;
-//	t_env_lst	*env_tmp;
 	t_env_lst	*new;
 	int		i;
 
 	env = big_s->env_lst;
-//	env_tmp = big_s->env_lst;
 	i = ft_lstsize_env(env);
-//	printf("HERE i = %d\n", i);
-//	new = ft_lstnew_env(i, split_exp[2]);
-/*
-	cmp entre env->line[0] genre*
-*
-	faudrait un lst_new et lst add_back d'un  bail vide au bout de env 
-	et la ou on trouve que c l'emplacement de la var exportee on remplace 
-	et on remplace ainsi de suite
-	avec une var temp
-	--> dc il fo un env tmp;
-*/
-	if (ft_strchr(split_exp[1], '"') != 0)
-		split_exp[1] = ft_remv_qt_exp(split_exp[1]);
-	new = ft_lstnew_env(i, split_exp[1]);
-	printf("new->line = %s\n", split_exp[1]);
+	if (ft_strchr(split_exp[index], '"') != 0)
+		split_exp[index] = ft_remv_qt_exp(split_exp[index]);
+	new = ft_lstnew_env(i, split_exp[index]);
 	ft_lstadd_back_env(&env, new);
-// print de test :
-//	env_tmp = big_s->env_lst;
-/*	while (env_tmp != NULL)
-	{
-		printf("%s\n", env_tmp->line);
-		env_tmp = env_tmp->next;
-	}*/
 }
 
 void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 {
-//	int		i;
+	int		i;
+	int		size;
 	t_env_lst	*env;
 	char		**var;
 
-//	i = 0;
+	i = 1;
+	size = 1;
 	env = big_s->env_lst;
-	var = ft_split(split_exp[1], '=');
-	// var [0] == NAME var [1] == value
-	while (env != NULL)
+	while (split_exp && split_exp[size])
+		size++;
+	while (i < size)
 	{
-		if (ft_memcmp(env->line, var[0], ft_strlen(var[0])) == 0)
+//		faire un parsing de chaque split_exp[i] ici
+	//	si += --> faut deriver sur une autre fonction qui permet de concat
+		var = ft_split(split_exp[i], '=');
+	// var [0] == NAME var [1] == value
+		while (env != NULL)
 		{
-			ft_update_export(big_s, var, split_exp[1]);
-			ft_free_tab(var);
-			return ;
+			if (ft_memcmp(env->line, var[0], ft_strlen(var[0])) == 0)
+			{
+				ft_update_export(big_s, var, split_exp);
+				free(split_exp[0]);
+				split_exp[0] = NULL;
+				ft_free_tab(var);
+				return ;
+			}
+			env = env->next;
 		}
-		env = env->next;
-	}
-	//printf("test = %s\n", split_exp[1]);
 	// si on est tjrs la c'est que var[0] n'existait pas dans env_lst
-	ft_new_env_var(big_s, split_exp);
-	ft_free_tab(var);
+		ft_new_env_var(big_s, split_exp, i);
+		ft_free_tab(var);
+		i++;
+	}
 }
 
 void	ft_swap(char **strs, int i, int j)
@@ -156,8 +145,6 @@ void	sort_n_print_exp(char **env_strs, t_big_struct *big_s)
 	t_env_lst	*env;
 
 	i = 0;
-//	size = 0;
-//	(void)big_s;
 	env = big_s->env_lst;
 	size = ft_lstsize_env(env);
 /*	while(env_strs && env_strs[size])
@@ -199,6 +186,59 @@ void	ft_free_tab_special(char **tab, t_big_struct *big_s)
 	}
 	free(tab);
 }
+
+char	*ft_dup_special(char *src)
+{
+	int		i;
+	int		j;
+	int		check;
+	char	*dst;
+
+	i = 0;
+	j = 0;
+	check = 0;
+	dst = malloc(sizeof(char) * (ft_strlen(src) + 2 + 1));
+	if (!dst)
+		return (NULL);
+	while (src && src[i])
+	{
+		if ((i > 1) && src[i - 1] == '=' && check == 0)
+		{
+			dst[j] = '"';
+			j++;
+			check++;
+		}
+		dst[j++] = src[i++];
+	}
+	dst[j] = '"';
+	dst[++j] = '\0';
+	return (dst);
+}
+
+char	**add_qt_env(char **strs)
+{
+	char	**new_strs;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (strs && strs[i])
+		i++;
+	new_strs = malloc(sizeof(char *) * (i + 1));
+	if (!new_strs)
+		return (NULL);
+	while (strs && strs[j])
+	{
+		if (ft_strchr(strs[j], '"') == 0)
+			new_strs[j] = ft_dup_special(strs[j]);
+		j++;
+	}
+	new_strs[j] = NULL;
+	ft_free_tab(strs);
+	return (new_strs);
+}
+
 void	ft_print_export_env(t_big_struct *big_s)
 {
 	t_env_lst	*env;
@@ -211,16 +251,13 @@ void	ft_print_export_env(t_big_struct *big_s)
 	env = big_s->env_lst;
 	env_tmp = big_s->env_lst;
 	size = (ft_lstsize_env(env));
-	printf("FINAL SIZE YES = %d\n", size);
 	while (env_tmp->next != NULL)
 		env_tmp = env_tmp->next;
-	printf("DONC FREROT LE LAST = %s\n", env_tmp->line);
 	env_strs = malloc(sizeof(char *) * (size + 1));
 	if (!env_strs)
 		return ;
 	while (env != NULL && env->line != NULL)
 	{
-	//	printf("env->line = %s\nsize env->line = %ld\n", env->line, ft_strlen(env->line));
 		env_strs[i] = ft_strdup(env->line);
 		if (!env_strs[i])
 		{
@@ -231,13 +268,13 @@ void	ft_print_export_env(t_big_struct *big_s)
 		env = env->next;
 	}
 	env_strs[size] = NULL;
+	env_strs = add_qt_env(env_strs);
 	sort_n_print_exp(env_strs, big_s);
 	ft_free_tab(env_strs);
 }
 
 int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
-//	t_env_lst	*env;
 	char		**split_export;
 	int		i;
 
@@ -262,14 +299,11 @@ int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 		i++;
 	if (i == 1)
 		ft_print_export_env(big_s);
-	else if(ft_memchr(split_export[1], '=', ft_strlen(split_export[1])) != 0)
+	else /*if(ft_memchr(split_export[1], '=', ft_strlen(split_export[1])) != 0)*/
 		ft_change_env_lst(big_s, split_export);
-	else
-		write(2, "Error syntax\n", 13);
-//	if (split_export)
-//		ft_free_tab(split_export);
-//	ft_free_tab(split_export);
-//	du coup il faut changer la size OU ajouter un malloc ici ???
+/*	else
+		write(2, "Error syntax\n", 13);*/
+	
 	free(split_export[0]);
 	free(split_export);
 	return (1);
