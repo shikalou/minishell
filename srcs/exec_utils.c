@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/14 17:23:44 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 11:26:22 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ char	*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd)
 			big_struct->cmd_updated = NULL;
 		}
 		printf("%s : command not found\n", big_struct->spaced_cmd[0]);
+		big_struct->status = 9;
 		return (NULL);
 	}
 }

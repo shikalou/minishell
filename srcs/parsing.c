@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 17:17:25 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 12:39:59 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_checkquotes(char *cmd)
 	return (check_d + check_s);
 }
 
-int	check_after_pipe(char *cmd)
+int	check_after_pipe(char *cmd, char c)
 {
 	int	j;
 	int	i;
@@ -95,7 +95,7 @@ int	check_after_pipe(char *cmd)
 	j = 0;
 	while (cmd && cmd[i])
 	{
-		if (cmd[i] == '|')
+		if (cmd[i] == c)
 		{
 			i++;
 			while (cmd && cmd[i] != '\0')
@@ -119,13 +119,16 @@ int	ft_parsing(char *cmd, t_big_struct *big_struct)
 	if (ft_checkquotes(cmd) != 0)
 	{
 		write(2, "Error syntax\n", 13);
+		big_struct->status = 2;
 		return (0);
 	}
 	cmd = check_spe_char(cmd);
-	if (!cmd || (check_after_pipe(cmd) == 1))
+	if (!cmd || (check_after_pipe(cmd, '|') == 1
+		|| check_after_pipe(cmd, '<') == 1 || check_after_pipe(cmd, '>') == 1))
 	{
 		free(cmd);
 		write(2, "Error syntax\n", 13);
+		big_struct->status = 2;
 		return (0);
 	}
 	big_struct->input = ft_split_du_futur(cmd, '|');

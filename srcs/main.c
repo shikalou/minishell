@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/27 15:06:49 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 11:18:12 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	shellmini(t_big_struct *big_struct)
 	signal(SIGINT, sig_handler);
 	while (1)
 	{
-		cmd = readline("\nnelson et zor minishell$ ");
+		cmd = readline("nelson et zor minishell$ ");
 		if (!cmd)
 			return ;
 		add_history(cmd);

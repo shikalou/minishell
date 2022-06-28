@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/27 17:11:07 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 11:33:06 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
-	pid_t	pid;
-
 	if (big_struct->spaced_cmd != NULL)
 	{
 		ft_free_tab(big_struct->spaced_cmd);
@@ -51,7 +49,7 @@ void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
-	pid_t	pid;
+	// pid_t	pid;
 	int		fd_temp;
 
 	if (big_struct->spaced_cmd != NULL)
@@ -97,8 +95,6 @@ void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
-	pid_t	pid;
-
 	if (big_struct->spaced_cmd != NULL)
 	{
 		ft_free_tab(big_struct->spaced_cmd);
@@ -109,7 +105,7 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	if (cmd_lst->pid == 0)
 	{
 		if (cmd_lst->fd_out == 1)
-		{;kl;lk
+		{
 			close(big_struct->pipefd[0]);
 			cmd_lst->fd_out = big_struct->pipefd[1];
 		}
@@ -138,14 +134,22 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 void	ft_wait(int max, t_big_struct *big_struct)
 {
-	int	i;
+	//int	i;
+	(void)max;
+	t_cmd_lst	*cmd_lst;
 
-	i = 0;
-	while (i < max)
-	{
-		waitpid(big_struct->pid, &big_struct->status, 0);
-		i++;
-	}
+	cmd_lst = big_struct->cmd_lst;
+	//i = 0;
+	//while (i < max)
+	//{
+		while (cmd_lst)
+		{
+			waitpid(cmd_lst->pid, &big_struct->status, 0);
+			WEXITSTATUS(big_struct->status);
+			cmd_lst = cmd_lst->next;
+		}
+	//	i++;
+	//}
 }
 
 void	ft_multi_pipe(t_big_struct *big_struct)

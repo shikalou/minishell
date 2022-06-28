@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/23 16:48:26 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 11:42:32 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 							&& cmd[j] != '\''))
 						j++;
 					if(cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
-						return("0");
+						return (ft_itoa(big_struct->status));
 					/*	FONCTION $? A IMPLEMENT	*/
 					if ((j - i) == 1)
 						return("$");
@@ -102,7 +102,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				j++;
 			//	FONCTION $? A IMPLEMENT
 			if (cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
-				return ("0");
+				return (ft_itoa(big_struct->status));
 			if ((j - i) == 1)
 				return("$");
 			return (get_env_lst(cmd, (i), j, big_struct));

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/23 14:36:31 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/28 12:41:33 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	parsing_redirection(t_big_struct *big_struct)
 		big_struct->spaced_par = ft_split(cmd_lst->command, ' ');
 		while (big_struct->spaced_par && big_struct->spaced_par[i])
 		{
-			if (ft_memcmp(big_struct->spaced_par[i], "<", ft_strlen(big_struct->spaced_par[i])) == 0)
+			if (ft_memcmp(big_struct->spaced_par[i], "<", 1) == 0)
 			{
 				i++;
 				cmd_lst->fd_in = open(big_struct->spaced_par[i], O_RDONLY);
@@ -63,7 +63,7 @@ void	parsing_redirection(t_big_struct *big_struct)
 				free(cmd_lst->command);
 				cmd_lst->command = update_flux(big_struct, "<", k, i - 1);
 			}
-			else if (ft_memcmp(big_struct->spaced_par[i], ">", ft_strlen(big_struct->spaced_par[i])) == 0)
+			else if (ft_memcmp(big_struct->spaced_par[i], ">", 1) == 0)
 			{
 				i++;
 				cmd_lst->fd_out = open(big_struct->spaced_par[i], O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -72,8 +72,9 @@ void	parsing_redirection(t_big_struct *big_struct)
 				k = ft_strlen(cmd_lst->command);
 				free(cmd_lst->command);
 				cmd_lst->command = update_flux(big_struct, ">", k, i - 1);
+				printf("new command ==== '%s'\n", cmd_lst->command);
 			}
-			else if (ft_memcmp(big_struct->spaced_par[i], ">>", ft_strlen(big_struct->spaced_par[i])) == 0)
+			else if (ft_memcmp(big_struct->spaced_par[i], ">>", 2) == 0)
 			{
 				i++;
 				cmd_lst->fd_out = open(big_struct->spaced_par[i], O_CREAT | O_WRONLY | O_APPEND, 0644);
@@ -83,10 +84,10 @@ void	parsing_redirection(t_big_struct *big_struct)
 				free(cmd_lst->command);
 				cmd_lst->command = update_flux(big_struct, ">>", k, i - 1);
 			}
-			ft_free_tab(big_struct->spaced_par);
-			big_struct->spaced_par = NULL;
 			i++;
 		}
+		ft_free_tab(big_struct->spaced_par);
+		big_struct->spaced_par = NULL;
 		cmd_lst = cmd_lst->next;
 	}
 }
