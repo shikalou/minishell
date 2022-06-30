@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/30 16:02:10 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/30 18:33:22 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ int	ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	return (0);
 }
 
+int	ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+{
+	t_env_lst	*env;
+
+	env = big_s->env_lst;
+	while (env != NULL)
+	{
+		if (ft_strchr(env->line, '=') != 0)
+			ft_putendl_fd(env->line, cmd_lst->fd_out);
+		env = env->next;
+	}
+	return (1);
+}
 int	ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
 	if (cmd_lst->command && ft_strcmp(big_struct->spaced_cmd[0], "pwd") == 0)
@@ -48,6 +61,8 @@ int	ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		ft_exit(big_struct);
 		return (1);
 	}
+	else if (cmd_lst->command && ft_strcmp(big_struct->spaced_cmd[0], "env") == 0)
+		return(ft_env(big_struct, cmd_lst));
 	/*else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "unset", size) == 0)
 		return (ft_unset(big_struct, cmd_lst));*/
 	//else if (les prochains builtins :D )

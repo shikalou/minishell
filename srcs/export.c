@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/30 18:12:08 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/30 18:35:58 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,8 +285,14 @@ void	ft_print_export_env(t_big_struct *big_s)
 }
 
 /*
-	probleme de export 
+	problemes de export 
+		- export a=lol a+=haha genre sur la meme ligne
+		- {export a=lol
+		   export a}
+		- export a+=123 --> le += ne marche qu'avec les ""
+		- si export a= --> a doit valoir une chaine vide () 
 */
+
 int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
 	char		**split_export;
