@@ -6,19 +6,11 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/28 16:40:50 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/30 16:02:10 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_exit(t_big_struct *big_struct)
-{
-
-	ft_free_tab(big_struct->spaced_cmd);
-	ft_free_child(big_struct);
-	exit(big_struct->status);
-}
 
 int	ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
@@ -54,6 +46,7 @@ int	ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	else if (cmd_lst->command && ft_strcmp(big_struct->spaced_cmd[0], "exit") == 0)
 	{
 		ft_exit(big_struct);
+		return (1);
 	}
 	/*else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "unset", size) == 0)
 		return (ft_unset(big_struct, cmd_lst));*/

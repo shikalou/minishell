@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/28 18:41:04 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/30 16:18:02 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_heredoc(t_big_struct *big_struct)
+/*void	ft_heredoc(t_big_struct *big_struct)
 {
 	int			i;
 	t_cmd_lst	*head;
@@ -31,6 +31,33 @@ void	ft_heredoc(t_big_struct *big_struct)
 		}
 		i = 0;
 		head = head->next;
+	}
+}*/
+
+void	ft_heredoc(t_big_struct *big_struct)
+{
+	int			i;
+	t_cmd_lst	*cmd_lst;
+	char		**split;
+
+	i = 0;
+	cmd_lst = big_struct->cmd_lst;
+	while (cmd_lst)
+	{
+		if (ft_strnstr(cmd_lst->command, "<<", ft_strlen(cmd_lst->command)) != NULL)
+		{
+			split = ft_split(cmd_lst->command, ' ');
+			while (split[i])
+			{
+				if (ft_strcmp(split[i], "<<") == 0)
+				{
+					i++;
+				}
+				else
+					i++;
+			}
+		}
+		cmd_lst = cmd_lst->next;
 	}
 }
 
@@ -73,22 +100,22 @@ void	ft_exec(t_big_struct *big_struct)
 		ft_heredoc(big_struct);
 	if (cmd_lst && !cmd_lst->next)
 	{
-		ft_simple_exec(big_struct, cmd_lst);
-		waitpid(big_struct->cmd_lst->pid, &big_struct->status, 0);
-		if (WIFSIGNALED(big_struct->status))
+		if (ft_simple_exec(big_struct, cmd_lst) != 0)
 		{
-			if (WCOREDUMP(big_struct->status))
-				printf("Quit (core dumped)\n");
-			big_struct->status = (WTERMSIG(big_struct->status) + 128);
-			if (big_struct->status == 130)
-				printf("\n");
+			waitpid(big_struct->cmd_lst->pid, &big_struct->status, 0);
+			if (WIFSIGNALED(big_struct->status))
+			{
+				if (WCOREDUMP(big_struct->status))
+					printf("Quit (core dumped)\n");
+				big_struct->status = (WTERMSIG(big_struct->status) + 128);
+				if (big_struct->status == 130)
+					printf("\n");
+			}
+			else
+				big_struct->status = WEXITSTATUS(big_struct->status);
 		}
-		else
-			big_struct->status = WEXITSTATUS(big_struct->status);
 	}
 	else if (cmd_lst && cmd_lst->next)
-	{
 		ft_multi_pipe(big_struct);
-	}
 	signal(SIGINT, sig_handler);
 }

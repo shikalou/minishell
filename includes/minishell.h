@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/28 16:40:25 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/30 11:20:20 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void			ft_free_between(t_big_struct *big_struct);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 
 /*		--> UTILS EXEC				*/
-void			ft_wait(int max, t_big_struct *big_struct);
+void			ft_wait(t_big_struct *big_struct);
 char			*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd);
 char			*ft_check_slash(t_big_struct *big_struct);
 int				ft_strcmp(char *s1, char *s2);
