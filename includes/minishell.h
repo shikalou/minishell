@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/30 16:26:28 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/30 18:12:17 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <limits.h>
 # include "../libft/libft.h"
 
 typedef struct s_env_lst
@@ -139,7 +140,7 @@ int				ft_unset(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			ft_exit(t_big_struct *big_struct);
 
 /*			->utils				*/
-void			ft_update_oldpwd(t_big_struct *big_struct);
+void			ft_update_oldpwd(t_big_struct *big_struct, char *s);
 char			**ft_split_export(char *cmd);
 char			*ft_get_home(t_big_struct *big_struct, char *env);
 int				ft_count_tab(char **tab);
