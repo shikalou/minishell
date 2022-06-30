@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   retry_export.c                                     :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/30 13:07:53 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/30 14:19:41 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 {
 	int		i;
 	int		size;
+	int		check;
 	t_env_lst	*env;
 	char		**var;
 
@@ -105,11 +106,22 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 		size++;
 	while (i < size)
 	{
+		check = 0;
 //		faire un parsing de chaque split_exp[i] ici
+		if (parsing_export(split_exp[i]) == 1)
+			var = concat_export(split_exp, big_s);
 	//	si += --> faut deriver sur une autre fonction qui permet de concat
-		var = ft_split(split_exp[i], '=');
+		else if (parsing_export(split_exp[i]) == 0)
+			var = ft_split(split_exp[i], '=');
+		else
+		{
+			ft_putstr_fd("export : `", 2);
+			ft_putstr_fd(split_exp[i], 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+			check++;
+		}
 	// var [0] == NAME var [1] == value
-		while (env != NULL)
+		while (env != NULL && check == 0)
 		{
 			if (ft_memcmp(env->line, var[0], ft_strlen(var[0])) == 0)
 			{
@@ -117,13 +129,16 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 				free(split_exp[0]);
 				split_exp[0] = NULL;
 				ft_free_tab(var);
-				return ;
+				check++;
 			}
 			env = env->next;
 		}
 	// si on est tjrs la c'est que var[0] n'existait pas dans env_lst
-		ft_new_env_var(big_s, split_exp, i);
-		ft_free_tab(var);
+		if (check == 0)
+		{
+			ft_new_env_var(big_s, split_exp, i);
+			ft_free_tab(var);
+		}
 		i++;
 	}
 }
