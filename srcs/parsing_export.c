@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/30 16:11:43 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/30 18:07:07 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,65 @@
 
 
 */
+/*void	conc_quotes(char *env_line, char **var, char *tmp
+)*/
 
 void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd)
 {
-//	int		i;
-//	int		j;
 	char	*tmp;
 	int		len_name;
-//	int		len_var;
 	t_env_lst	*env;
+/*
+	dans otr func :
+*/
+	int		i;
+	int		j;
+	int		len_var;
+	int		len_envvar;
 
-	/*
-		en gros update export sof ke la o lieu d'erase avec le strdup juste on strjoin hihi 
-		fo verif les free
-	*/
-//	i = -1;
-//	j = 0;
-	len_name = ft_strlen(var[0]);
-//	len_var = ft_strlen(var[1]);
+	len_var = ft_strlen(var[1]);
+/*
+	fin otr func
+*/
 	env = big_s->env_lst;
+	len_name = ft_strlen(var[0]);
 	while (env != NULL)
 	{
-		if ((ft_memcmp(env->line, var[0], len_name) == 0)
-			&& (ft_memcmp(var[0], "PATH", len_name) != 0))
+		if (ft_memcmp(env->line, var[0], len_name) == 0)
 		{
 			tmp = ft_strdup(env->line);
-			free(env->line);
-			env->line = ft_strjoin(tmp, var[1]);
+			if (ft_strchr(var[1], '"') == 0)
+			{
+				free(env->line);
+				env->line = ft_strjoin(tmp, var[1]);
+				free(tmp);
+			}
+			else
+			{
+				len_envvar = ft_strlen(env->line);
+				free(env->line);
+				env->line = malloc(1 * (len_envvar + (len_var - 2) + 1));
+				if (!env->line)
+				{
+					free(tmp);
+					return ;
+				}
+				i = 0;
+				j = 0;
+				while (i < len_envvar)
+				{
+					env->line[i] = tmp[i];
+					i++;
+				}
+				while (j < (len_var - 1) && var[1][j])
+				{
+					if (var[1][j] == '"')
+						j++;
+					else
+						env->line[i++] = var[1][j++];
+				}
+				env->line[i] = '\0';
+			}
 			free(tmp);
 		}
 		env = env->next;
@@ -99,7 +131,7 @@ int	parsing_export(char *var)
 		while (var[i] && var[i] == ' ')
 			i++;
 	}
-	if (var[i] && (ft_isalpha(var[i]) == 0 && var[i] != '_' && var[i] != '+'))
+	if (var[i] && (ft_isalpha(var[i]) == 0 && var[i] != '_'))
 		return (-1);
 	i++;
 	while (var[i])
