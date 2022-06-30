@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/28 18:33:42 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:07:53 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,8 +210,13 @@ char	*ft_dup_special(char *src)
 		}
 		dst[j++] = src[i++];
 	}
-	dst[j] = '"';
-	dst[++j] = '\0';
+	if(check > 0)
+	{
+		dst[j] = '"';
+		dst[++j] = '\0';
+	}
+	else
+		dst[j] = '\0';
 	return (dst);
 }
 
@@ -294,7 +299,7 @@ int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	4)	-->check des erreurs
 */
 	i = 0;
-	split_export = ft_split_export(cmd_lst->command);
+	split_export = ft_split_du_futur(cmd_lst->command, ' ');
 	while (split_export && split_export[i])
 		i++;
 	if (i == 1)
