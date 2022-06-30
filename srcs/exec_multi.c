@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/29 15:49:52 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/06/30 16:04:57 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,8 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		close(cmd_lst->fd_out);
 }
 
-void	ft_wait(int max, t_big_struct *big_struct)
+void	ft_wait(t_big_struct *big_struct)
 {
-	(void)max;
 	t_cmd_lst	*cmd_lst;
 
 	cmd_lst = big_struct->cmd_lst;
@@ -178,7 +177,10 @@ void	ft_multi_pipe(t_big_struct *big_struct)
 	i = 0;
 	n_cmd = ft_lstsize_cmd(big_struct->cmd_lst);
 	pipe(big_struct->pipefd);
-	first_exec(big_struct, head);
+	if (head->fd_in != -1)
+		first_exec(big_struct, head);
+	else
+		close(big_struct->pipefd[1]);
 	head = head->next;
 	while (i < (n_cmd - 2))
 	{
@@ -187,5 +189,5 @@ void	ft_multi_pipe(t_big_struct *big_struct)
 		head = head->next;
 	}
 	last_exec(big_struct, head);
-	ft_wait(n_cmd, big_struct);
+	ft_wait(big_struct);
 }
