@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/30 14:19:41 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/06/30 15:23:15 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,10 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 		check = 0;
 //		faire un parsing de chaque split_exp[i] ici
 		if (parsing_export(split_exp[i]) == 1)
-			var = concat_export(split_exp, big_s);
+			var = trim_conc_export(split_exp[i]);
 	//	si += --> faut deriver sur une autre fonction qui permet de concat
 		else if (parsing_export(split_exp[i]) == 0)
-			var = ft_split(split_exp[i], '=');
+			var = ft_split_du_futur(split_exp[i], '=');
 		else
 		{
 			ft_putstr_fd("export : `", 2);
@@ -125,7 +125,10 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 		{
 			if (ft_memcmp(env->line, var[0], ft_strlen(var[0])) == 0)
 			{
-				ft_update_export(big_s, var, split_exp);
+				if (parsing_export(split_exp[i]) == 1)
+					ft_conc_update(big_s, var, split_exp)
+				else
+					ft_update_export(big_s, var, split_exp);
 				free(split_exp[0]);
 				split_exp[0] = NULL;
 				ft_free_tab(var);
