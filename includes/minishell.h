@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/01 15:24:20 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/01 16:47:46 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,13 +141,13 @@ void			ft_exit(t_big_struct *big_struct);
 
 /*			->utils				*/
 void			ft_update_oldpwd(t_big_struct *big_struct, char *s);
-char			**ft_split_export(char *cmd);
 char			*ft_get_home(t_big_struct *big_struct, char *env);
 int				ft_count_tab(char **tab);
 int				ft_check_echo_n(char *s);
 
 /*			->export			*/
 void			ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind);
+char			**ft_split_export(char *var, char c);
 char			**trim_conc_export(char *var);
 int				parsing_export(char *var);
 /*char			*get_export_var(char *cmd, int start, t_big_struct *big_struct);

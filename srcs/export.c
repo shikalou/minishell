@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/01 15:25:36 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:08:40 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,9 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 		if (parsing_export(split_exp[i]) == 1)
 			var = trim_conc_export(split_exp[i]);
 		else if (parsing_export(split_exp[i]) == 0)
-			var = ft_split_du_futur(split_exp[i], '=');
+		{
+			var = ft_split_export(split_exp[i], '=');
+		}
 		else
 		{
 			ft_putstr_fd("export : `", 2);
@@ -217,13 +219,15 @@ char	*ft_dup_special(char *src)
 		return (NULL);
 	while (src && src[i])
 	{
-		if ((i > 1) && src[i - 1] == '=' && check == 0)
+		if ((i >= 1) && src[i] == '=' && check == 0)
 		{
+			dst[j++] = src[i++];
 			dst[j] = '"';
 			j++;
 			check++;
 		}
-		dst[j++] = src[i++];
+		else
+			dst[j++] = src[i++];
 	}
 	if(check > 0)
 	{
@@ -291,18 +295,27 @@ void	ft_print_export_env(t_big_struct *big_s)
 /*
 	problemes de export 
 		XOK	export a=lol a+=haha genre sur la meme ligne
-		XOK	{export a=lol
-		 	  export a}
+		- export a=lol
+		   export a (a est pas sense etre remplace.....)
 		XOK	export a+=123 --> le += ne marche qu'avec les ""
-		- si export a= --> a doit valoir une chaine vide () 
+		XOK	 si export a= --> a doit valoir une chaine vide () 
+		- export a+=123 a=po a+="" a=lol
+		y'a bcp de pblm avec split du futur genre des conditionnal jump ou des trucs kom ca
 */
 
 int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
 	char		**split_export;
 	int		i;
+//	int		j;
 
 	i = 0;
+//	j = 0;
+/*	while (cmd_lst->command && cmd_lst->command[j])
+		j++;
+	if (cmd_lst->command[j - 1] == '=')
+		split_export = ft_split_export(cmd_lst->command, ' ');
+	else*/
 	split_export = ft_split_du_futur(cmd_lst->command, ' ');
 	while (split_export && split_export[i])
 		i++;
