@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/30 18:07:07 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:24:13 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 /*void	conc_quotes(char *env_line, char **var, char *tmp
 )*/
 
-void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd)
+void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 {
 	char	*tmp;
 	int		len_name;
@@ -51,7 +51,6 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd)
 			{
 				free(env->line);
 				env->line = ft_strjoin(tmp, var[1]);
-				free(tmp);
 			}
 			else
 			{
@@ -83,7 +82,7 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd)
 		}
 		env = env->next;
 	}
-	free(cmd[1]);
+	free(cmd[ind]);
 }
 
 char	**trim_conc_export(char *var)

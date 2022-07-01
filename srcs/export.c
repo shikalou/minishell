@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/30 18:48:52 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:25:36 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ void	ft_update_export(t_big_struct *big_s, char **var, char **cmd)
 	{
 		if (ft_memcmp(env->line, var[0], len_name) == 0)
 		{
-			free(env->line);
-			if (ft_strchr(var[1], '"') == 0)
+			if ((var[1] == NULL && (((int)ft_strlen(env->line)) > len_name)) || (ft_strchr(var[1], '"') == 0))
+			{
+				free(env->line);
 				env->line = ft_strdup(cmd[1]);
+			}
 			else
 			{
+				free(env->line);
 				env->line = malloc(1 * len_name + len_var);
 				if(!env->line)
 					return ;
@@ -124,7 +127,7 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 			if (ft_memcmp(env->line, var[0], ft_strlen(var[0])) == 0)
 			{
 				if (parsing_export(split_exp[i]) == 1)
-					ft_conc_update(big_s, var, split_exp);
+					ft_conc_update(big_s, var, split_exp, i);
 				else
 					ft_update_export(big_s, var, split_exp);
 				free(split_exp[0]);
@@ -139,6 +142,7 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 			ft_new_env_var(big_s, split_exp, i);
 			ft_free_tab(var);
 		}
+		env = big_s->env_lst;
 		i++;
 	}
 }
@@ -286,10 +290,10 @@ void	ft_print_export_env(t_big_struct *big_s)
 
 /*
 	problemes de export 
-		- export a=lol a+=haha genre sur la meme ligne
-		- {export a=lol
-		   export a}
-		- export a+=123 --> le += ne marche qu'avec les ""
+		XOK	export a=lol a+=haha genre sur la meme ligne
+		XOK	{export a=lol
+		 	  export a}
+		XOK	export a+=123 --> le += ne marche qu'avec les ""
 		- si export a= --> a doit valoir une chaine vide () 
 */
 

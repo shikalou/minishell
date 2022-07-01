@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/30 18:12:17 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/01 15:24:20 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int				ft_count_tab(char **tab);
 int				ft_check_echo_n(char *s);
 
 /*			->export			*/
-void			ft_conc_update(t_big_struct *big_s, char **var, char **cmd);
+void			ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind);
 char			**trim_conc_export(char *var);
 int				parsing_export(char *var);
 /*char			*get_export_var(char *cmd, int start, t_big_struct *big_struct);
