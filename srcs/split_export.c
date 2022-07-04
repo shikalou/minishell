@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:55:04 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/01 16:48:47 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:19:35 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ void	fill_str(char **result, char *var, char c)
 		else
 			result[j][k++] = var[i];
 		i++;
-		if ((!var[i] || var[i] == '\0') && (var[i - 1] == c) && k == 0 && j == 1)
-			result[j][k] = '\0';
+	}
+	result[j][k] = '\0';
+	if (j == 0)
+	{
+		free(result[1]);
+		result[1] = NULL;
 	}
 	result[2] = NULL;
 }

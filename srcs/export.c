@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/01 17:08:40 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:18:35 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_update_export(t_big_struct *big_s, char **var, char **cmd)
 	int		len_var;
 
 	i = -1;
-	j = 0;
+	j = -1;
 	len_name = ft_strlen(var[0]);
 	len_var = ft_strlen(var[1]);
 	env = big_s->env_lst;
@@ -29,21 +29,27 @@ void	ft_update_export(t_big_struct *big_s, char **var, char **cmd)
 	{
 		if (ft_memcmp(env->line, var[0], len_name) == 0)
 		{
-			if ((var[1] == NULL && (((int)ft_strlen(env->line)) > len_name)) || (ft_strchr(var[1], '"') == 0))
+			if ((var[1] == NULL
+				&& ((int)ft_strlen(env->line)) < (len_name + len_var)))
 			{
 				free(env->line);
 				env->line = ft_strdup(cmd[1]);
 			}
+			else if ((var[1] == NULL))
+			{
+				free(cmd[1]);
+				return ;
+			}
 			else
 			{
 				free(env->line);
-				env->line = malloc(1 * len_name + len_var);
+				env->line = malloc(1 * len_name + len_var + 2);
 				if(!env->line)
 					return ;
 				while (++i < len_name)
 					env->line[i] = var[0][i];
 				env->line[i++] = '=';
-				while (++j < (len_var - 1))
+				while (++j < len_var)
 				{
 					env->line[i] = var[1][j];
 					i++;
