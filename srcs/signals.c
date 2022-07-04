@@ -6,11 +6,23 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:44:56 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/28 18:26:06 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/04 11:13:08 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	get_value(t_big_struct *big_struct, int i)
+{
+	static t_big_struct *static_struct;
+
+	if (i == 0)
+		static_struct = big_struct;
+	if (i == 1)
+	{
+		static_struct->status = 130;
+	}
+}
 
 void	sig_handler(int intSig)
 {
@@ -20,6 +32,7 @@ void	sig_handler(int intSig)
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		rl_redisplay();
+		get_value(NULL, 1);
 	}
 }
 

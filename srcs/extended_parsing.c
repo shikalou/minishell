@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/28 11:42:32 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/04 13:15:49 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
 {
 	(void)big_struct;
-	char	name[j];
+	char		name[j];
 	t_env_lst	*head;
-	int		k;
+	int			k;
 
 	k = 0;
 	head = big_struct->env_lst;
@@ -44,7 +44,7 @@ char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
 	while (head)
 	{
 		if (ft_memcmp(head->line, name, k) == 0 && (head->line)[k] == '=')
-			return((head->line)+ (k + 1));
+			return((head->line) + (k + 1));
 		head = head->next;
 	}
 	return (NULL);
@@ -67,14 +67,16 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				if (cmd[i] == '$' && i == index)
 				{
 					j = i;
-					printf("test lol\n");
 					j++;
 					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
 							&& cmd[j] != '"' && cmd[j] != '$'
 							&& cmd[j] != '\''))
 						j++;
 					if(cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
-						return (ft_itoa(big_struct->status));
+					{
+						big_struct->c_status = ft_itoa(big_struct->status);
+						return (big_struct->c_status);
+					}
 					/*	FONCTION $? A IMPLEMENT	*/
 					if ((j - i) == 1)
 						return("$");
@@ -89,7 +91,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 		}
 		else if (cmd[i] == '\'' && ft_memchr_aug(cmd, i, '$') == 1)
 		// on interprete pas
-			return("anticonstitutionnellement");
+			return ("anticonstitutionnellement");
 		else if (cmd[i] == '$' && i == index)
 			// on interprete
 		{
@@ -102,7 +104,10 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				j++;
 			//	FONCTION $? A IMPLEMENT
 			if (cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
-				return (ft_itoa(big_struct->status));
+			{
+				big_struct->c_status = ft_itoa(big_struct->status);
+				return (big_struct->c_status);
+			}
 			if ((j - i) == 1)
 				return("$");
 			return (get_env_lst(cmd, (i), j, big_struct));

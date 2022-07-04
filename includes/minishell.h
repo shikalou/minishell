@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/01 16:47:46 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:36:19 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_big_struct
 	char		*cmd_updated;
 	int			pipefd[2];
 	int			status;
+	char		*c_status;
 	t_env_lst	*env_lst;
 	t_cmd_lst	*cmd_lst;
 }	t_big_struct;
@@ -155,7 +156,7 @@ int				check_var_in_env(char *cmd, int start, t_env_lst *env_lst);
 int				get_export_size(char *cmd, int start);
 */
 /*		--> HEREDOC, APPEND & REDIREC		*/
-void			ft_heredoc(t_big_struct *big_struct);
+void			ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i);
 /*			->utils				*/
 char			*ft_strnstr_hd(char *s1, char *s2, size_t n, size_t i);
 int				get_next_heredoc(char *s1, char *s2, int i);
@@ -163,6 +164,7 @@ int				get_next_heredoc(char *s1, char *s2, int i);
 /*		--> SIGNALS							*/
 void			sig_handler(int intSig);
 void			sig_handler_cmd(int intSig);
+void			get_value(t_big_struct *big_struct, int i);
 
 /********************************************************/
 /********************************************************/
