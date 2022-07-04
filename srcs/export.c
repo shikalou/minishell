@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/04 17:18:35 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:33:42 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 			ft_putstr_fd("export : `", 2);
 			ft_putstr_fd(split_exp[i], 2);
 			ft_putendl_fd("': not a valid identifier", 2);
+			big_s->status = 1;
 			check++;
 		}
 		while (env != NULL && check == 0)
@@ -301,8 +302,8 @@ void	ft_print_export_env(t_big_struct *big_s)
 /*
 	problemes de export 
 		XOK	export a=lol a+=haha genre sur la meme ligne
-		- export a=lol
-		   export a (a est pas sense etre remplace.....)
+		XOK	 export a=lol
+		   	export a (a est pas sense etre remplace.....)
 		XOK	export a+=123 --> le += ne marche qu'avec les ""
 		XOK	 si export a= --> a doit valoir une chaine vide () 
 		- export a+=123 a=po a+="" a=lol
