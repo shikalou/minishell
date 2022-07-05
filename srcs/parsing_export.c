@@ -6,22 +6,30 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/01 15:24:13 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:12:57 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	il faut juste ke 1er char soit pas un chiffre
-	les autres char peuvent etre chiffres
-	all char peuvent etre lettres et '_'
-	si quotes --> on les skip juste doubles comme simple
+char	*ft_add_char(char *str, char c)
+{
+	int		i;
+	char	*result;
 
-
-*/
-/*void	conc_quotes(char *env_line, char **var, char *tmp
-)*/
+	i = 0;
+	result = malloc(sizeof(char) * (ft_strlen(str) + 2));
+	if (!result)
+		return (NULL);
+	while (str && str[i])
+	{
+		result[i] = str[i];
+		i++;
+	}
+	result[i] = c;
+	result[++i] = '\0';
+	return (result);
+}
 
 void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 {
@@ -46,7 +54,10 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 	{
 		if (ft_memcmp(env->line, var[0], len_name) == 0)
 		{
-			tmp = ft_strdup(env->line);
+			if (ft_strchr(env->line, '=') == 0)
+				tmp = ft_add_char(env->line, '=');
+			else
+				tmp = ft_strdup(env->line);
 			if (ft_strchr(var[1], '"') == 0)
 			{
 				free(env->line);

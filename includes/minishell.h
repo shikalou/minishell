@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/05 14:01:10 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:09:31 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,15 +147,24 @@ char			*ft_get_home(t_big_struct *big_struct, char *env);
 int				ft_count_tab(char **tab);
 int				ft_check_echo_n(char *s);
 
-/*			->export			*/
+/*		--> EXPORT				*/
 void			ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind);
 char			**ft_split_export(char *var, char c);
 char			**trim_conc_export(char *var);
+char			*ft_remv_eq(char *var);
+char			*ft_remv_qt_exp(char *var);
 int				parsing_export(char *var);
-/*char			*get_export_var(char *cmd, int start, t_big_struct *big_struct);
-int				check_var_in_env(char *cmd, int start, t_env_lst *env_lst);
-int				get_export_size(char *cmd, int start);
-*/
+/*			-> tools			*/
+int				ft_eq_check(char *str);
+char			*ft_remv_eq(char *var);
+char			*ft_remv_qt_exp(char *var);
+/*			-> exportprint			*/
+char			**add_qt_env(char **strs);
+char			*ft_dup_special(char *src);
+void			ft_print_export_env(t_big_struct *big_s);
+void			sort_n_print_exp(char **env_strs, t_big_struct *big_s);
+void			ft_swap(char **strs, int i, int j);
+
 /*		--> HEREDOC, APPEND & REDIREC		*/
 void			ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i);
 void			ft_open_heredoc(t_big_struct *big_struct);
