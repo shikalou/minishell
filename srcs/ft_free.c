@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/04 13:11:34 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/05 15:11:46 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ void	ft_free_between(t_big_struct *big_struct)
 	{
 		free(big_struct->cmd_updated);
 		big_struct->cmd_updated = NULL;
+	}
+	if (big_struct->random_file != NULL)
+	{
+		unlink(big_struct->random_file);
+		free(big_struct->random_file);
+		big_struct->random_file = NULL;
 	}
 }
 
