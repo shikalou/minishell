@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:01:33 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/05 17:09:44 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:19:18 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,12 @@ char	**add_qt_env(char **strs)
 	return (new_strs);
 }
 
-
 void	ft_print_export_env(t_big_struct *big_s)
 {
 	t_env_lst	*env;
 	char		**env_strs;
-	int		i;
-	int		size;
+	int			i;
+	int			size;
 
 	i = -1;
 	env = big_s->env_lst;
@@ -75,11 +74,11 @@ void	ft_swap(char **strs, int i, int j)
 	strs[j] = tmp;
 }
 
-void	sort_n_print_exp(char **env_strs, t_big_struct *big_s)
+void	sort_n_print_exp(char **strs, t_big_struct *big_s)
 {
-	int		i;
-	int		j;
-	int		size;
+	int			i;
+	int			j;
+	int			size;
 	t_env_lst	*env;
 
 	i = -1;
@@ -90,15 +89,15 @@ void	sort_n_print_exp(char **env_strs, t_big_struct *big_s)
 		j = i;
 		while (++j < size)
 		{
-			if (ft_strncmp(env_strs[i], env_strs[j], ft_strlen(env_strs[i])) > 0)
-				ft_swap(env_strs, i, j);
+			if (ft_strncmp(strs[i], strs[j], ft_strlen(strs[i])) > 0)
+				ft_swap(strs, i, j);
 		}
 	}
 	i = -1;
 	while (++i < size)
 	{
 		ft_putstr_fd("export  ", big_s->cmd_lst->fd_out);
-		ft_putendl_fd(env_strs[i], big_s->cmd_lst->fd_out);
+		ft_putendl_fd(strs[i], big_s->cmd_lst->fd_out);
 	}
 }
 
@@ -120,14 +119,13 @@ char	*ft_dup_special(char *src)
 		if ((i >= 1) && src[i] == '=' && check == 0)
 		{
 			dst[j++] = src[i++];
-			dst[j] = '"';
-			j++;
+			dst[j++] = '"';
 			check++;
 		}
 		else
 			dst[j++] = src[i++];
 	}
-	if(check > 0)
+	if (check > 0)
 	{
 		dst[j] = '"';
 		dst[++j] = '\0';

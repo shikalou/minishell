@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/05 17:09:31 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:18:24 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char			*ft_remv_qt_exp(char *var);
 char			**add_qt_env(char **strs);
 char			*ft_dup_special(char *src);
 void			ft_print_export_env(t_big_struct *big_s);
-void			sort_n_print_exp(char **env_strs, t_big_struct *big_s);
+void			sort_n_print_exp(char **strs, t_big_struct *big_s);
 void			ft_swap(char **strs, int i, int j);
 
 /*		--> HEREDOC, APPEND & REDIREC		*/
