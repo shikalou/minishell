@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/04 17:36:19 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/05 14:01:10 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_big_struct
 	int			pipefd[2];
 	int			status;
 	char		*c_status;
+	char		*random_file;
 	t_env_lst	*env_lst;
 	t_cmd_lst	*cmd_lst;
 }	t_big_struct;
@@ -157,6 +158,8 @@ int				get_export_size(char *cmd, int start);
 */
 /*		--> HEREDOC, APPEND & REDIREC		*/
 void			ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i);
+void			ft_open_heredoc(t_big_struct *big_struct);
+
 /*			->utils				*/
 char			*ft_strnstr_hd(char *s1, char *s2, size_t n, size_t i);
 int				get_next_heredoc(char *s1, char *s2, int i);
