@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:46:20 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/03 14:25:44 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/06 16:53:51 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	check_chevron(char c)
 
 int	check_str(char *cmd, int index, int end)
 {
-	index++;
 	while (index < end)
 	{
 		if (cmd[index] != ' ')
