@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:44:56 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/04 11:13:08 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/06 14:49:50 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ void	get_value(t_big_struct *big_struct, int i)
 	if (i == 1)
 	{
 		static_struct->status = 130;
+	}
+}
+
+void	sig_handler_heredoc(int intSig)
+{
+	if (intSig == SIGINT)
+	{
+
 	}
 }
 

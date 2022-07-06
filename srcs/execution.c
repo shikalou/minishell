@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/04 17:51:54 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/06 16:17:30 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 int	ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
 	big_struct->spaced_cmd = ft_split(big_struct->cmd_lst->command, ' ');
+	if (big_struct->spaced_cmd[0] == NULL)
+		return (1);
 	if (ft_check_builtin_multi(big_struct, cmd_lst) == 0)
 	{
 		printf("fd in = %d\n", cmd_lst->fd_in);

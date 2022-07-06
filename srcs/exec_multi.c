@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/30 16:04:57 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/06 16:36:32 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		big_struct->spaced_cmd = NULL;
 	}
 	big_struct->spaced_cmd = ft_split(cmd_lst->command, ' ');
+	if (big_struct->spaced_cmd[0] == NULL)
+		return ;
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{
@@ -59,6 +61,8 @@ void	middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		big_struct->spaced_cmd = NULL;
 	}
 	big_struct->spaced_cmd = ft_split(cmd_lst->command, ' ');
+	if (big_struct->spaced_cmd[0] == NULL)
+		return ;
 	fd_temp = big_struct->pipefd[0];
 	pipe(big_struct->pipefd);
 	cmd_lst->pid = fork();
@@ -104,6 +108,8 @@ void	first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		big_struct->spaced_cmd = NULL;
 	}
 	big_struct->spaced_cmd = ft_split(cmd_lst->command, ' ');
+	if (big_struct->spaced_cmd[0] == NULL)
+		return ;
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{

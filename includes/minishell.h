@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/05 17:18:24 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/06 14:49:11 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,8 @@ void			sort_n_print_exp(char **strs, t_big_struct *big_s);
 void			ft_swap(char **strs, int i, int j);
 
 /*		--> HEREDOC, APPEND & REDIREC		*/
-void			ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i);
+void			ft_heredoc_main(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i);
+pid_t			ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i);
 void			ft_open_heredoc(t_big_struct *big_struct);
 
 /*			->utils				*/
@@ -176,6 +177,7 @@ int				get_next_heredoc(char *s1, char *s2, int i);
 /*		--> SIGNALS							*/
 void			sig_handler(int intSig);
 void			sig_handler_cmd(int intSig);
+void			sig_handler_heredoc(int intSig);
 void			get_value(t_big_struct *big_struct, int i);
 
 /********************************************************/
