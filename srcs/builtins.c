@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/30 18:33:22 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/06 17:00:45 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ int	ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	}
 	else if (cmd_lst->command && ft_strcmp(big_struct->spaced_cmd[0], "env") == 0)
 		return(ft_env(big_struct, cmd_lst));
-	/*else if (cmd_lst->command && ft_memcmp(big_struct->spaced_cmd[0], "unset", size) == 0)
-		return (ft_unset(big_struct, cmd_lst));*/
-	//else if (les prochains builtins :D )
+	else if (cmd_lst->command && ft_strcmp(big_struct->spaced_cmd[0], "unset") == 0)
+		return (ft_unset(big_struct, cmd_lst));
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 16:12:42 by ldinaut           #+#    #+#              #
-#    Updated: 2022/07/05 17:08:16 by mcouppe          ###   ########.fr        #
+#    Updated: 2022/07/06 17:18:54 by mcouppe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS_FILES	=	main.c utils_parsing.c split_du_futur.c lst_utils.c \
 			extended_parsing.c extended_parse_utils.c strtrim_aug.c \
 			builtins.c exec_multi.c redirection.c ft_free.c echo.c cd.c \
 			export.c signals.c parsing_export.c exit.c split_export.c \
-			heredocs.c export_tools.c export_print.c
+			heredocs.c export_tools.c export_print.c unset.c
 
 SRCS		=	$(addprefix srcs/, $(SRCS_FILES))
 
