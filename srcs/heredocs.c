@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:29:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/06 15:12:22 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/07 20:28:48 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i)
 	pid = fork();
 	if (pid == 0)
 	{
-		//signal(SIGINT, sig_handler_heredoc);
+		signal(SIGINT, sig_handler_heredoc);
 		input = readline("> ");
 		if (!input)
 		{
@@ -75,6 +75,7 @@ void	ft_heredoc_main(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i)
 {
 	pid_t	pid;
 
+	signal(SIGINT, SIG_IGN);
 	if (cmd_lst->fd_in != 0)
 		close(cmd_lst->fd_in);
 	if (big_struct->random_file != NULL)
