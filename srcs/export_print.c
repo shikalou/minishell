@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:01:33 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/05 17:19:18 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/07 20:38:54 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ void	ft_print_export_env(t_big_struct *big_s)
 	i = -1;
 	env = big_s->env_lst;
 	size = (ft_lstsize_env(env));
+	if (big_s->check_unset == 1)
+		size--;
 	env_strs = malloc(sizeof(char *) * (size + 1));
 	if (!env_strs)
 		return ;
-	while (env != NULL && env->line != NULL)
+	while (env != NULL)
 	{
 		env_strs[++i] = ft_strdup(env->line);
 		if (!env_strs[i])
@@ -80,7 +82,9 @@ void	sort_n_print_exp(char **strs, t_big_struct *big_s)
 	int			j;
 	int			size;
 	t_env_lst	*env;
+	int	check;
 
+	check = 0;
 	i = -1;
 	env = big_s->env_lst;
 	size = ft_lstsize_env(env);
@@ -89,15 +93,25 @@ void	sort_n_print_exp(char **strs, t_big_struct *big_s)
 		j = i;
 		while (++j < size)
 		{
-			if (ft_strncmp(strs[i], strs[j], ft_strlen(strs[i])) > 0)
+			check = 0;
+			if (!strs[i] || strs[i] == NULL)
+				check = 1;
+			if (!strs[j] || strs[j] == NULL)
+				check = 1;
+			if (check == 0 && ft_strcmp(strs[i], strs[j]) > 0)
 				ft_swap(strs, i, j);
 		}
 	}
 	i = -1;
 	while (++i < size)
 	{
-		ft_putstr_fd("export  ", big_s->cmd_lst->fd_out);
-		ft_putendl_fd(strs[i], big_s->cmd_lst->fd_out);
+		if (!strs[i] || strs[i] == NULL)
+			;
+		else
+		{
+			ft_putstr_fd("export  ", big_s->cmd_lst->fd_out);
+			ft_putendl_fd(strs[i], big_s->cmd_lst->fd_out);
+		}
 	}
 }
 

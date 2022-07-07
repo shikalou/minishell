@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/05 17:12:15 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/07 20:51:16 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,14 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 		}
 		if (check == 0)
 		{
+			if (big_s->check_name && ft_strncmp(var[0], big_s->check_name, ft_strlen(var[0])) == 0)
+			{
+				free(big_s->check_name);
+				big_s->check_name = NULL;
+				big_s->check_unset = 0;
+			}
 			ft_new_env_var(big_s, split_exp, i);
+		//	free(split_exp[i]);
 			ft_free_tab(var);
 		}
 		env = big_s->env_lst;

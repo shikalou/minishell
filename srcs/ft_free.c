@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/05 15:11:46 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/07 20:22:12 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	ft_free_child(t_big_struct *big_struct)
 	if (big_struct->input)
 		ft_free_tab(big_struct->input);
 	ft_free_tab(big_struct->path);
+	if (big_struct->check_unset == 1)
+		ft_free_tab(big_struct->envp);
 	ft_lstclear_cmd(big_struct->cmd_lst);
 	ft_lstclear_env(big_struct->env_lst);
 	free(big_struct);

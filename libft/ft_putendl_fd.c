@@ -6,7 +6,7 @@
 /*   By: ldinaut <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:30:17 by ldinaut           #+#    #+#             */
-/*   Updated: 2021/11/26 17:39:20 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/07 16:35:42 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_putendl_fd(char *s, int fd)
 	int	i;
 
 	i = 0;
+	if (!s || !s[i])
+		return ;
 	while (s[i])
 	{
 		ft_putchar_fd(s[i], fd);

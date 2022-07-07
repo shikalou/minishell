@@ -6,13 +6,13 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:01:02 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/06 20:24:40 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/07 20:50:16 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env_lst	*ft_recreate_env(int *tmp_tab, char **tmp_strs, char *to_suppr)
+/*t_env_lst	*ft_recreate_env(int *tmp_tab, char **tmp_strs, char *to_suppr)
 {
 	int		size;
 	int		i;
@@ -73,59 +73,115 @@ char	**ft_char_tab_env(t_big_struct *big_s)
 	result[i] = NULL;
 	return (result);
 }
-
+*//*
 void	ft_unset_env(char *to_suppr, t_big_struct *big_s)
 {
 	t_env_lst	*env;
-	char	**tmp_strs;
-	int		*tmp_tab;
-	int		check;
 
-	check = 0;
-	printf("\n\nHERE\tHERE\tHERE\n\n");
-//	tmp = NULL;
 	env = big_s->env_lst;
-	tmp_tab = ft_tab_env(big_s);
-	tmp_strs = ft_char_tab_env(big_s);
-	while (env != NULL && check == 0)
+	while (env != NULL)
 	{
 		if (ft_strncmp(env->line, to_suppr, ft_strlen(to_suppr)) == 0)
 		{
-		//	ft_lstclear_env(big_s->env_lst);
-		//	ft_lstclear_env();
-			big_s->env_lst = ft_recreate_env(tmp_tab, tmp_strs, to_suppr);
-		/*	env = ft_lstnew_env(tmp->index, tmp->line);
-			while (tmp)
-			{
-				if (ft_strncmp(tmp->line, to_suppr, ft_strlen(to_suppr)) == 0)
-					tmp = tmp->next;
-				if (tmp)
-					ft_lstadd_back_env(&env, ft_lstnew_env(tmp->index, tmp->line));
-				tmp = tmp->next;
-			}*/
-			check++;
+			printf("test = %s\n", to_suppr);
+			ft_lstdelone_env(&env, &free);
+		//	env->line = NULL;
+			//env->line = env->next->line;
+		//	env = env->next;
 		}
-		else
-			env = env->next;
+		env = env->next;
 	}
-	/*
-		print pr check
-	*/
-/*	env = big_s->env_lst;
+	//big_s->env_lst = env;
+	//printf("test = %s\n", big_s->env_lst->next->line);
+	env = big_s->env_lst;
 	while (env != NULL)
 	{
 		printf("check \t %s\n", env->line);
 		env = env->next;
-	}*/
-//	free(tmp_tab);
-//	ft_free_tab(tmp_strs);
+	}
 	free(to_suppr);
+}
+*/
+char	**ft_clear_envp(int ind, char **envp, char *to_suppr)
+{
+	int		i;
+	int		j;
+	char		**result;
+
+	i = 0;
+	j = 0;
+	while (envp && envp[i])
+		i++;
+//	printf("dans clear envp // i = %d\n", i);
+	result = malloc(sizeof(char *) * (i));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (envp && envp[i])
+	{
+		if (ft_strncmp(envp[i], to_suppr, ft_strlen(to_suppr)) == 0)
+		{
+		//	printf("here\n");
+//			free(envp[i]);
+			i++;
+		}
+		if (envp[i] && i != ind)
+			result[j++] = ft_strdup(envp[i]);
+		i++;
+	}
+	result[j] = NULL;
+//	ft_free_tab(envp);
+	return (result);
+}
+
+void	ft_unset_env(char *to_suppr, t_big_struct *big_s)
+{
+	//char	**envp;
+	char		**split_check;
+	int		i;
+	int		size;
+	t_env_lst	*env_tmp;
+
+	i = 0;
+	size = ft_strlen(to_suppr);
+	env_tmp = big_s->env_lst;
+	while (env_tmp)
+	{
+		if (ft_strncmp(env_tmp->line, to_suppr, size) == 0)
+		{
+	//		printf("test 1\n env->line = %s\nto_suppr = %s\n envp[%d] = %s\n", env_tmp->line, to_suppr, i, big_s->envp[i]);
+			if (ft_strncmp(big_s->envp[i], to_suppr, size) == 0)
+			{
+				big_s->envp = ft_clear_envp(i, big_s->envp, to_suppr);
+	//			printf("test 2\n envp[%d] after = %s\n et celui avant = %s\n", i, big_s->envp[i], big_s->envp[i - 1]);
+				i = -1;
+				big_s->check_unset = 1;
+				if (ft_strchr(to_suppr, '=') != 0)
+				{
+					split_check = ft_split_export(to_suppr, '=');
+					big_s->check_name = ft_strdup(split_check[1]);
+					ft_free_tab(split_check);
+				}
+			}
+			if (i == -1 && ft_strncmp("PATH=", to_suppr, 5) == 0)
+			{
+				ft_free_tab(big_s->path);
+				big_s->path = NULL;
+			}
+			env_tmp->line = NULL;
+		//	free(env_tmp);
+			return ;
+		}
+		env_tmp = env_tmp->next;
+		i++;
+	}
 }
 
 int	ft_unset(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
 	char	**split_unset;
 	char	**var;
+	char	*dup_line;
 	t_env_lst	*env;
 	int		i;
 	int		check;
@@ -141,7 +197,9 @@ int	ft_unset(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 		{
 			if (ft_strncmp(env->line, var[0], ft_strlen(var[0])) == 0)
 			{
-				ft_unset_env(ft_strdup(env->line), big_s);
+				dup_line = ft_strdup(env->line);
+				ft_unset_env(dup_line, big_s);
+				free(dup_line);
 				check++;
 			}	
 			env = env->next;

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/28 14:34:44 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/07 20:23:45 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,22 @@ int	ft_lstsize_env(t_env_lst *lst)
 	return (i);
 }
 
+void	ft_lstdelone_env(t_env_lst **lst, void (*del)(void *))
+{
+//	lst->line = NULL;
+/*	if (!lst || !del)
+		return ;*/
+	//printf("line ds delone %s\n", (*lst)->line);
+	del((*lst)->line);
+//	(*lst)->line = malloc(sizeof(char) * 1);
+//	if (!(*lst)->line)
+//		return ;
+//	(*lst)->line[0] = '\0';
+//	del((*lst));
+	(*lst)->line = NULL;
+	free(*lst);
+	(*lst) = NULL;
+}
 /*
 void	ft_lstclear(t_list **lst)
 {
