@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:01:33 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/07 20:38:54 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/08 14:40:16 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**add_qt_env(char **strs)
 	new_strs = malloc(sizeof(char *) * (i + 1));
 	if (!new_strs)
 		return (NULL);
-	while (strs && strs[j])
+	while (j < i)
 	{
 		if (ft_strchr(strs[j], '"') == 0)
 			new_strs[j] = ft_dup_special(strs[j]);
@@ -43,7 +43,7 @@ void	ft_print_export_env(t_big_struct *big_s)
 	int			i;
 	int			size;
 
-	i = -1;
+	i = 0;
 	env = big_s->env_lst;
 	size = (ft_lstsize_env(env));
 	if (big_s->check_unset == 1)
@@ -53,13 +53,14 @@ void	ft_print_export_env(t_big_struct *big_s)
 		return ;
 	while (env != NULL)
 	{
-		env_strs[++i] = ft_strdup(env->line);
+		env_strs[i] = ft_strdup(env->line);
 		if (!env_strs[i])
 		{
 			ft_free_tab(env_strs);
 			return ;
 		}
 		env = env->next;
+		i++;
 	}
 	env_strs[size] = NULL;
 	env_strs = add_qt_env(env_strs);
@@ -88,6 +89,8 @@ void	sort_n_print_exp(char **strs, t_big_struct *big_s)
 	i = -1;
 	env = big_s->env_lst;
 	size = ft_lstsize_env(env);
+	if (big_s->check_unset > 0)
+		size -= big_s->check_unset;
 	while (++i < size)
 	{
 		j = i;
@@ -102,17 +105,22 @@ void	sort_n_print_exp(char **strs, t_big_struct *big_s)
 				ft_swap(strs, i, j);
 		}
 	}
-	i = -1;
-	while (++i < size)
+	i = 0;
+/*	if (big_s->check_unset > 0)
+		size++;*/
+	while (i < size)
 	{
-		if (!strs[i] || strs[i] == NULL)
-			;
-		else
+		if (!strs[i] || strs[i] == NULL || strs[i][0] == '\0')
+			i++;
+		if (strs[i] && strs[i] != NULL && strs[i][0] != '\0')
 		{
 			ft_putstr_fd("export  ", big_s->cmd_lst->fd_out);
 			ft_putendl_fd(strs[i], big_s->cmd_lst->fd_out);
 		}
+		i++;
 	}
+	printf("size ds print = %d\n", i);
+//	printf("last strs ?? %c\n", strs[i][0]);//, strs[i - 1][1], strs[i -1][2]);
 }
 
 char	*ft_dup_special(char *src)

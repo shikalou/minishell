@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 16:33:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/05 17:20:35 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/08 13:15:49 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,31 @@ char	*ft_remv_qt_exp(char *var)
 	}
 	result[j] = '\0';
 	free(var);
+	return (result);
+}
+
+char	**ft_addback_tab(t_big_struct *big_s, char **envp, char *to_add)
+{
+	int		i;
+	int		size_tot;
+	//int		size;
+	char	**result;
+
+	i = 0;
+	size_tot = 0;
+	while (envp && envp[size_tot])
+		size_tot++;
+	result = malloc(sizeof(char *) * (size_tot + 2));
+	if (!result)
+		return (NULL);
+	while (envp && envp[i])
+	{
+		result[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	result[i] = ft_strdup(to_add);
+	result[++i] = NULL;
+	if (big_s->check_export == 1)
+		ft_free_tab(envp);
 	return (result);
 }

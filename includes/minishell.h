@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/08 12:13:13 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/08 13:30:49 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ typedef struct s_big_struct
 	char		*absolut_path;
 	char		*cmd_updated;
 	char		*check_name;
+	int			check_export;
 	int			check_unset;
+	int			env_size;
 	int			pipefd[2];
 	int			status;
 	char		*c_status;
@@ -161,6 +163,7 @@ int				parsing_export(char *var);
 int				ft_eq_check(char *str);
 char			*ft_remv_eq(char *var);
 char			*ft_remv_qt_exp(char *var);
+char			**ft_addback_tab(t_big_struct *big_s, char **envp, char *to_add);
 /*			-> exportprint			*/
 char			**add_qt_env(char **strs);
 char			*ft_dup_special(char *src);

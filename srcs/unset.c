@@ -6,13 +6,13 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:01:02 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/08 12:29:59 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/08 14:45:49 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ft_clear_envp(int ind, char **envp, char *to_suppr)
+char	**ft_clear_envp(int ind, char **envp, char *to_suppr, t_big_struct *big_s)
 {
 	int		i;
 	int		j;
@@ -33,8 +33,12 @@ char	**ft_clear_envp(int ind, char **envp, char *to_suppr)
 		if (envp[i] && i != ind)
 			result[j++] = ft_strdup(envp[i]);
 		i++;
+		if (envp[i] && (envp[i] == NULL || envp[i][0] == '\0'))
+			i++;
 	}
 	result[j] = NULL;
+	if (big_s->check_unset > 0 || big_s->check_export == 1)
+		ft_free_tab(envp);
 	return (result);
 }
 
@@ -42,26 +46,23 @@ void	ft_unset_env(char *to_suppr, t_big_struct *big_s)
 {
 	char		**split_check;
 	int		i;
+	int		check;
 	int		size;
 	t_env_lst	*env_tmp;
 
 	i = 0;
+	check = 0;
 	size = ft_strlen(to_suppr);
 	env_tmp = big_s->env_lst;
 	while (env_tmp)
 	{
-		if (ft_strncmp(env_tmp->line, to_suppr, size) == 0)
+		if (check == 0 && ft_strncmp(env_tmp->line, to_suppr, size) == 0)
 		{
-/*
-		en gros il faudrait update envp[i] en plus de la lst_env ds export a chaque add de var 
-		kom ca le free se passe mieux et derriere on peut parcourir env
-*/
-			printf("IN UNSET ENV envp[i] = %s", big_s->envp[i]);
 			if (big_s->envp[i] && ft_strncmp(big_s->envp[i], to_suppr, size) == 0)
 			{
-				big_s->envp = ft_clear_envp(i, big_s->envp, to_suppr);
+				big_s->envp = ft_clear_envp(i, big_s->envp, to_suppr, big_s);
 				i = -1;
-				big_s->check_unset = 1;
+				big_s->check_unset++;
 				if (ft_strchr(to_suppr, '=') != 0)
 				{
 					split_check = ft_split_export(to_suppr, '=');
@@ -75,8 +76,7 @@ void	ft_unset_env(char *to_suppr, t_big_struct *big_s)
 				big_s->path = NULL;
 			}
 			free(env_tmp->line);
-			env_tmp->line = NULL;
-			return ;
+			check++;
 		}
 		env_tmp = env_tmp->next;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/08 12:10:24 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/08 13:33:58 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ t_big_struct	*ft_init_big_struct(char **envp)
 	big_struct->status = 0;
 	big_struct->c_status = NULL;
 	big_struct->random_file = NULL;
+	big_struct->check_export = 0;
 	big_struct->check_unset = 0;
 	big_struct->check_name = NULL;
+	big_struct->env_size = ft_lstsize_env(big_struct->env_lst);
+//	printf("check env_size =%d\n", big_struct->env_size);
 	return (big_struct);
 }
