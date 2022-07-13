@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/06 16:51:51 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/13 12:44:35 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,15 @@ int	check_after_pipe(char *cmd, char c)
 		return (1);
 	i = 0;
 	j = 0;
-	while (cmd && cmd[i])
+	while (cmd && cmd[i] && cmd[i] != '\0')
 	{
 		if (cmd[i] == c)
 		{
 			i++;
-			while (cmd && cmd[i] != '\0')
+			j = 0;
+			while (cmd && cmd[i] && cmd[i] != '\0')
 			{
-				if (ft_isalnum(cmd[i]) == 1)
+				if (cmd[i] != '\0' && ft_isalnum(cmd[i]) == 1)
 					j++;
 				i++;
 			}
