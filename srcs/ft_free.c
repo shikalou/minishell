@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/14 15:54:28 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/14 17:52:28 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,17 @@ void	ft_free_between(t_big_struct *big_struct)
 		free(big_struct->random_file);
 		big_struct->random_file = NULL;
 	}
+	if (big_struct->c_status != NULL)
+	{
+		free(big_struct->c_status);
+		big_struct->c_status = NULL;
+	}
 }
 
 void	ft_free_child(t_big_struct *big_struct, int i)
 {
+	if (big_struct->c_status != NULL)
+		free(big_struct->c_status);
 	if (big_struct->absolut_path)
 		free(big_struct->absolut_path);
 	if (big_struct->spaced_par)
