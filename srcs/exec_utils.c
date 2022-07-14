@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/07 16:51:05 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 17:36:53 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char	*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd)
 		return (ft_check_slash(big_struct));
 	else
 	{
-		while (big_struct->path[i] != NULL)
+		while (big_struct->path && big_struct->path[i] != NULL)
 		{
 			temp = ft_strjoin(big_struct->path[i], "/");
 			big_struct->cmd_updated = ft_strjoin(temp, spaced_cmd[0]);

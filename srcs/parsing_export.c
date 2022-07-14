@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/08 12:12:56 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 17:32:46 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 /*
 	fin otr func
 */
+	if (var[1] == NULL)
+	{
+		free(cmd[ind]);
+		return ;
+	}
 	env = big_s->env_lst;
 	len_name = ft_strlen(var[0]);
 	while (env != NULL)
@@ -58,7 +63,7 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 				tmp = ft_add_char(env->line, '=');
 			else
 				tmp = ft_strdup(env->line);
-			if (ft_strchr(var[1], '"') == 0)
+			if (var[1] && ft_strchr(var[1], '"') == 0)
 			{
 				free(env->line);
 				env->line = ft_strjoin(tmp, var[1]);

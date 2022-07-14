@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/08 13:52:14 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 17:33:24 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	ft_new_env_var(t_big_struct *big_s, char **split_exp, int index)
 	if (ft_eq_check(split_exp[index]) != 0)
 		split_exp[index] = ft_remv_eq(split_exp[index]);
 	new = ft_lstnew_env(i, split_exp[index]);
-//	printf("new->line = %s\n", new->line);
 	big_s->envp = ft_addback_tab(big_s, big_s->envp, new->line);
 	ft_lstadd_back_env(&env, new);
 	big_s->check_export = 1;
@@ -134,7 +133,6 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 				big_s->check_unset--;
 			}
 			ft_new_env_var(big_s, split_exp, i);
-		//	free(split_exp[i]);
 			ft_free_tab(var);
 		}
 		env = big_s->env_lst;
