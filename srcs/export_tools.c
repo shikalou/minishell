@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 16:33:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/08 13:15:49 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 14:11:29 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ char	**ft_addback_tab(t_big_struct *big_s, char **envp, char *to_add)
 	result[i] = ft_strdup(to_add);
 	result[++i] = NULL;
 	if (big_s->check_export == 1)
-		ft_free_tab(envp);
+		ft_free_tab(big_s->envp);
 	return (result);
 }
