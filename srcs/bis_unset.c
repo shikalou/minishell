@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:48:27 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 14:12:10 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:31:28 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	update_envp(t_big_struct *big_s, char **envp, int ind)
 
 	i = 0;
 	j = 0;
-	printf("allo test\n");
 	while (envp && envp[i])
 		i++;
 	result = malloc(sizeof(char *) * i);
@@ -33,8 +32,9 @@ void	update_envp(t_big_struct *big_s, char **envp, int ind)
 			i++;
 		if (envp[i] && i != ind)
 			result[j++] = ft_strdup(envp[i]);
-		printf("in envp i = %d\n", i);
 		i++;
+		if (envp[i] && (envp[i] == NULL || envp[i][0] == '\0'))
+			i++;
 	}
 	result[j] = NULL;
 	if (big_s->check_unset > 0 || big_s->check_export == 1)
@@ -44,7 +44,6 @@ void	update_envp(t_big_struct *big_s, char **envp, int ind)
 
 void	update_lst(t_big_struct *big_s, char *var)
 {
-	printf("test 2\n");
 	ft_lstclear_env(big_s->env_lst);
 	big_s->env_lst = ft_init_env_lst(big_s->envp);
 	big_s->env_size = ft_lstsize_env(big_s->env_lst);
@@ -69,7 +68,6 @@ void	cmp_var(char *var, t_big_struct *big_s)
 		if ((ft_strncmp(env->line, var, size) == 0)
 			&& (env->line[size] == '\0' || env->line[size] == '='))
 		{
-			printf("test comp\n");
 			update_envp(big_s, big_s->envp, i);
 			update_lst(big_s, var);
 			big_s->check_unset = 1;
@@ -91,12 +89,8 @@ int	ft_unset(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	env = big_s->env_lst;
 	while (spaced_cmd && spaced_cmd[i])
 	{
-		printf("spaced_cmd[%d] = %s\n", i, spaced_cmd[i]);
 		if (i > 0)
-		{
-			printf("test debutlol \n");
 			cmp_var(spaced_cmd[i], big_s);
-		}
 		i++;
 	}
 	if (i < 1)

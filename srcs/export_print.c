@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:01:33 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/08 14:40:16 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:30:57 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	**add_qt_env(char **strs)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	while (strs && strs[i])
-		i++;
+	while (strs && strs[++i])
+		;
 	new_strs = malloc(sizeof(char *) * (i + 1));
 	if (!new_strs)
 		return (NULL);
@@ -46,8 +46,6 @@ void	ft_print_export_env(t_big_struct *big_s)
 	i = 0;
 	env = big_s->env_lst;
 	size = (ft_lstsize_env(env));
-	if (big_s->check_unset == 1)
-		size--;
 	env_strs = malloc(sizeof(char *) * (size + 1));
 	if (!env_strs)
 		return ;
@@ -62,7 +60,7 @@ void	ft_print_export_env(t_big_struct *big_s)
 		env = env->next;
 		i++;
 	}
-	env_strs[size] = NULL;
+	env_strs[i] = NULL;
 	env_strs = add_qt_env(env_strs);
 	sort_n_print_exp(env_strs, big_s);
 	ft_free_tab(env_strs);
@@ -89,8 +87,6 @@ void	sort_n_print_exp(char **strs, t_big_struct *big_s)
 	i = -1;
 	env = big_s->env_lst;
 	size = ft_lstsize_env(env);
-	if (big_s->check_unset > 0)
-		size -= big_s->check_unset;
 	while (++i < size)
 	{
 		j = i;
@@ -105,22 +101,15 @@ void	sort_n_print_exp(char **strs, t_big_struct *big_s)
 				ft_swap(strs, i, j);
 		}
 	}
-	i = 0;
-/*	if (big_s->check_unset > 0)
-		size++;*/
-	while (i < size)
+	i = -1;
+	while (++i <= size)
 	{
-		if (!strs[i] || strs[i] == NULL || strs[i][0] == '\0')
-			i++;
 		if (strs[i] && strs[i] != NULL && strs[i][0] != '\0')
 		{
 			ft_putstr_fd("export  ", big_s->cmd_lst->fd_out);
 			ft_putendl_fd(strs[i], big_s->cmd_lst->fd_out);
 		}
-		i++;
 	}
-	printf("size ds print = %d\n", i);
-//	printf("last strs ?? %c\n", strs[i][0]);//, strs[i - 1][1], strs[i -1][2]);
 }
 
 char	*ft_dup_special(char *src)
