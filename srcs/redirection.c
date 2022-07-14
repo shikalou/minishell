@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/06 12:04:42 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/14 14:46:26 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,22 @@ void	parsing_redirection(t_big_struct *big_struct)
 			else if (ft_strcmp(big_struct->spaced_par[i], "<<") == 0)
 			{
 				ft_heredoc_main(big_struct, cmd_lst, i + 1);
-				k = ft_strlen(cmd_lst->command);
-				free(cmd_lst->command);
-				cmd_lst->command = update_flux(big_struct, k, i);
+				if (big_struct->cmd_lst != NULL)
+				{
+					k = ft_strlen(cmd_lst->command);
+					free(cmd_lst->command);
+					cmd_lst->command = update_flux(big_struct, k, i);
+				}
+				else
+				{
+					cmd_lst = NULL;
+				}
 			}
 			i++;
 		}
 		ft_free_tab(big_struct->spaced_par);
 		big_struct->spaced_par = NULL;
-		cmd_lst = cmd_lst->next;
+		if (big_struct->cmd_lst != NULL)
+			cmd_lst = cmd_lst->next;
 	}
 }

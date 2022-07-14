@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/07 16:55:38 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:33:49 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	}
 	return (1);
 }
+
 int	ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
 	if (cmd_lst->command && ft_strcmp(big_struct->spaced_cmd[0], "pwd") == 0)

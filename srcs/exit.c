@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:39:08 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/30 19:00:43 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:54:48 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ void	ft_exit(t_big_struct *b)
 	{
 		i = (256 - b->status % 256);
 	}
-	ft_free_child(b);
+	ft_free_child(b, 1);
 	exit(i);
 }

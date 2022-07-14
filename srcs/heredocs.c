@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:29:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/07 20:28:48 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:58:06 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i)
 				break ;
 			}
 		}
+		close(cmd_lst->fd_in);
+		ft_free_child(big_struct, 0);
 		exit(0);
 	}
 	return (pid);
@@ -75,6 +77,7 @@ void	ft_heredoc_main(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i)
 {
 	pid_t	pid;
 
+	get_value(big_struct, cmd_lst, 0);
 	signal(SIGINT, SIG_IGN);
 	if (cmd_lst->fd_in != 0)
 		close(cmd_lst->fd_in);
@@ -89,5 +92,18 @@ void	ft_heredoc_main(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i)
 	pid = ft_heredoc(big_struct, cmd_lst, i);
 	waitpid(pid, &big_struct->status, 0);
 	close(cmd_lst->fd_in);
-	cmd_lst->fd_in = open(big_struct->random_file, O_RDONLY, 0644);
+	if (WEXITSTATUS(big_struct->status) == 2)
+	{
+		ft_free_tab(big_struct->spaced_par);
+		big_struct->spaced_par = NULL;
+		ft_lstclear_cmd(big_struct->cmd_lst);
+		big_struct->cmd_lst = NULL;
+		big_struct->status = 130;
+	}
+	else
+	{
+		printf("%d %s\n", cmd_lst->fd_in, big_struct->random_file);
+		cmd_lst->fd_in = open(big_struct->random_file, O_RDONLY, 0644);
+		printf("after %d %s\n", cmd_lst->fd_in, big_struct->random_file);
+	}
 }

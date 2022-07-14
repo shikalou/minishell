@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/13 12:44:35 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:20:33 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,7 @@ int	ft_parsing(char *cmd, t_big_struct *big_struct)
 	big_struct->cmd_lst = ft_init_cmd_lst(big_struct->input);
 	parsing_quotes(big_struct);
 	parsing_redirection(big_struct);
+	if (big_struct->cmd_lst == NULL)
+		return (0);
 	return (1);
 }

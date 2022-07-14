@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/08 13:30:49 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:54:39 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int				ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 
 /*		--> UTILS ALL				*/
 void			ft_free_tab(char **tab);
-void			ft_free_child(t_big_struct *big_struct);
+void			ft_free_child(t_big_struct *big_struct, int i);
 void			ft_free_between(t_big_struct *big_struct);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 
@@ -184,7 +184,7 @@ int				get_next_heredoc(char *s1, char *s2, int i);
 void			sig_handler(int intSig);
 void			sig_handler_cmd(int intSig);
 void			sig_handler_heredoc(int intSig);
-void			get_value(t_big_struct *big_struct, int i);
+void			get_value(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i);
 
 /********************************************************/
 /********************************************************/

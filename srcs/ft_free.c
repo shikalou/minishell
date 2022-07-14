@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/08 13:52:53 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:54:28 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_free_between(t_big_struct *big_struct)
 	}
 }
 
-void	ft_free_child(t_big_struct *big_struct)
+void	ft_free_child(t_big_struct *big_struct, int i)
 {
 	if (big_struct->absolut_path)
 		free(big_struct->absolut_path);
@@ -75,6 +75,13 @@ void	ft_free_child(t_big_struct *big_struct)
 	{
 		free(big_struct->check_name);
 		ft_free_tab(big_struct->envp);
+	}
+	if (big_struct->random_file != NULL)
+	{
+		if (i == 1)
+			unlink(big_struct->random_file);
+		free(big_struct->random_file);
+		big_struct->random_file = NULL;
 	}
 	ft_lstclear_cmd(big_struct->cmd_lst);
 	ft_lstclear_env(big_struct->env_lst);
