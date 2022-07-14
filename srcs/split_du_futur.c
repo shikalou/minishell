@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/13 15:29:26 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 17:25:32 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 			else
 				strs[j][l++] = s1[i++];
 		}
-		if (s1[i] && !(s1[i + 1]))
+		if (s1[i] && (s1[i] != c) && !(s1[i + 1]))
 			strs[j][l++] = s1[i];
 		strs[j][l] = '\0';
 		j++;

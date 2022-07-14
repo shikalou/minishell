@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 16:33:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 14:11:29 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 17:32:52 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char	**ft_addback_tab(t_big_struct *big_s, char **envp, char *to_add)
 {
 	int		i;
 	int		size_tot;
-	//int		size;
 	char	**result;
 
 	i = 0;

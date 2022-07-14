@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:48:27 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 15:31:28 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/14 17:08:55 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,13 @@ void	update_envp(t_big_struct *big_s, char **envp, int ind)
 	result = malloc(sizeof(char *) * i);
 	if (!result)
 		return ;
-	i = 0;
-	while (envp && envp[i])
+	i = -1;
+	while (envp && envp[++i])
 	{
 		if (i == ind)
-			i++;
-		if (envp[i] && i != ind)
+			;
+		else if (envp[i] && i != ind)
 			result[j++] = ft_strdup(envp[i]);
-		i++;
-		if (envp[i] && (envp[i] == NULL || envp[i][0] == '\0'))
-			i++;
 	}
 	result[j] = NULL;
 	if (big_s->check_unset > 0 || big_s->check_export == 1)
@@ -80,13 +77,11 @@ void	cmp_var(char *var, t_big_struct *big_s)
 
 int	ft_unset(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
-	t_env_lst	*env;
 	char	**spaced_cmd;
 	int		i;
 
 	i = 0;
 	spaced_cmd = big_s->spaced_cmd;
-	env = big_s->env_lst;
 	while (spaced_cmd && spaced_cmd[i])
 	{
 		if (i > 0)
@@ -95,13 +90,6 @@ int	ft_unset(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	}
 	if (i < 1)
 		return (1);
-	
-/*
-	il fo prendre len de spaced_cmd[i] et comparer avec lst env en checkant bien que a len+1 on a un '=' ds l'env 
-	ensuite bah du coup fo free/remplace ds envp
-	puis bah la meme ds env lst lol hehe facile hein 
-*/
 	(void)cmd_lst;
-	(void) env;
 	return (1);
 }
