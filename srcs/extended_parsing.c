@@ -6,27 +6,19 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 17:05:33 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:05:17 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	le but de cette fonction :
-
-	- recuperer une str avec la variable d'environnement ciblee
-	- probleme  = si on a plusieurs variable d'environnement
-		solution possible = rappeler ft_get_env_var a chaque fois qu'il
-				    y a un $
-				    du coup il faut lui donner en param le i de cmd[i]
-				    pour savoir ou on en est dans cmd
-
-				    par contre : pour le malloc general, on peut pas encore le faire
-				donc on va le faire petit a petit
-*/
-
 char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
 {
+/*
+	le (void)big_struct --> je comprends pas du tout pk il est void et du coup 
+	comment on a acces a l'env sans passer par big_struct (et du coup a koi sert 
+	la fonction et pk elle s'appelle get env lst mdrr jui perdue)
+*/
 	(void)big_struct;
 	char		name[j];
 	t_env_lst	*head;
@@ -34,7 +26,7 @@ char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
 
 	k = 0;
 	head = big_struct->env_lst;
-	while(i < j)
+	while (i < j)
 	{
 		if (cmd[i] && ((ft_isalnum(cmd[i]) == 1) || cmd[i] == '_'))
 			name[k++] = cmd[i];
@@ -44,7 +36,7 @@ char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
 	while (head)
 	{
 		if (ft_memcmp(head->line, name, k) == 0 && (head->line)[k] == '=')
-			return((head->line) + (k + 1));
+			return ((head->line) + (k + 1));
 		head = head->next;
 	}
 	return (NULL);
@@ -53,10 +45,8 @@ char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
 char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 {
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	while (cmd[i])
 	{
 		if (cmd[i] == '"')
@@ -65,67 +55,19 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 			while (cmd[i] && cmd[i] != '"')
 			{
 				if (cmd[i] == '$' && i == index)
-				{
-					j = i;
-					j++;
-					while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-							&& cmd[j] != '"' && cmd[j] != '$'
-							&& cmd[j] != '\''))
-						j++;
-					if(cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
-					{
-						if (big_struct->c_status != NULL)
-						{
-							free(big_struct->c_status);
-							big_struct->c_status = NULL;
-						}
-						big_struct->c_status = ft_itoa(big_struct->status);
-						return (big_struct->c_status);
-					}
-					/*	FONCTION $? A IMPLEMENT	*/
-					if ((j - i) == 1)
-						return("$");
-					/*		on interprete*/
-
-					return (get_env_lst(cmd, (i + 1), j, big_struct));
-				}
+					return (expand_first_case(big_struct, i, cmd));
 				i++;
 			}
 			if (cmd[i] && cmd[i] == '"')
 				i++;
 		}
 		else if (cmd[i] == '\'' && ft_memchr_aug(cmd, i, '$') == 1)
-		// on interprete pas
 			return ("anticonstitutionnellement");
 		else if (cmd[i] == '$' && i == index)
-			// on interprete
-		{
-			j = i;
-			if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0'
-					&& cmd[j] != '"'))
-				j++;
-			while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '\''
-					&& cmd[j] != '"' && cmd[j] != '$'))
-				j++;
-			//	FONCTION $? A IMPLEMENT
-			if (cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
-			{
-				if (big_struct->c_status != NULL)
-				{
-					free(big_struct->c_status);
-					big_struct->c_status = NULL;
-				}
-				big_struct->c_status = ft_itoa(big_struct->status);
-				return (big_struct->c_status);
-			}
-			if ((j - i) == 1)
-				return("$");
-			return (get_env_lst(cmd, (i), j, big_struct));
-		}
+			return (expand_second_case(big_struct, i, cmd));
 		else
 			i++;
 	}
-	//printf("env_var est NULL ????????????????????????????????????????????????\n");
 	return (NULL);
 }
 
@@ -145,23 +87,22 @@ int	get_right_size(char *cmd, t_big_struct *big_struct)
 			if (ft_strlen(ft_get_env_var(big_struct, cmd, i)) == 0)
 				count += ft_len_dollar(cmd, i);
 			i += ft_len_dollar(cmd, i);
-			//printf("(if) count = %d, i = %d\n", count, i);
 		}
 		else
 		{
 			count++;
 			i++;
-		//	printf("(else) count = %d, i = %d\n", count, i);
 		}
 	}
-//	printf("get_right_size = %d\n", count);
 	return (count);
 }
 
+// elle elle va etre dure a reduire lol yoloooo
 char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 {
 	char	*new_cmd;
-	char	*env_var;
+	char	*env;
+	int		len;
 	int		i;
 	int		j;
 
@@ -176,21 +117,23 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 	{
 		if (cmd[i] == '$')
 		{
-			env_var = ft_get_env_var(big_struct, cmd, i);
-			if (env_var == NULL && cmd[i])
+			env = ft_get_env_var(big_struct, cmd, i);
+			len = ft_strlen(env);
+			if (env == NULL && cmd[i])
 				i += ft_len_dollar(cmd, i);
-			else if(ft_memcmp(env_var, "anticonstitutionnellement", ft_strlen(env_var)) == 0)
+			else if (ft_memcmp(env, "anticonstitutionnellement", len == 0))
 			{
 				new_cmd[j++] = cmd[i++];
-				while (cmd[i] != '$' && cmd[i] != '\'' && cmd[i] != ' ' && cmd[i] != '\0')
+				while (cmd[i] != '$' && cmd[i] != '\'' && cmd[i] != ' '
+					&& cmd[i] != '\0')
 					new_cmd[j++] = cmd[i++];
 			}
 			else
 			{
 				new_cmd[j] = '\0';
-				ft_strlcat(new_cmd, env_var, (ft_strlen(new_cmd) + ft_strlen(env_var) + 1));
+				ft_strlcat(new_cmd, env, (ft_strlen(new_cmd) + len + 1));
 				i += (ft_len_dollar(cmd, i));
-				j += ft_strlen(env_var);
+				j += ft_strlen(env);
 			}
 		}
 		else

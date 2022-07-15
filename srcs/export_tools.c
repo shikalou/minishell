@@ -6,12 +6,34 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 16:33:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 17:32:52 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:21:27 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	exp_update_line(char **var, t_env_lst *env, int i, int j)
+{
+	int		len_n;
+	int		len_v;
+
+	len_n = ft_strlen(var[0]);
+	len_v = ft_strlen(var[1]);
+	free(env->line);
+	env->line = malloc(1 * (len_n + len_v + 2));
+	if (!env->line)
+		return (1);
+	while (++i < len_n)
+		env->line[i] = var[0][i];
+	env->line[i++] = '=';
+	while (++j < len_v)
+	{
+		env->line[i] = var[1][j];
+		i++;
+	}
+	env->line[i] = '\0';
+	return (0);
+}
 int	ft_eq_check(char *str)
 {
 	int		i;

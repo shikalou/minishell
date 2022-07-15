@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/14 15:20:33 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/15 22:05:03 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,8 @@ int	ft_parsing(char *cmd, t_big_struct *big_struct)
 	}
 	cmd = check_spe_char(cmd);
 	if (!cmd || (check_after_pipe(cmd, '|') == 1
-		|| check_after_pipe(cmd, '<') == 1 || check_after_pipe(cmd, '>') == 1))
+			|| check_after_pipe(cmd, '<') == 1
+			|| check_after_pipe(cmd, '>') == 1))
 	{
 		free(cmd);
 		write(2, "Error syntax\n", 13);

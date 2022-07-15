@@ -6,12 +6,20 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/14 16:14:33 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:02:20 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// NORME LOL		
+// - on a des lines too long de ttpar du coup en vrai jme dis limite
+// big_struct moi deja jle remp tt le tmps par big_s mdr mais on peut trouver autre choz
+// et surtout spaced_cmd jkroi c la pir ds tous les fichiers elle clc donc on peut aussi
+// reflechir a lui changer son identite (c ca le wokisme puree ajean avait raison)
+// - ensuite pr les func trop longue exec_utils c pareil donc jpense on va avoir besoin
+// de carrement 2 fichiers en plus kon peut nommer de maniere hyper intello "exec_drawer.c" 
+// et exec_cupboard.c lol 
 void	last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
 	if (big_struct->spaced_cmd != NULL)

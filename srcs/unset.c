@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bis_unset.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:48:27 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 17:08:55 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:36:10 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	update_lst(t_big_struct *big_s, char *var)
 void	cmp_var(char *var, t_big_struct *big_s)
 {
 	t_env_lst	*env;
-	int		i;
-	int		size;
+	int			i;
+	int			size;
 
 	size = ft_strlen(var);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:55:04 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/05 16:00:47 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:58:40 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	fill_str(char **result, char *var, char c)
 	int		j;
 	int		k;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	k = 0;
-	while (var && var[i])
+	while (var && var[++i])
 	{
 		if (var[i] == c)
 		{
@@ -31,7 +31,6 @@ void	fill_str(char **result, char *var, char c)
 		}
 		else
 			result[j][k++] = var[i];
-		i++;
 	}
 	result[j][k] = '\0';
 	if (j == 0)
@@ -42,6 +41,7 @@ void	fill_str(char **result, char *var, char c)
 	result[2] = NULL;
 }
 
+//	NORME jsp frerot
 char	**ft_split_export(char *var, char c)
 {
 	int		i;

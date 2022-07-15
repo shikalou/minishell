@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 17:32:46 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/15 22:02:53 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,22 @@ char	*ft_add_char(char *str, char c)
 
 void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 {
-	char	*tmp;
-	int		len_name;
-	t_env_lst	*env;
-/*
-	dans otr func :
-*/
-	int		i;
-	int		j;
-	int		len_var;
-	int		len_envvar;
+	char			*tmp;
+	t_env_lst		*env;
+	int				len_name;
+	int				i;
+	int				j;
+	int				len_var;
+	int				len_envvar;
 
 	len_var = ft_strlen(var[1]);
-/*
-	fin otr func
-*/
+	len_name = ft_strlen(var[0]);
+	env = big_s->env_lst;
 	if (var[1] == NULL)
 	{
 		free(cmd[ind]);
 		return ;
 	}
-	env = big_s->env_lst;
-	len_name = ft_strlen(var[0]);
 	while (env != NULL)
 	{
 		if (ft_memcmp(env->line, var[0], len_name) == 0)
@@ -103,13 +97,13 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 
 char	**trim_conc_export(char *var)
 {
-	char		**tmp;
-	char		**result;
+	char	**tmp;
+	char	**result;
 	int		i;
 	int		j;
 
 	i = 0;
-	j = 0;
+	j = -1;
 	tmp = ft_split_du_futur(var, '=');
 	if (!tmp || tmp == NULL)
 		return (NULL);
@@ -121,13 +115,12 @@ char	**trim_conc_export(char *var)
 		ft_free_tab(tmp);
 		return (NULL);
 	}
-	while (tmp && tmp[j])
+	while (tmp && tmp[++j])
 	{
 		if (j == 0)
 			result[j] = ft_strtrim(tmp[j], "+");
 		else
 			result[j] = ft_strdup(tmp[j]);
-		j++;
 	}
 	result[j] = NULL;
 	ft_free_tab(tmp);
@@ -152,7 +145,7 @@ int	parsing_export(char *var)
 	while (var[i])
 	{
 		if (var[i] == '=')
-				return (0);
+			return (0);
 		else if (var[i] == '+')
 		{
 			if (var[i + 1] && var[i + 1] == '=')
@@ -160,7 +153,7 @@ int	parsing_export(char *var)
 			else
 				return (-1);
 		}
-		else if(var[i] != '_' && (ft_isalnum(var[i]) == 0))
+		else if (var[i] != '_' && (ft_isalnum(var[i]) == 0))
 			return (-1);
 		i++;
 	}

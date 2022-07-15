@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/14 15:54:39 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:54:21 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int				ft_parsing(char *cmd, t_big_struct *big_struct);
 /*		--> PARSING QUOTES			*/
 void			parsing_quotes(t_big_struct *big_struct);
 
+char			*expand_first_case(t_big_struct *big_s, int i, char *cmd);
+char			*expand_second_case(t_big_struct *big_s, int i, char *cmd);
 char			*extended_dollar(char *cmd, t_big_struct *big_struct);
 char			*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index);
 char			*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct);
@@ -113,6 +115,8 @@ char			*strtrim_aug(char *cmd);
 int				check_char(char c);
 int				check_str(char *cmd, int index, int end);
 int				check_char_basic(char c);
+int				ft_count_char(char const *s1, int i, char c);
+int				ft_count_strs(char const *s, char c);
 int				ft_split_quotes(const char *s1, int i);
 
 /********************************************************/
@@ -123,8 +127,8 @@ void			ft_multi_pipe(t_big_struct *big_struct);
 void			first_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			middle_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			last_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-int				ft_simple_exec(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-int				ft_check_builtin_multi(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_simple_exec(t_big_struct *big_s, t_cmd_lst *cmd_lst);
+int				ft_check_builtin_multi(t_big_struct *big_s, t_cmd_lst *cmd_lst);
 
 /*		--> UTILS ALL				*/
 void			ft_free_tab(char **tab);
@@ -139,10 +143,11 @@ char			*ft_check_slash(t_big_struct *big_struct);
 int				ft_strcmp(char *s1, char *s2);
 
 /*		--> BUILTIN				*/
-int				ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
-int				ft_echo(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_echo(t_big_struct *big_s, t_cmd_lst *cmd_lst);
+int				ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst);
 int				ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst);
+int				ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 int				ft_unset(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			ft_exit(t_big_struct *big_struct);
 

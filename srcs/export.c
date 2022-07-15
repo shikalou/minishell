@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 17:33:24 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:27:18 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	ft_update_export(t_big_struct *big_s, char **var, char **cmd, int ind)
 {
-	int		i;
-	int		j;
+	int			i;
+	int			j;
+	int			len_name;
+	int			len_var;
 	t_env_lst	*env;
-	int		len_name;
-	int		len_var;
 
 	i = -1;
 	j = -1;
@@ -30,7 +30,7 @@ void	ft_update_export(t_big_struct *big_s, char **var, char **cmd, int ind)
 		if (ft_memcmp(env->line, var[0], len_name) == 0)
 		{
 			if ((var[1] == NULL
-				&& ((int)ft_strlen(env->line)) < (len_name + len_var)))
+					&& ((int)ft_strlen(env->line)) < (len_name + len_var)))
 			{
 				free(env->line);
 				env->line = ft_strdup(cmd[ind]);
@@ -42,9 +42,12 @@ void	ft_update_export(t_big_struct *big_s, char **var, char **cmd, int ind)
 			}
 			else
 			{
+//				if (exp_update_line(var, env, i, j) == 1)
+//					return ;
+//				mais avant de l'implementer checker si il fo pas &env
 				free(env->line);
 				env->line = malloc(1 * len_name + len_var + 2);
-				if(!env->line)
+				if (!env->line)
 					return ;
 				while (++i < len_name)
 					env->line[i] = var[0][i];
@@ -66,7 +69,7 @@ void	ft_new_env_var(t_big_struct *big_s, char **split_exp, int index)
 {
 	t_env_lst	*env;
 	t_env_lst	*new;
-	int		i;
+	int			i;
 
 	env = big_s->env_lst;
 	i = ft_lstsize_env(env);
@@ -80,13 +83,16 @@ void	ft_new_env_var(t_big_struct *big_s, char **split_exp, int index)
 	big_s->check_export = 1;
 }
 
+//	NORME TIPS
+// puree t'as fait vraiment n'importe koi la y'a rien ki va, assieds toi 5 min
+// avant de commencer a mettre les mains ds cette enorme merde
 void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 {
-	int		i;
-	int		size;
-	int		check;
-	t_env_lst	*env;
+	int			i;
+	int			size;
+	int			check;
 	char		**var;
+	t_env_lst	*env;
 
 	i = 1;
 	size = 1;
@@ -126,7 +132,8 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 		}
 		if (check == 0)
 		{
-			if (big_s->check_name && ft_strncmp(var[0], big_s->check_name, ft_strlen(var[0])) == 0)
+			if (big_s->check_name
+				&& ft_strncmp(var[0], big_s->check_name, ft_strlen(var[0])) == 0)
 			{
 				free(big_s->check_name);
 				big_s->check_name = NULL;
@@ -143,14 +150,14 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 void	ft_free_tab_special(char **tab, t_big_struct *big_s)
 {
 	t_env_lst	*env;
-	int		i;
-	int		size;
+	int			i;
+	int			size;
 
 	i = 0;
 	env = big_s->env_lst;
 	size = (ft_lstsize_env(env) - 1);
 	if (!tab)
-		return;
+		return ;
 	while (tab && tab[i] && i < size)
 	{
 		free(tab[i]);
@@ -172,7 +179,7 @@ void	ft_free_tab_special(char **tab, t_big_struct *big_s)
 
 int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
-	char		**split_export;
+	char	**split_export;
 	int		i;
 
 	i = 0;
