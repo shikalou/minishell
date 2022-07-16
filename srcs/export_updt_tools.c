@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 17:44:37 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 19:15:07 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/16 19:29:02 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_remv_plus(char *old)
 	return (result);
 }
 
-void	ft_concenv_update(t_big_struct *big_s, char **var, char **split_exp, int ind)
+void	ft_concenv_up(t_big_struct *big_s, char **var, char **split, int ind)
 {
 	int		i;
 
@@ -44,7 +44,7 @@ void	ft_concenv_update(t_big_struct *big_s, char **var, char **split_exp, int in
 		if (ft_strncmp(big_s->envp[i], var[0], ft_strlen(var[0])) == 0)
 		{
 			free(big_s->envp[i]);
-			big_s->envp[i] = ft_remv_plus(split_exp[ind]);
+			big_s->envp[i] = ft_remv_plus(split[ind]);
 			return ;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 19:02:43 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/16 20:08:42 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 			{
 				if (parsing_export(split_exp[i]) == 1)
 				{
-					ft_concenv_update(big_s, var, split_exp, i);
+					ft_concenv_up(big_s, var, split_exp, i);
 					ft_conc_update(big_s, var, split_exp, i);
 				}
 				else

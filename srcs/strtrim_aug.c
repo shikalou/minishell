@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/06/23 16:24:05 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/16 20:09:57 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	strtrim_size(char *cmd)
 	j = 0;
 	if (!cmd)
 		return (i);
-	while (cmd && cmd[i] != '\0')
+	while (cmd && cmd[i++] != '\0')
 	{
 		if (cmd[i] == '"')
 		{
@@ -37,7 +37,6 @@ int	strtrim_size(char *cmd)
 			while (cmd[i] && cmd[i] != '\'')
 				i++;
 		}
-		i++;
 	}
 	return (i - j);
 }
@@ -50,14 +49,14 @@ char	*strtrim_aug(char *cmd)
 	int		size;
 
 	size = strtrim_size(cmd);
-	i = 0;
+	i = -1;
 	j = 0;
-	if(ft_strnstr(cmd, "export ", 7) != NULL)
+	if (ft_strnstr(cmd, "export ", 7) != NULL)
 		return (cmd);
 	new_cmd = malloc(sizeof(char) * size + 1);
 	if (!new_cmd)
 		return (NULL);
-	while (cmd && cmd[i])
+	while (cmd && cmd[++i])
 	{
 		if (cmd[i] == '"')
 		{
@@ -72,11 +71,7 @@ char	*strtrim_aug(char *cmd)
 				new_cmd[j++] = cmd[i++];
 		}
 		else
-		{
-			new_cmd[j] = cmd[i];
-			j++;
-		}
-		i++;
+			new_cmd[j++] = cmd[i];
 	}
 	new_cmd[j] = '\0';
 	if (cmd)
