@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:43:58 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/15 21:52:08 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:33:36 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,16 @@ int	ft_count_strs(char const *s, char c)
 	}
 	return (k);
 }
+/*
+void	fill_strs(char **strs, const char *s1, char c, int check)
+{
+	int		i;
+	int		j;
+	
+	i = 0;
+	j = 0;
+	while (s1 && s1[i])
+	{
+		while (s1 && s1[i] != c && s1[i])
+	}
+}*/

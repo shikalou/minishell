@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:07:45 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/06/14 17:22:45 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:26:32 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (s2 == NULL || !s2 || s2[j] == '\0')
 		return ((char *)s1);
 	k = (ft_strlen(s1) + ft_strlen(s2));
-	// printf("in STRJOIN\ns1 = %s\ns2 = %s\n", s1, s2);
 	dest = malloc(sizeof(char) * (k + 1));
 	if (!dest)
 		return (NULL);
@@ -34,11 +33,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	while (s2 && s2[j])
-	{
-		dest[i] = s2[j];
-		i++;
-		j++;
-	}
+		dest[i++] = s2[j++];
 	dest[i] = '\0';
 	return (dest);
 }

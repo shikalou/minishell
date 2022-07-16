@@ -6,37 +6,13 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:01:33 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 15:30:57 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/16 19:18:12 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**add_qt_env(char **strs)
-{
-	char	**new_strs;
-	int		i;
-	int		j;
-
-	i = -1;
-	j = 0;
-	while (strs && strs[++i])
-		;
-	new_strs = malloc(sizeof(char *) * (i + 1));
-	if (!new_strs)
-		return (NULL);
-	while (j < i)
-	{
-		if (ft_strchr(strs[j], '"') == 0)
-			new_strs[j] = ft_dup_special(strs[j]);
-		j++;
-	}
-	new_strs[j] = NULL;
-	ft_free_tab(strs);
-	return (new_strs);
-}
-
-void	ft_print_export_env(t_big_struct *big_s)
+void	ft_print_export_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
 	t_env_lst	*env;
 	char		**env_strs;
@@ -53,35 +29,38 @@ void	ft_print_export_env(t_big_struct *big_s)
 	{
 		env_strs[i] = ft_strdup(env->line);
 		if (!env_strs[i])
-		{
-			ft_free_tab(env_strs);
-			return ;
-		}
+			return (ft_free_tab(env_strs));
 		env = env->next;
 		i++;
 	}
 	env_strs[i] = NULL;
 	env_strs = add_qt_env(env_strs);
-	sort_n_print_exp(env_strs, big_s);
+	sort_n_print_exp(env_strs, big_s, cmd_lst);
 	ft_free_tab(env_strs);
 }
 
-void	ft_swap(char **strs, int i, int j)
+void	env_print(char **strs, int size, t_cmd_lst *cmd_lst)
 {
-	char	*tmp;
+	int		i;
 
-	tmp = strs[i];
-	strs[i] = strs[j];
-	strs[j] = tmp;
+	i = -1;
+	while (++i <= size)
+	{
+		if (strs[i] && strs[i] != NULL && strs[i][0] != '\0')
+		{
+			ft_putstr_fd("export  ", cmd_lst->fd_out);
+			ft_putendl_fd(strs[i], cmd_lst->fd_out);
+		}
+	}
 }
 
-void	sort_n_print_exp(char **strs, t_big_struct *big_s)
+void	sort_n_print_exp(char **strs, t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
 	int			i;
 	int			j;
 	int			size;
+	int			check;
 	t_env_lst	*env;
-	int	check;
 
 	check = 0;
 	i = -1;
@@ -93,23 +72,24 @@ void	sort_n_print_exp(char **strs, t_big_struct *big_s)
 		while (++j < size)
 		{
 			check = 0;
-			if (!strs[i] || strs[i] == NULL)
-				check = 1;
-			if (!strs[j] || strs[j] == NULL)
+			if (!strs[i] || strs[i] == NULL || !strs[j] || strs[j] == NULL)
 				check = 1;
 			if (check == 0 && ft_strcmp(strs[i], strs[j]) > 0)
-				ft_swap(strs, i, j);
+				ft_swap_exp(strs, i, j);
 		}
 	}
-	i = -1;
-	while (++i <= size)
+	env_print(strs, size, cmd_lst);
+}
+
+void	ending_dup_spe(char *dst, int check, int j)
+{
+	if (check > 0)
 	{
-		if (strs[i] && strs[i] != NULL && strs[i][0] != '\0')
-		{
-			ft_putstr_fd("export  ", big_s->cmd_lst->fd_out);
-			ft_putendl_fd(strs[i], big_s->cmd_lst->fd_out);
-		}
+		dst[j] = '"';
+		dst[++j] = '\0';
 	}
+	else
+		dst[j] = 0;
 }
 
 char	*ft_dup_special(char *src)
@@ -136,12 +116,6 @@ char	*ft_dup_special(char *src)
 		else
 			dst[j++] = src[i++];
 	}
-	if (check > 0)
-	{
-		dst[j] = '"';
-		dst[++j] = '\0';
-	}
-	else
-		dst[j] = '\0';
+	ending_dup_spe(dst, check, j);
 	return (dst);
 }
