@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:09:07 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/15 20:34:20 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/16 20:47:16 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ char	*expand_first_case(t_big_struct *big_s, int i, char *cmd)
 		big_s->c_status = ft_itoa(big_s->status);
 		return (big_s->c_status);
 	}
-// function $? implemented
 	if ((j - i) == 1)
 		return ("$");
-//	on interprete
 	return (get_env_lst(cmd, (i + 1), j, big_s));
 }
 
@@ -47,7 +45,6 @@ char	*expand_second_case(t_big_struct *big_s, int i, char *cmd)
 	while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '\''
 			&& cmd[j] != '"' && cmd[j] != '$'))
 		j++;
-//	fonction $? implemented
 	if (cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
 	{
 		if (big_s->c_status != NULL)

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/15 21:05:17 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/16 20:40:57 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 			len = ft_strlen(env);
 			if (env == NULL && cmd[i])
 				i += ft_len_dollar(cmd, i);
-			else if (ft_memcmp(env, "anticonstitutionnellement", len == 0))
+			else if (ft_memcmp(env, "anticonstitutionnellement", len) == 0)
 			{
 				new_cmd[j++] = cmd[i++];
 				while (cmd[i] != '$' && cmd[i] != '\'' && cmd[i] != ' '

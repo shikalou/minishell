@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 20:09:57 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/16 20:46:14 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,14 @@ int	strtrim_size(char *cmd)
 	return (i - j);
 }
 
-char	*strtrim_aug(char *cmd)
+void	ft_fill_trim(char *new_cmd, char *cmd)
 {
-	char	*new_cmd;
-	int		i;
-	int		j;
-	int		size;
+	int	i;
+	int	j;
 
-	size = strtrim_size(cmd);
-	i = -1;
+	i = 0;
 	j = 0;
-	if (ft_strnstr(cmd, "export ", 7) != NULL)
-		return (cmd);
-	new_cmd = malloc(sizeof(char) * size + 1);
-	if (!new_cmd)
-		return (NULL);
-	while (cmd && cmd[++i])
+	while (cmd && cmd[i])
 	{
 		if (cmd[i] == '"')
 		{
@@ -71,9 +63,23 @@ char	*strtrim_aug(char *cmd)
 				new_cmd[j++] = cmd[i++];
 		}
 		else
-			new_cmd[j++] = cmd[i];
+			new_cmd[j++] = cmd[i++];
 	}
 	new_cmd[j] = '\0';
+}
+
+char	*strtrim_aug(char *cmd)
+{
+	char	*new_cmd;
+	int		size;
+
+	size = strtrim_size(cmd);
+	if (ft_strnstr(cmd, "export ", 7) != NULL)
+		return (cmd);
+	new_cmd = malloc(sizeof(char) * size + 1);
+	if (!new_cmd)
+		return (NULL);
+	ft_fill_trim(new_cmd, cmd);
 	if (cmd)
 		free(cmd);
 	return (new_cmd);
