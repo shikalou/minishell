@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 17:44:37 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 19:29:02 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/17 19:34:00 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_remv_plus(char *old)
 	return (result);
 }
 
-void	ft_concenv_up(t_big_struct *big_s, char **var, char **split, int ind)
+void	ft_up_env_exp(t_big_struct *big_s, char **var, char **split, int ind)
 {
 	int		i;
 
@@ -43,8 +43,36 @@ void	ft_concenv_up(t_big_struct *big_s, char **var, char **split, int ind)
 	{
 		if (ft_strncmp(big_s->envp[i], var[0], ft_strlen(var[0])) == 0)
 		{
+			if (var[1] && ft_strchr(var[1], '"') != 0)
+				split[ind] = ft_remv_qt_exp(split[ind]);
 			free(big_s->envp[i]);
-			big_s->envp[i] = ft_remv_plus(split[ind]);
+			big_s->envp[i] = ft_strdup(split[ind]);
+			return ;
+		}
+		i++;
+	}
+}
+
+void	ft_concenv_up(t_big_struct *big_s, char **var, char **split, int ind)
+{
+	int		i;
+	char		*tmp;
+
+	i = 0;
+	while (big_s->envp && big_s->envp[i])
+	{
+		if (ft_strncmp(big_s->envp[i], var[0], ft_strlen(var[0])) == 0)
+		{
+			if (var[1] && var[1][0] != '\0' &&ft_strchr(var[1], '"') != 0)
+			{
+				var[1] = ft_remv_qt_exp(var[1]);
+				tmp = ft_strjoin(big_s->envp[i], var[1]);
+			}
+			else
+				tmp = ft_remv_plus(split[ind]);
+			free(big_s->envp[i]);
+			big_s->envp[i] = ft_strdup(tmp);
+			free(tmp);
 			return ;
 		}
 		i++;
@@ -68,6 +96,8 @@ char	**add_qt_env(char **strs)
 	{
 		if (ft_strchr(strs[j], '"') == 0)
 			new_strs[j] = ft_dup_special(strs[j]);
+		else
+			new_strs[j] = ft_strdup(strs[j]);
 		j++;
 	}
 	new_strs[j] = NULL;

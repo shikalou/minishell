@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/15 20:47:10 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/17 18:26:32 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,16 @@ int	ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 
 int	ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
-	t_env_lst	*env;
+	char	**env;
+	int		i;
 
-	env = big_s->env_lst;
-	while (env != NULL)
+	env = big_s->envp;
+	i = 0;
+	while (env[i] != NULL)
 	{
-		if (env->line != NULL && env->line[0] && ft_strchr(env->line, '=') != 0)
-			ft_putendl_fd(env->line, cmd_lst->fd_out);
-		env = env->next;
+		if (env[i] != NULL && env[i][0] && ft_strchr(env[i], '=') != 0)
+			ft_putendl_fd(env[i], cmd_lst->fd_out);
+		i++;
 	}
 	return (1);
 }

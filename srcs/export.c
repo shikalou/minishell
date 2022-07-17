@@ -6,7 +6,7 @@
 /*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 20:08:42 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/17 19:47:59 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,10 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 					ft_conc_update(big_s, var, split_exp, i);
 				}
 				else
+				{
+					ft_up_env_exp(big_s, var, split_exp, i);
 					ft_update_export(big_s, var, split_exp, i);
+				}
 				free(split_exp[0]);
 				split_exp[0] = NULL;
 				ft_free_tab(var);
@@ -178,6 +181,9 @@ void	ft_free_tab_special(char **tab, t_big_struct *big_s)
 		XOK	 export a+=123 a=po a+="" a=lol
 		XOK	le last case ki bug c export a+=123 a=lol
 		XOK	y'a bcp de pblm avec split du futur genre des conditionnal jump ou des trucs kom ca
+	a= a+=1223 a="haha"
+	ca normalement c bon il reste une last dingz avec
+	a =  a="haha" a+=123 lol
 */
 
 int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)

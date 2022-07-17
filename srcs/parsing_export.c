@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/15 22:02:53 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/17 19:39:40 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 		free(cmd[ind]);
 		return ;
 	}
+	printf("test %s et %s\n", var[0], var[1]);
 	while (env != NULL)
 	{
 		if (ft_memcmp(env->line, var[0], len_name) == 0)
