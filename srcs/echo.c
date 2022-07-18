@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 13:19:06 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/18 15:51:01 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,48 +28,39 @@ int	ft_check_echo_n(char *s)
 	return (1);
 }
 
-//too many line mais va falloir voir comment case goupille avec cmd_lst->command
+void	echo_putstr(t_big_struct *big_s, t_cmd_lst *cmd_lst, int i)
+{
+	ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
+	while (big_s->spaced_cmd[++i])
+	{
+		ft_putchar_fd(' ', cmd_lst->fd_out);
+		ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
+	}
+}
+
 int	ft_echo(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
 	int	i;
 
 	i = 1;
-/*
-	la meilleur tech serait de reprendre cmd_lst->command parce ke c la seule
-	str ki conserve les espaces kon ait a dispo ici
-	- mais du coup juste pour les putstr car les check de memcmp sont carres
-	- et checker le nombre d'espaces entre echo et le reste (use strisalpha)
-	- on update ce quon va print ds une str ki dup cmd_lst sans le echo koi
-*/
 	if (big_s->spaced_cmd[i] && ft_memcmp(big_s->spaced_cmd[i], "-n", 2) == 0)
 	{
 		if (ft_check_echo_n(big_s->spaced_cmd[i]))
 		{
 			while (ft_check_echo_n(big_s->spaced_cmd[i]))
 				i++;
-			ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
-			if (big_s->spaced_cmd[i])
-			{
-				while (big_s->spaced_cmd[++i])
-				{
-					ft_putchar_fd(' ', cmd_lst->fd_out);
-					ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
-				}
-			}
-			return (0);
+			echo_putstr(big_s, cmd_lst, i);
+			big_s->status = 0;
+			return (1);
 		}
 	}
-	else if (big_s->spaced_cmd[i])
+	if (big_s->spaced_cmd[i])
 	{
-		ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
-		while (big_s->spaced_cmd[++i])
-		{
-			ft_putchar_fd(' ', cmd_lst->fd_out);
-			ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
-		}
+		echo_putstr(big_s, cmd_lst, i);
 		ft_putchar_fd('\n', cmd_lst->fd_out);
 	}
 	else
 		ft_putchar_fd('\n', cmd_lst->fd_out);
-	return (0);
+	big_s->status = 0;
+		return (1);
 }

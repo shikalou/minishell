@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:29:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 13:00:25 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/18 15:35:36 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
 	return (pid);
 }
 
-void	ft_firstcheck(t_big_struct *b, t_cmd_lst *cmd_lst)
+static void	ft_firstcheck(t_big_struct *b, t_cmd_lst *cmd_lst)
 {
 	if (cmd_lst->fd_in != 0)
 		close(cmd_lst->fd_in);

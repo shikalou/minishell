@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 11:28:34 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/18 15:56:13 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 		return (1);
 	}
 	ft_putendl_fd(big_struct->absolut_path, cmd_lst->fd_out);
-	return (0);
+	big_struct->status = 0;
+	return (1);
 }
 
 int	ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
@@ -52,20 +53,11 @@ int	ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 int	ft_check_builtin_multi(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
 	if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "pwd") == 0)
-	{
-		ft_pwd(big_s, cmd_lst);
-		return (1);
-	}
+		return (ft_pwd(big_s, cmd_lst));
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "echo") == 0)
-	{
-		big_s->status = ft_echo(big_s, cmd_lst);
-		return (1);
-	}
+		return (ft_echo(big_s, cmd_lst));
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "cd") == 0)
-	{
-		big_s->status = ft_cd(big_s);
-		return (1);
-	}
+		return (big_s->status = ft_cd(big_s));
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "export") == 0)
 		return (ft_export(big_s, cmd_lst));
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "exit") == 0)

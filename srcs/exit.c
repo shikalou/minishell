@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:39:08 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 10:44:16 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/18 14:12:17 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	exit_next(t_big_struct *b)
 		if (b->spaced_cmd[1][0] != '-')
 			i = (b->status % 256);
 		else
-			i = (/*256 - */b->status % 256);
+			i = (b->status % 256);
 	}
 	ft_free_tab(b->spaced_cmd);
 	ft_free_child(b, 1);
