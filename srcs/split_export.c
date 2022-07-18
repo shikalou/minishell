@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:55:04 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 18:52:19 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 20:46:11 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,19 @@ void	fill_str(char **result, char *var, char c)
 	int		i;
 	int		j;
 	int		k;
+	int		check;
 
 	i = -1;
 	j = 0;
 	k = 0;
+	check = 0;
 	while (var && var[++i])
 	{
-		if (var[i] == c)
+		if (var[i] == c && check == 0)
 		{
 			result[j][k] = '\0';
 			j++;
+			check++;
 			k = 0;
 		}
 		else
@@ -65,9 +68,9 @@ char	**ft_split_export(char *var, char c)
 	result[0] = malloc(1 * (i + 1));
 	if (!result[0])
 		return (se_clean(result, 0));
-	while (var[i] == c)
+	if (var[i] == c)
 		i++;
-	while (var && var[i] && var[i++] != c)
+	while (var && var[i++] != '\0')
 		j++;
 	result[1] = malloc(1 * (j + 1));
 	if (!result[1])

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 17:44:37 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/18 11:06:01 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/18 21:10:28 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_up_env_exp(t_big_struct *big_s, char **var, char **split, int ind)
 	}
 }
 
-void	ft_concenv_up(t_big_struct *big_s, char **var, char **split, int ind)
+void	ft_concenv_up(t_big_struct *big_s, char **var)
 {
 	int		i;
 	char	*tmp;
@@ -69,7 +69,7 @@ void	ft_concenv_up(t_big_struct *big_s, char **var, char **split, int ind)
 				tmp = ft_strjoin(big_s->envp[i], var[1]);
 			}
 			else
-				tmp = ft_remv_plus(split[ind]);
+				tmp = ft_strjoin(big_s->envp[i], var[1]);
 			free(big_s->envp[i]);
 			big_s->envp[i] = ft_strdup(tmp);
 			free(tmp);

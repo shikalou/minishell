@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/17 19:39:40 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 21:10:51 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 		free(cmd[ind]);
 		return ;
 	}
-	printf("test %s et %s\n", var[0], var[1]);
 	while (env != NULL)
 	{
 		if (ft_memcmp(env->line, var[0], len_name) == 0)
@@ -61,6 +60,7 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 			if (var[1] && ft_strchr(var[1], '"') == 0)
 			{
 				free(env->line);
+				printf("tmp = %s\n", tmp);
 				env->line = ft_strjoin(tmp, var[1]);
 			}
 			else
@@ -135,15 +135,11 @@ int	parsing_export(char *var)
 	i = 0;
 	if (!var)
 		return (-1);
-	if (var[i] && var[i] == ' ')
-	{
-		while (var[i] && var[i] == ' ')
+	while (var[i] && var[i] == ' ')
 			i++;
-	}
 	if (var[i] && (ft_isalpha(var[i]) == 0 && var[i] != '_'))
 		return (-1);
-	i++;
-	while (var[i])
+	while (var[++i])
 	{
 		if (var[i] == '=')
 			return (0);
@@ -156,7 +152,6 @@ int	parsing_export(char *var)
 		}
 		else if (var[i] != '_' && (ft_isalnum(var[i]) == 0))
 			return (-1);
-		i++;
 	}
 	return (0);
 }

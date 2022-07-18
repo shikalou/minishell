@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/15 22:05:03 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 20:28:26 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,30 +58,26 @@ char	*check_spe_char(char *cmd)
 int	ft_checkquotes(char *cmd)
 {
 	int	i;
-	int	check_s;
-	int	check_d;
 
 	i = -1;
-	check_s = 0;
-	check_d = 0;
-	while (cmd[++i])
+	while (cmd && cmd[++i])
 	{
 		if (cmd[i] && cmd[i] == '\'')
 		{
 			while (cmd[i] && cmd[++i] && cmd[i] != '\'')
 				;
 			if (!cmd[i])
-				check_s++;
+				return(1);
 		}
 		if (cmd[i] && cmd[i] == '\"')
 		{
 			while (cmd[i] && cmd[++i] && cmd[i] != '\"')
 				;
 			if (!cmd[i])
-				check_d++;
+				return(1);
 		}
 	}
-	return (check_d + check_s);
+	return (0);
 }
 
 int	check_after_pipe(char *cmd, char c)
