@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/14 17:52:28 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/18 10:46:27 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,8 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
-void	ft_free_between(t_big_struct *big_struct)
+void	ft_free_between_two(t_big_struct *big_struct)
 {
-	if (big_struct->cmd_lst)
-	{
-		ft_lstclear_cmd(big_struct->cmd_lst);
-		big_struct->cmd_lst = NULL;
-	}
-	if (big_struct->input)
-	{
-		ft_free_tab(big_struct->input);
-		big_struct->input = NULL;
-	}
-	if (big_struct->spaced_cmd != NULL)
-	{
-		ft_free_tab(big_struct->spaced_cmd);
-		big_struct->spaced_cmd = NULL;
-	}
 	if (big_struct->spaced_par)
 	{
 		ft_free_tab(big_struct->spaced_par);
@@ -65,6 +50,26 @@ void	ft_free_between(t_big_struct *big_struct)
 		free(big_struct->c_status);
 		big_struct->c_status = NULL;
 	}
+}
+
+void	ft_free_between(t_big_struct *big_struct)
+{
+	if (big_struct->cmd_lst)
+	{
+		ft_lstclear_cmd(big_struct->cmd_lst);
+		big_struct->cmd_lst = NULL;
+	}
+	if (big_struct->input)
+	{
+		ft_free_tab(big_struct->input);
+		big_struct->input = NULL;
+	}
+	if (big_struct->spaced_cmd != NULL)
+	{
+		ft_free_tab(big_struct->spaced_cmd);
+		big_struct->spaced_cmd = NULL;
+	}
+	ft_free_between_two(big_struct);
 }
 
 void	ft_free_child(t_big_struct *big_struct, int i)

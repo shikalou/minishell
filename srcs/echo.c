@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/15 20:56:21 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 13:19:06 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_check_echo_n(char *s)
 	return (1);
 }
 
-// too many line mais va falloir voir comment ca se goupille avec cmd_lst->command
+//too many line mais va falloir voir comment case goupille avec cmd_lst->command
 int	ft_echo(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
 	int	i;

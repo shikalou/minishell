@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/17 18:26:32 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 11:28:34 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
+	if (big_struct->absolut_path != NULL)
+	{
+		free(big_struct->absolut_path);
+		big_struct->absolut_path = NULL;
+	}
 	big_struct->absolut_path = getcwd(NULL, 0);
 	if (!big_struct->absolut_path)
 	{
@@ -40,8 +45,8 @@ int	ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	return (1);
 }
 
-//		norme to-dos : 
-// voir comment on peut update les big_s->status direct 
+//		norme to-dos :
+// voir comment on peut update les big_s->status direct
 //	ds les fonc pr return 1 pour la norme
 // pareil pr ft_pwd sense return un int mais sans ke son retour soit check
 int	ft_check_builtin_multi(t_big_struct *big_s, t_cmd_lst *cmd_lst)
@@ -58,7 +63,7 @@ int	ft_check_builtin_multi(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	}
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "cd") == 0)
 	{
-		big_s->status = ft_cd(big_s, cmd_lst);
+		big_s->status = ft_cd(big_s);
 		return (1);
 	}
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "export") == 0)

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/17 18:59:38 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 12:30:15 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,15 +135,17 @@ void			ft_free_tab(char **tab);
 void			ft_free_child(t_big_struct *big_struct, int i);
 void			ft_free_between(t_big_struct *big_struct);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
+void			ft_close_fdinout(t_cmd_lst *cmd_lst);
 
 /*		--> UTILS EXEC				*/
 void			ft_wait(t_big_struct *big_struct);
+void			ft_dup(t_cmd_lst *cmd_lst);
 char			*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd);
 char			*ft_check_slash(t_big_struct *big_struct);
 int				ft_strcmp(char *s1, char *s2);
 
 /*		--> BUILTIN				*/
-int				ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
+int				ft_cd(t_big_struct *big_struct);
 int				ft_echo(t_big_struct *big_s, t_cmd_lst *cmd_lst);
 int				ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst);
 int				ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst);
@@ -182,7 +184,7 @@ void			ft_swap(char **strs, int i, int j);
 /*		--> HEREDOC, APPEND & REDIREC		*/
 void			ft_heredoc_main(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i);
 pid_t			ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i);
-void			ft_open_heredoc(t_big_struct *big_struct);
+void			ft_open_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 
 /*			->utils				*/
 char			*ft_strnstr_hd(char *s1, char *s2, size_t n, size_t i);

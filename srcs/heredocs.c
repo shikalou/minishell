@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:29:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/14 15:58:06 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/18 13:00:25 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_open_heredoc(t_big_struct *big_struct)
+void	ft_open_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst)
 {
 	char	file[10];
 	char	c[100];
@@ -36,10 +36,11 @@ void	ft_open_heredoc(t_big_struct *big_struct)
 	}
 	file[j] = '\0';
 	close(fd_rand);
-	big_struct->random_file = ft_strjoin("/tmp/", file);
+	b->random_file = ft_strjoin("/tmp/", file);
+	cmd_lst->fd_in = open(b->random_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 }
 
-int	ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i)
+int	ft_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
 {
 	char	*input;
 	pid_t	pid;
@@ -49,61 +50,56 @@ int	ft_heredoc(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i)
 	{
 		signal(SIGINT, sig_handler_heredoc);
 		input = readline("> ");
-		if (!input)
-		{
-			printf("warning: here_doc delimited by end-of-file (wanted `%s')\n", big_struct->spaced_par[i]);
-			i = -1;
-		}
-		while (i != -1 && ft_strcmp(input, big_struct->spaced_par[i]) != 0)
+		while (input && ft_strcmp(input, b->spaced_par[i]) != 0)
 		{
 			write(cmd_lst->fd_in, input, ft_strlen(input));
 			write(cmd_lst->fd_in, "\n", 1);
 			free(input);
 			input = readline("> ");
-			if (!input)
-			{
-				printf("warning: here_doc delimited by end-of-file (wanted `%s')\n", big_struct->spaced_par[i]);
-				break ;
-			}
+		}
+		if (!input)
+		{
+			printf("warning: here_doc delimited by EOF (wanted `%s')\n",
+				b->spaced_par[i]);
 		}
 		close(cmd_lst->fd_in);
-		ft_free_child(big_struct, 0);
+		ft_free_child(b, 0);
 		exit(0);
 	}
 	return (pid);
 }
 
-void	ft_heredoc_main(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i)
+void	ft_firstcheck(t_big_struct *b, t_cmd_lst *cmd_lst)
+{
+	if (cmd_lst->fd_in != 0)
+		close(cmd_lst->fd_in);
+	if (b->random_file != NULL)
+	{
+		unlink(b->random_file);
+		free(b->random_file);
+		b->random_file = NULL;
+	}
+}
+
+void	ft_heredoc_main(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
 {
 	pid_t	pid;
 
-	get_value(big_struct, cmd_lst, 0);
+	get_value(b, cmd_lst, 0);
 	signal(SIGINT, SIG_IGN);
-	if (cmd_lst->fd_in != 0)
-		close(cmd_lst->fd_in);
-	if (big_struct->random_file != NULL)
-	{
-		unlink(big_struct->random_file);
-		free(big_struct->random_file);
-		big_struct->random_file = NULL;
-	}
-	ft_open_heredoc(big_struct);
-	cmd_lst->fd_in = open(big_struct->random_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	pid = ft_heredoc(big_struct, cmd_lst, i);
-	waitpid(pid, &big_struct->status, 0);
+	ft_firstcheck(b, cmd_lst);
+	ft_open_heredoc(b, cmd_lst);
+	pid = ft_heredoc(b, cmd_lst, i);
+	waitpid(pid, &b->status, 0);
 	close(cmd_lst->fd_in);
-	if (WEXITSTATUS(big_struct->status) == 2)
+	if (WEXITSTATUS(b->status) == 2)
 	{
-		ft_free_tab(big_struct->spaced_par);
-		big_struct->spaced_par = NULL;
-		ft_lstclear_cmd(big_struct->cmd_lst);
-		big_struct->cmd_lst = NULL;
-		big_struct->status = 130;
+		ft_free_tab(b->spaced_par);
+		b->spaced_par = NULL;
+		ft_lstclear_cmd(b->cmd_lst);
+		b->cmd_lst = NULL;
+		b->status = 130;
 	}
 	else
-	{
-		printf("%d %s\n", cmd_lst->fd_in, big_struct->random_file);
-		cmd_lst->fd_in = open(big_struct->random_file, O_RDONLY, 0644);
-		printf("after %d %s\n", cmd_lst->fd_in, big_struct->random_file);
-	}
+		cmd_lst->fd_in = open(b->random_file, O_RDONLY, 0644);
 }

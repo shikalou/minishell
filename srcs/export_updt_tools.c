@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_updt_tools.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 17:44:37 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/17 19:34:00 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 11:06:01 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ void	ft_up_env_exp(t_big_struct *big_s, char **var, char **split, int ind)
 void	ft_concenv_up(t_big_struct *big_s, char **var, char **split, int ind)
 {
 	int		i;
-	char		*tmp;
+	char	*tmp;
 
 	i = 0;
 	while (big_s->envp && big_s->envp[i])
 	{
 		if (ft_strncmp(big_s->envp[i], var[0], ft_strlen(var[0])) == 0)
 		{
-			if (var[1] && var[1][0] != '\0' &&ft_strchr(var[1], '"') != 0)
+			if (var[1] && var[1][0] != '\0' && ft_strchr(var[1], '"') != 0)
 			{
 				var[1] = ft_remv_qt_exp(var[1]);
 				tmp = ft_strjoin(big_s->envp[i], var[1]);

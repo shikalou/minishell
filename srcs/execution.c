@@ -6,33 +6,11 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/15 21:04:28 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 13:08:52 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*void	ft_heredoc(t_big_struct *big_struct)
-{
-	int			i;
-	t_cmd_lst	*head;
-
-	i = 0;
-	head = big_struct->cmd_lst;
-	while (head)
-	{
-		if (ft_strnstr_hd(head->command, "<<", ft_strlen(head->command), i))
-		{
-			while (get_next_heredoc(head->command, "<<", i) > 0)
-			{
-				printf("strnstr = %s\n ", ft_strnstr_hd(head->command, "<<", ft_strlen(head->command), i));
-				i = (get_next_heredoc(head->command, "<<", i));
-			}
-		}
-		i = 0;
-		head = head->next;
-	}
-}*/
 
 int	ft_simple_exec(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
@@ -41,7 +19,6 @@ int	ft_simple_exec(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 		return (1);
 	if (ft_check_builtin_multi(big_s, cmd_lst) == 0)
 	{
-		printf("fd in = %d\n", cmd_lst->fd_in);
 		cmd_lst->pid = fork();
 		if (cmd_lst->pid == 0)
 		{
@@ -49,8 +26,7 @@ int	ft_simple_exec(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 			{
 				signal(SIGINT, SIG_DFL);
 				signal(SIGQUIT, sig_handler_cmd);
-				dup2(cmd_lst->fd_in, 0);
-				dup2(cmd_lst->fd_out, 1);
+				ft_dup(cmd_lst);
 				execve(big_s->cmd_updated, big_s->spaced_cmd, big_s->envp);
 				perror("execve");
 			}
@@ -61,10 +37,7 @@ int	ft_simple_exec(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	}
 	else
 		return (1);
-	if (cmd_lst->fd_in != 0)
-		close(cmd_lst->fd_in);
-	if (cmd_lst->fd_out != 1)
-		close(cmd_lst->fd_out);
+	ft_close_fdinout(cmd_lst);
 	return (0);
 }
 
@@ -78,7 +51,6 @@ void	ft_exec(t_big_struct *big_struct)
 	{
 		if (ft_simple_exec(big_struct, cmd_lst) == 0)
 		{
-			printf("pid = %d\n", cmd_lst->pid);
 			waitpid(cmd_lst->pid, &big_struct->status, 0);
 			if (WIFSIGNALED(big_struct->status))
 			{

@@ -6,20 +6,18 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 20:40:57 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 10:55:55 by ldinant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
-{
 /*
-	le (void)big_struct --> je comprends pas du tout pk il est void et du coup 
-	comment on a acces a l'env sans passer par big_struct (et du coup a koi sert 
+	le (void)big_struct --> je comprends pas du tout pk il est void et du coup
+	comment on a acces a l'env sans passer par big_struct (et du coup a koi sert
 	la fonction et pk elle s'appelle get env lst mdrr jui perdue)
 */
-	(void)big_struct;
+char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
+{
 	char		name[j];
 	t_env_lst	*head;
 	int			k;

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:08:11 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/15 20:55:19 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 11:39:45 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,11 @@ void	ft_update_oldpwd(t_big_struct *big_struct, char *s)
 	}
 }
 
-//	too many lines
-/* (ptetre le if(len == 1) a mettre ds une func
-	qui retournerait un int genre ds ft_cd on aurait :)
-	if (len == 1)
-		return (ft_cd_len_one(big_struct));
-
-et  ft_cd_len_one :
-
 int	ft_cd_len_one(t_big_struct *big_s)
 {
 	int		ret;
 	char	*home;
 
-	ft_update_oldpwd(big_s, "OLDPWD=");
 	home = ft_get_home(big_s, "HOME=");
 	ret = chdir(home);
 	if (ret != 0)
@@ -80,37 +71,22 @@ int	ft_cd_len_one(t_big_struct *big_s)
 	ft_update_oldpwd(big_s, "PWD=");
 	return (0);
 }
-*/
-int	ft_cd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
+
+int	ft_cd(t_big_struct *big_struct)
 {
-	int		i;
 	int		ret;
 	int		len;
-	char	*home;
 
-	i = 1;
-	(void)cmd_lst;
 	len = ft_count_tab(big_struct->spaced_cmd);
 	if (len > 2)
 	{
 		ft_putendl_fd("cd: too many arguments", 2);
 		return (1);
 	}
-	if (len == 1)
-	{
-		ft_update_oldpwd(big_struct, "OLDPWD=");
-		home = ft_get_home(big_struct, "HOME=");
-		ret = chdir(home);
-		if (ret != 0)
-		{
-			perror("chdir");
-			return (1);
-		}
-		ft_update_oldpwd(big_struct, "PWD=");
-		return (0);
-	}
 	ft_update_oldpwd(big_struct, "OLDPWD=");
-	ret = chdir(big_struct->spaced_cmd[i]);
+	if (len == 1)
+		return (ft_cd_len_one(big_struct));
+	ret = chdir(big_struct->spaced_cmd[1]);
 	if (ret != 0)
 	{
 		perror("chdir");

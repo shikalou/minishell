@@ -6,98 +6,11 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 17:36:53 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/18 12:12:49 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	besoin d'adapter les strnstr aux quotes d'ou ajout du split quotes
-	ex = "pwd" ne doit pas s'exec , "pwd" pwd --> doit s'exec
-*/
-int	get_next_heredoc(char *s1, char *s2, int i)
-{
-	int		j;
-	int		temp;
-
-	if (s2[0] == '\0')
-		return (0);
-	while (s1[i])
-	{
-		j = 0;
-		if (s1[i] == '"' || s1[i] == '\'')
-			i += (ft_split_quotes(s1, i) + 1);
-		temp = i;
-		while (s1[i] && (s1[i] == s2[j]))
-		{
-			if (s2[j + 1] == '\0')
-				return (i);
-			else
-			{
-				i++;
-				j++;
-			}
-		}
-		i = temp;
-		i++;
-	}
-	return (0);
-}
-
-char	*ft_strnstr_exec(char *s1, char *s2, size_t n)
-{
-	size_t	i;
-	size_t	j;
-	size_t	temp;
-
-	i = 0;
-	if ((!s2 || s2[0] == '\0') && s1)
-		return (s1);
-	while (s1 && s1[i])
-	{
-		j = 0;
-		if (s1[i] == '"' || s1[i] == '\'')
-			i += (ft_split_quotes(s1, i) + 1);
-		temp = i;
-		while (s1[i] && s2[j] && s1[i] == s2[j] && i < n)
-		{
-			if (!s2[j + 1] || s2[j + 1] == '\0')
-				return (&((char *)s1)[temp]);
-			i++;
-			j++;
-		}
-		i = temp + 1;
-	}
-	return (NULL);
-}
-
-char	*ft_strnstr_hd(char *s1, char *s2, size_t n, size_t i)
-{
-	size_t	j;
-	size_t	temp;
-
-	if (s2[0] == '\0')
-		return ((char *)s1);
-	while (s1[i])
-	{
-		temp = i;
-		j = 0;
-		while (s1[i] == s2[j] && i < n)
-		{
-			if (s2[j + 1] == '\0')
-				return (&((char *)s1)[temp]);
-			else
-			{
-				i++;
-				j++;
-			}
-		}
-		i = temp;
-		i++;
-	}
-	return (NULL);
-}
 
 char	*ft_check_slash(t_big_struct *big_struct)
 {
@@ -125,7 +38,8 @@ char	*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd)
 			temp = ft_strjoin(big_struct->path[i], "/");
 			big_struct->cmd_updated = ft_strjoin(temp, spaced_cmd[0]);
 			free(temp);
-			if (big_struct->cmd_updated && access(big_struct->cmd_updated, X_OK) == 0)
+			if (big_struct->cmd_updated
+				&& access(big_struct->cmd_updated, X_OK) == 0)
 				return (big_struct->cmd_updated);
 			i++;
 			free(big_struct->cmd_updated);
@@ -152,4 +66,18 @@ int	ft_strcmp(char *s1, char *s2)
 			return (s1[i] - s2[i]);
 	}
 	return (0);
+}
+
+void	ft_close_fdinout(t_cmd_lst *cmd_lst)
+{
+	if (cmd_lst->fd_in != 0)
+		close(cmd_lst->fd_in);
+	if (cmd_lst->fd_out != 1)
+		close(cmd_lst->fd_out);
+}
+
+void	ft_dup(t_cmd_lst *cmd_lst)
+{
+	dup2(cmd_lst->fd_in, 0);
+	dup2(cmd_lst->fd_out, 1);
 }
