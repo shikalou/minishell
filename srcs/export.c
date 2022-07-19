@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 17:22:10 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:48 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_exp(t_big_struct *big_s, char **var, char **cmd, int ind)
+void	update_exp(t_big *big_s, char **var, char **cmd, int ind)
 {
 	int			i;
 	int			j;
@@ -45,7 +45,7 @@ void	update_exp(t_big_struct *big_s, char **var, char **cmd, int ind)
 	free(cmd[ind]);
 }
 
-void	ft_new_env_var(t_big_struct *big_s, char **split_exp, int index)
+void	ft_new_env_var(t_big *big_s, char **split_exp, int index)
 {
 	t_env_lst	*env;
 	t_env_lst	*new;
@@ -66,7 +66,7 @@ void	ft_new_env_var(t_big_struct *big_s, char **split_exp, int index)
 //	NORME TIPS
 // puree t'as fait vraiment n'importe koi la y'a rien ki va, assieds toi 5 min
 // avant de commencer a mettre les mains ds cette enorme merde
-void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
+void	ft_change_env_lst(t_big *big_s, char **split_exp)
 {
 	int			i;
 	int			size;
@@ -129,7 +129,7 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 	}
 }
 
-void	ft_free_tab_special(char **tab, t_big_struct *big_s)
+void	ft_free_tab_special(char **tab, t_big *big_s)
 {
 	t_env_lst	*env;
 	int			i;
@@ -162,7 +162,7 @@ void	ft_free_tab_special(char **tab, t_big_struct *big_s)
 	a =  a="haha" a+=123 lol
 */
 
-int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+int	ft_export(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	char	**split_export;
 	int		i;

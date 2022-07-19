@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 14:10:32 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:40 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_check_echo_n(char *s)
 	return (1);
 }
 
-void	echo_putstr(t_big_struct *big_s, t_cmd_lst *cmd_lst, int i)
+void	echo_putstr(t_big *big_s, t_cmd_lst *cmd_lst, int i)
 {
 	ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
 	while (big_s->spaced_cmd[++i])
@@ -38,7 +38,7 @@ void	echo_putstr(t_big_struct *big_s, t_cmd_lst *cmd_lst, int i)
 	}
 }
 
-int	ft_echo(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+int	ft_echo(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 10:46:27 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:49 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
-void	ft_free_between_two(t_big_struct *big_struct)
+void	ft_free_between_two(t_big *big_struct)
 {
 	if (big_struct->spaced_par)
 	{
@@ -52,7 +52,7 @@ void	ft_free_between_two(t_big_struct *big_struct)
 	}
 }
 
-void	ft_free_between(t_big_struct *big_struct)
+void	ft_free_between(t_big *big_struct)
 {
 	if (big_struct->cmd_lst)
 	{
@@ -72,7 +72,7 @@ void	ft_free_between(t_big_struct *big_struct)
 	ft_free_between_two(big_struct);
 }
 
-void	ft_free_child(t_big_struct *big_struct, int i)
+void	ft_free_child(t_big *big_struct, int i)
 {
 	if (big_struct->c_status != NULL)
 		free(big_struct->c_status);

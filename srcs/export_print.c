@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:01:33 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 19:18:12 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:46 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_export_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+void	ft_print_export_env(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	t_env_lst	*env;
 	char		**env_strs;
@@ -54,7 +54,7 @@ void	env_print(char **strs, int size, t_cmd_lst *cmd_lst)
 	}
 }
 
-void	sort_n_print_exp(char **strs, t_big_struct *big_s, t_cmd_lst *cmd_lst)
+void	sort_n_print_exp(char **strs, t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	int			i;
 	int			j;

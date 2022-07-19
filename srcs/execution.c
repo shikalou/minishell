@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 13:08:52 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:42 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_simple_exec(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+int	ft_simple_exec(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	big_s->spaced_cmd = ft_split(big_s->cmd_lst->command, ' ');
 	if (big_s->spaced_cmd[0] == NULL)
@@ -41,7 +41,7 @@ int	ft_simple_exec(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	return (0);
 }
 
-void	ft_exec(t_big_struct *big_struct)
+void	ft_exec(t_big *big_struct)
 {
 	t_cmd_lst	*cmd_lst;
 

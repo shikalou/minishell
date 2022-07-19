@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 16:33:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/17 19:34:32 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:46 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_remv_qt_exp(char *var)
 	return (result);
 }
 
-char	**ft_addback_tab(t_big_struct *big_s, char **envp, char *to_add)
+char	**ft_addback_tab(t_big *big_s, char **envp, char *to_add)
 {
 	int		i;
 	int		size_tot;

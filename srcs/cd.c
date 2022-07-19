@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:08:11 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 14:15:35 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:38 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_count_tab(char **tab)
 	return (i);
 }
 
-char	*ft_get_home(t_big_struct *big_struct, char *env)
+char	*ft_get_home(t_big *big_struct, char *env)
 {
 	t_env_lst	*env_lst;
 
@@ -36,7 +36,7 @@ char	*ft_get_home(t_big_struct *big_struct, char *env)
 	return (NULL);
 }
 
-void	ft_update_oldpwd(t_big_struct *big_struct, char *s)
+void	ft_update_oldpwd(t_big *big_struct, char *s)
 {
 	t_env_lst	*env_lst;
 	char		*str;
@@ -56,7 +56,7 @@ void	ft_update_oldpwd(t_big_struct *big_struct, char *s)
 	}
 }
 
-int	ft_cd_len_one(t_big_struct *big_s)
+int	ft_cd_len_one(t_big *big_s)
 {
 	int		ret;
 	char	*home;
@@ -73,7 +73,7 @@ int	ft_cd_len_one(t_big_struct *big_s)
 	return (1);
 }
 
-int	ft_cd(t_big_struct *big_struct)
+int	ft_cd(t_big *big_struct)
 {
 	int		ret;
 	int		len;

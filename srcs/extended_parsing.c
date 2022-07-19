@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 14:27:38 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:48 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	comment on a acces a l'env sans passer par big_struct (et du coup a koi sert
 	la fonction et pk elle s'appelle get env lst mdrr jui perdue)
 */
-char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
+char	*get_env_lst(char *cmd, int i, int j, t_big *big_struct)
 {
 	char		name[100000];
 	t_env_lst	*head;
@@ -40,7 +40,7 @@ char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
 	return (NULL);
 }
 
-char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
+char	*ft_get_env_var(t_big *big_struct, char *cmd, int index)
 {
 	int		i;
 
@@ -69,7 +69,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 	return (NULL);
 }
 
-int	get_right_size(char *cmd, t_big_struct *big_struct)
+int	get_right_size(char *cmd, t_big *big_struct)
 {
 	int	i;
 	int	count;
@@ -96,7 +96,7 @@ int	get_right_size(char *cmd, t_big_struct *big_struct)
 }
 
 // elle elle va etre dure a reduire lol yoloooo
-char	*extended_dollar(char *cmd, t_big_struct *big_struct)
+char	*extended_dollar(char *cmd, t_big *big_struct)
 {
 	char	*new_cmd;
 	char	*env;
@@ -146,7 +146,7 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 	return (new_cmd);
 }
 
-void	parsing_quotes(t_big_struct *big_struct)
+void	parsing_quotes(t_big *big_struct)
 {
 	t_cmd_lst	*head;
 	char		*tmp;

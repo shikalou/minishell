@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/14 15:58:06 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:51 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	shellmini(t_big_struct *big_struct)
+void	shellmini(t_big *big_struct)
 {
 	char	*cmd;
 
@@ -35,11 +35,11 @@ void	shellmini(t_big_struct *big_struct)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_big_struct	*big_struct;
+	t_big	*big_struct;
 
 	(void)ac;
 	(void)av;
-	big_struct = ft_init_big_struct(envp);
+	big_struct = ft_init_big(envp);
 	if (!big_struct)
 		return (1);
 	get_value(big_struct, NULL, 0);

@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 16:47:29 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:45 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
+void	ft_conc_update(t_big *big_s, char **var, char **cmd, int ind)
 {
 	t_env_lst		*env;
 	int				len_name;

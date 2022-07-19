@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_cases.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:09:07 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 20:47:16 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:44 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_first_case(t_big_struct *big_s, int i, char *cmd)
+char	*expand_first_case(t_big *big_s, int i, char *cmd)
 {
 	int		j;
 
@@ -35,7 +35,7 @@ char	*expand_first_case(t_big_struct *big_s, int i, char *cmd)
 	return (get_env_lst(cmd, (i + 1), j, big_s));
 }
 
-char	*expand_second_case(t_big_struct *big_s, int i, char *cmd)
+char	*expand_second_case(t_big *big_s, int i, char *cmd)
 {
 	int		j;
 

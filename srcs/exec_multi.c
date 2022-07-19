@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 14:09:08 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:41 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	last_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
+void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 {
 	malloc_spaced_cmd(b, cmd_lst);
 	cmd_lst->pid = fork();
@@ -37,7 +37,7 @@ void	last_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 	ft_close_fdinout(cmd_lst);
 }
 
-void	middle_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
+void	middle_exec(t_big *b, t_cmd_lst *cmd_lst)
 {
 	int		fd_temp;
 
@@ -66,7 +66,7 @@ void	middle_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 	ft_close_fdinout(cmd_lst);
 }
 
-void	first_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
+void	first_exec(t_big *b, t_cmd_lst *cmd_lst)
 {
 	malloc_spaced_cmd(b, cmd_lst);
 	cmd_lst->pid = fork();
@@ -94,7 +94,7 @@ void	first_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 	ft_close_fdinout(cmd_lst);
 }
 
-void	ft_wait(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
+void	ft_wait(t_big *big_struct, t_cmd_lst *cmd_lst)
 {
 	while (cmd_lst)
 	{
@@ -121,7 +121,7 @@ void	ft_wait(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	}
 }
 
-void	ft_multi_pipe(t_big_struct *big_struct)
+void	ft_multi_pipe(t_big *big_struct)
 {
 	t_cmd_lst	*head;
 	int			i;

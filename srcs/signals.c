@@ -6,15 +6,15 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:44:56 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 10:08:07 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:40:57 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_value(t_big_struct *big_struct, t_cmd_lst *cmd_lst, int i)
+void	get_value(t_big *big_struct, t_cmd_lst *cmd_lst, int i)
 {
-	static t_big_struct	*static_struct;
+	static t_big		*static_struct;
 	static t_cmd_lst	*static_cmd_lst;
 
 	if (i == 0)

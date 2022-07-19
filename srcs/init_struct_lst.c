@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/15 21:36:45 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:50 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ char	**ft_recover_path(char **envp)
 	return (NULL);
 }
 
-t_big_struct	*ft_init_big_struct(char **envp)
+t_big	*ft_init_big(char **envp)
 {
-	t_big_struct	*big_struct;
+	t_big	*big_struct;
 
-	big_struct = malloc(sizeof(t_big_struct));
+	big_struct = malloc(sizeof(t_big));
 	if (!big_struct)
 		return (NULL);
 	big_struct->input = NULL;

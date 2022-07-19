@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 16:39:57 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:52 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*check_spe_char(char *cmd, int len_tmp)
 	return (cmd);
 }
 
-int	parsing_ending(char *cmd, t_big_struct *big_s)
+int	parsing_ending(char *cmd, t_big *big_s)
 {
 	big_s->input = ft_sdf(cmd, '|');
 	free(cmd);
@@ -75,7 +75,7 @@ int	parsing_ending(char *cmd, t_big_struct *big_s)
 	return (1);
 }
 
-int	ft_parsing(char *cmd, t_big_struct *big_struct)
+int	ft_parsing(char *cmd, t_big *big_struct)
 {
 	if (ft_checkquotes(cmd) != 0)
 	{

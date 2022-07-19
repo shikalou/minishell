@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:48:27 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/18 20:59:25 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:56 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_envp(t_big_struct *big_s, char **envp, int ind)
+void	update_envp(t_big *big_s, char **envp, int ind)
 {
 	char	**result;
 	int		i;
@@ -39,7 +39,7 @@ void	update_envp(t_big_struct *big_s, char **envp, int ind)
 	big_s->envp = result;
 }
 
-void	update_lst(t_big_struct *big_s, char *var)
+void	update_lst(t_big *big_s, char *var)
 {
 	ft_lstclear_env(big_s->env_lst);
 	big_s->env_lst = ft_init_env_lst(big_s->envp);
@@ -51,7 +51,7 @@ void	update_lst(t_big_struct *big_s, char *var)
 	}
 }
 
-void	cmp_var(char *var, t_big_struct *big_s)
+void	cmp_var(char *var, t_big *big_s)
 {
 	t_env_lst	*env;
 	int			i;
@@ -97,7 +97,7 @@ int	parsing_unset(char *var)
 	return (0);
 }
 
-int	ft_unset(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+int	ft_unset(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	char	**spaced_cmd;
 	int		i;

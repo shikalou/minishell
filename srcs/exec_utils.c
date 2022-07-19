@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/18 12:12:49 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:42 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_check_slash(t_big_struct *big_struct)
+char	*ft_check_slash(t_big *big_struct)
 {
 	if (access(big_struct->spaced_cmd[0], X_OK) == 0)
 	{
@@ -23,7 +23,7 @@ char	*ft_check_slash(t_big_struct *big_struct)
 	return (NULL);
 }
 
-char	*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd)
+char	*ft_find_check_path(t_big *big_struct, char **spaced_cmd)
 {
 	int		i;
 	char	*temp;

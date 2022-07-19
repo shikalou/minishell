@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:39:08 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 14:12:17 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:38:43 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_check_arg(char *s)
 	return (1);
 }
 
-int	exit_next(t_big_struct *b)
+int	exit_next(t_big *b)
 {
 	int	i;
 
@@ -77,7 +77,7 @@ int	exit_next(t_big_struct *b)
 	return (i);
 }
 
-void	ft_exit(t_big_struct *b)
+void	ft_exit(t_big *b)
 {
 	int	i;
 
