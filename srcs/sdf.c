@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_du_futur.c                                   :+:      :+:    :+:   */
+/*   sdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 14:53:06 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:58:06 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,68 +25,61 @@ static void	ft_free(char **strs, int j)
 	free(strs);
 }
 
-// fo ranger ft test lol
-static char	**ft_fill_strs(char **strs, const char *s1, char c, int check)
+static char	**ft_fill_strs(t_sdf *sdf, int check)
 {
-	int		i;
-	int		j;
-	int		l;
-
-	i = 0;
-	j = 0;
-	while (s1 && s1[i])
+	while (sdf->s && sdf->s[sdf->i])
 	{
-		l = 0;
+		sdf->l = 0;
 		check = 0;
-		while (s1[i] && s1[i] != c && s1[i + 1])
+		while (sdf->s[sdf->i] && sdf->s[sdf->i] != sdf->c && sdf->s[sdf->i + 1])
 		{
-			if (s1[i] == '"' || s1[i] == '\'')
+			if (sdf->s[sdf->i] == '"' || sdf->s[sdf->i] == '\'')
 			{
-				check = i + (ft_split_quotes(s1, i) + 1);
-				while (s1[i] && (i <= check))
-					strs[j][l++] = s1[i++];
+				check = sdf->i + (ft_split_quotes(sdf->s, sdf->i) + 1);
+				while (sdf->s[sdf->i] && (sdf->i <= check))
+					sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i++];
 			}
 			else
-				strs[j][l++] = s1[i++];
+				sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i++];
 		}
-		if (s1[i] && (s1[i] != c) && !(s1[i + 1]))
-			strs[j][l++] = s1[i];
-		strs[j][l] = '\0';
-		j++;
-		if (s1[i])
-			i++;
+		if (sdf->s[sdf->i] && (sdf->s[sdf->i] != sdf->c)
+			&& !(sdf->s[sdf->i + 1]))
+			sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i];
+		sdf->strs[sdf->j][sdf->l] = '\0';
+		sdf->j++;
+		if (sdf->s[sdf->i])
+			sdf->i++;
 	}
-	strs[j] = NULL;
-	return (strs);
+	sdf->strs[sdf->j] = NULL;
+	return (sdf->strs);
 }
 
 char	**ft_sdf(char const *s1, char c)
 {
+	t_sdf		sdf;
 	int			i;
-	int			k;
 	int			j;
 	int			l;
-	char		**strs;
 
 	i = 0;
 	j = -1;
-	k = ft_count_strs(s1, c);
-	strs = malloc(sizeof(char *) * (k + 1));
-	if (!strs)
+	ft_init_sdf(&sdf, s1, c);
+	sdf.strs = malloc(sizeof(char *) * (sdf.k + 1));
+	if (!sdf.strs)
 		return (NULL);
-	while (s1 && ++j < k)
+	while (sdf.s && ++j < sdf.k)
 	{
-		while (s1[i] && s1[i] == c)
+		while (sdf.s[i] && sdf.s[i] == c)
 			i++;
 		if (s1[i] != c)
 			l = ft_count_char(s1, i, c);
-		strs[j] = malloc(sizeof(char) * (l + 1));
+		sdf.strs[j] = malloc(sizeof(char) * (l + 1));
 		i += l;
-		if (!strs[j])
-			ft_free(strs, j);
+		if (!sdf.strs[j])
+			ft_free(sdf.strs, j);
 	}
-	ft_fill_strs(strs, s1, c, 0);
-	return (strs);
+	ft_fill_strs(&sdf, 0);
+	return (sdf.strs);
 }
 
 /*int main()

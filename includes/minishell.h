@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 19:20:30 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:12:33 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ typedef struct s_cmd_lst
 	struct s_cmd_lst	*next;
 }	t_cmd_lst;
 
+typedef struct s_sdf
+{
+	int			k;
+	int			i;
+	int			j;
+	int			l;
+	const char	*s;
+	char		c;
+	char		**strs;
+
+}	t_sdf;
+
 typedef struct s_big_struct
 {
 	char		**input;
@@ -67,7 +79,7 @@ typedef struct s_big_struct
 /********************************************************/
 void			shellmini(t_big *big_struct);
 
-t_big	*ft_init_big(char **envp);
+t_big			*ft_init_big(char **envp);
 
 /*		--> INIT CMD_LST			*/
 t_cmd_lst		*ft_init_cmd_lst(char **input);
@@ -81,7 +93,6 @@ t_env_lst		*ft_init_env_lst(char **envp);
 t_env_lst		*ft_lstnew_env(int i, char *env_line);
 void			ft_lstadd_back_env(t_env_lst **alst, t_env_lst *new);
 void			ft_lstclear_env(t_env_lst *env_lst);
-void			ft_lstdelone_env(t_env_lst **lst, void(*del)(void *));
 int				ft_lstsize_env(t_env_lst *lst);
 
 /********************************************************/
@@ -105,8 +116,13 @@ int				strtrim_size(char *cmd);
 
 /*		--> PARSING REDIRECTIONS	*/
 void			parsing_redirection(t_big *big_struct, int i);
+void			redirect_heredoc(t_big *b, t_cmd_lst *cmd_lst, int i);
+void			redirect_in(t_big *b, t_cmd_lst *cmd_lst, int i);
+void			redirect_out(t_big *b, t_cmd_lst *cmd_lst, int i, int j);
+char			*update_flux(t_big *b, int size, int index);
 
 /*		--> UTILS PARSING			*/
+void			ft_init_sdf(t_sdf *sdf, const char *s1, char c);
 char			**ft_sdf(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
@@ -140,13 +156,13 @@ char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 void			ft_close_fdinout(t_cmd_lst *cmd_lst);
 void			exit_child_first(t_big *b);
 void			exit_child_last_mid(t_big *b);
-void			fd_manager_mid(t_big *b, t_cmd_lst *cmd_lst, int fd_temp);
+void			fd_manager_mid(t_big *b, t_cmd_lst *cmd_lst, int fd_tmp);
 
 /*		--> UTILS EXEC				*/
 void			ft_wait(t_big *big_struct, t_cmd_lst *cmd_lst);
 void			ft_dup(t_cmd_lst *cmd_lst);
 void			malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst);
-char			*ft_find_check_path(t_big *big_struct, char **spaced_cmd);
+char			*ft_find_check_path(t_big *b, char **spaced_cmd);
 char			*ft_check_slash(t_big *big_struct);
 int				ft_strcmp(char *s1, char *s2);
 
@@ -166,12 +182,11 @@ int				ft_count_tab(char **tab);
 int				ft_check_echo_n(char *s);
 
 /*		--> EXPORT				*/
-void			ft_conc_update(t_big *big_s, char **var, char **cmd, int ind);
-void			ft_concenv_up(t_big *big_s, char **var);
+void			ft_conc_update(t_big *b, char **var, char **cmd, int ind);
+void			ft_concenv_up(t_big *b, char **var);
 void			ft_cue(t_env_lst *env, char **var, int len_env, char *tmp);
-void			ft_up_env_exp(t_big *big_s, char **var, char **split, int ind);
-void			update_exp(t_big *big_s, char **var, char **cmd, int ind);
-
+void			ft_up_env_exp(t_big *b, char **var, char **split, int ind);
+void			update_exp(t_big *b, char **var, char **cmd, int ind);
 char			**ft_split_export(char *var, char c);
 char			**trim_conc_export(char *var);
 int				exp_update_line(char **var, t_env_lst *env, int i, int j);
@@ -195,7 +210,7 @@ void			sort_n_print_exp(char **strs, t_big *big_s, t_cmd_lst *cmd_lst);
 void			ft_swap(char **strs, int i, int j);
 
 /*		--> HEREDOC, APPEND & REDIREC		*/
-void			ft_heredoc_main(t_big *big_struct, t_cmd_lst *cmd_lst, int i);
+void			ft_heredoc_main(t_big *b, t_cmd_lst *cmd_lst, int i);
 pid_t			ft_heredoc(t_big *big_struct, t_cmd_lst *cmd_lst, int i);
 void			ft_open_heredoc(t_big *big_struct, t_cmd_lst *cmd_lst);
 
