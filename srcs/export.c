@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 44:56:18 by ldinant          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:22:10 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_update_export(t_big_struct *big_s, char **var, char **cmd, int ind)
+void	update_exp(t_big_struct *big_s, char **var, char **cmd, int ind)
 {
 	int			i;
 	int			j;
@@ -36,29 +36,9 @@ void	ft_update_export(t_big_struct *big_s, char **var, char **cmd, int ind)
 				env->line = ft_strdup(cmd[ind]);
 			}
 			else if ((var[1] == NULL))
-			{
-				free(cmd[ind]);
+				return (free(cmd[ind]));
+			else if (exp_update_line(var, env, i, j) == 1)
 				return ;
-			}
-			else
-			{
-//				if (exp_update_line(var, env, i, j) == 1)
-//					return ;
-//				mais avant de l'implementer checker si il fo pas &env
-				free(env->line);
-				env->line = malloc(1 * len_name + len_var + 2);
-				if (!env->line)
-					return ;
-				while (++i < len_name)
-					env->line[i] = var[0][i];
-				env->line[i++] = '=';
-				while (++j < len_var)
-				{
-					env->line[i] = var[1][j];
-					i++;
-				}
-				env->line[i] = '\0';
-			}
 		}
 		env = env->next;
 	}
@@ -107,19 +87,14 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 		else if (parsing_export(split_exp[i]) == 0)
 			var = ft_split_export(split_exp[i], '=');
 		else
-		{
-			ft_putstr_fd("export : `", 2);
-			ft_putstr_fd(split_exp[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
-			big_s->status = 1;
-			check++;
-			free(split_exp[i]);
-		}
+			check = ft_error_export(big_s, split_exp[i]);
 		while (env != NULL && check == 0)
 		{
 			if (ft_strncmp(env->line, var[0], ft_strlen(var[0])) == 0)
 			{
-				if (parsing_export(split_exp[i]) == 1)
+				check = updt_e(split_exp, i, big_s, var);
+				split_exp[0] = NULL;
+			/*	if (parsing_export(split_exp[i]) == 1)
 				{
 					printf("hihi\n");
 					ft_concenv_up(big_s, var);
@@ -133,7 +108,7 @@ void	ft_change_env_lst(t_big_struct *big_s, char **split_exp)
 				free(split_exp[0]);
 				split_exp[0] = NULL;
 				ft_free_tab(var);
-				check++;
+				check++;*/
 			}
 			env = env->next;
 		}

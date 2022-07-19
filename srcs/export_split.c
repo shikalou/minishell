@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_export.c                                     :+:      :+:    :+:   */
+/*   export_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:55:04 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/18 20:46:11 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:35:38 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fill_str(char **result, char *var, char c)
+void	fill_str(char **result, char *var, char c, int check)
 {
 	int		i;
 	int		j;
 	int		k;
-	int		check;
 
 	i = -1;
 	j = 0;
 	k = 0;
-	check = 0;
 	while (var && var[++i])
 	{
 		if (var[i] == c && check == 0)
 		{
-			result[j][k] = '\0';
-			j++;
+			result[j++][k] = '\0';
 			check++;
 			k = 0;
 		}
@@ -75,6 +72,6 @@ char	**ft_split_export(char *var, char c)
 	result[1] = malloc(1 * (j + 1));
 	if (!result[1])
 		return (se_clean(result, 1));
-	fill_str(result, var, c);
+	fill_str(result, var, c, 0);
 	return (result);
 }
