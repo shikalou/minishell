@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 14:43:57 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:54:44 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int				strtrim_size(char *cmd);
 void			parsing_redirection(t_big_struct *big_struct, int i);
 
 /*		--> UTILS PARSING			*/
-char			**ft_split_du_futur(char const *s1, char c);
+char			**ft_sdf(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
 char			*check_spe_char(char *cmd, int len_tmp);

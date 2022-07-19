@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 14:21:09 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:57:34 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**trim_conc_export(char *var)
 
 	i = 0;
 	j = -1;
-	tmp = ft_split_du_futur(var, '=');
+	tmp = ft_sdf(var, '=');
 	if (!tmp || tmp == NULL)
 		return (NULL);
 	while (tmp && tmp[i])

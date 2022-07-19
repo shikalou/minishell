@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 13:52:55 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:55:49 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*check_spe_char(char *cmd, int len_tmp)
 
 int	parsing_ending(char *cmd, t_big_struct *big_s)
 {
-	big_s->input = ft_split_du_futur(cmd, '|');
+	big_s->input = ft_sdf(cmd, '|');
 	free(cmd);
 	if (big_s->input[0] == NULL)
 		return (0);

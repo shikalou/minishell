@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 14:13:49 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:25:25 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,6 @@ int	ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	return (1);
 }
 
-//		norme to-dos :
-// voir comment on peut update les big_s->status direct
-//	ds les fonc pr return 1 pour la norme
-// pareil pr ft_pwd sense return un int mais sans ke son retour soit check
 int	ft_check_builtin_multi(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 {
 	if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "pwd") == 0)
@@ -57,7 +53,7 @@ int	ft_check_builtin_multi(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "echo") == 0)
 		return (ft_echo(big_s, cmd_lst));
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "cd") == 0)
-		return(ft_cd(big_s));
+		return (ft_cd(big_s));
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "export") == 0)
 		return (ft_export(big_s, cmd_lst));
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "exit") == 0)

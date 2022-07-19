@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/18 10:55:55 by ldinant          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:27:38 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 */
 char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
 {
-	char		name[j];
+	char		name[100000];
 	t_env_lst	*head;
 	int			k;
 

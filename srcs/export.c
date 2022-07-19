@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldinant <ldinant@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/18 21:10:11 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 44:56:18 by ldinant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,12 +173,12 @@ void	ft_free_tab_special(char **tab, t_big_struct *big_s)
 	free(tab);
 }
 /*
-	problemes de export 
+	problemes de export
 		XOK	export a=lol a+=haha genre sur la meme ligne
 		XOK	 export a=lol
 		   	export a (a est pas sense etre remplace.....)
 		XOK	export a+=123 --> le += ne marche qu'avec les ""
-		XOK	 si export a= --> a doit valoir une chaine vide () 
+		XOK	 si export a= --> a doit valoir une chaine vide ()
 		XOK	 export a+=123 a=po a+="" a=lol
 		XOK	le last case ki bug c export a+=123 a=lol
 		XOK	y'a bcp de pblm avec split du futur genre des conditionnal jump ou des trucs kom ca
@@ -193,7 +193,7 @@ int	ft_export(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	int		i;
 
 	i = 0;
-	split_export = ft_split_du_futur(cmd_lst->command, ' ');
+	split_export = ft_sdf(cmd_lst->command, ' ');
 	while (split_export && split_export[i])
 		i++;
 	if (i == 1)

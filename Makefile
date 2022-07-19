@@ -6,13 +6,13 @@
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 16:12:42 by ldinaut           #+#    #+#              #
-#    Updated: 2022/07/19 14:22:11 by ldinaut          ###   ########.fr        #
+#    Updated: 2022/07/19 14:55:17 by ldinaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
-SRCS_FILES	=	main.c utils_parsing.c split_du_futur.c ft_free.c cd.c \
+SRCS_FILES	=	main.c utils_parsing.c sdf.c ft_free.c cd.c \
 			init_struct_lst.c parsing.c execution.c exec_utils.c \
 			extended_parsing.c extended_parse_utils.c strtrim_aug.c \
 			builtins.c exec_multi.c redirection.c echo.c lst_utils_cmd.c \

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 15:44:14 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:53:06 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_free(char **strs, int j)
 }
 
 // fo ranger ft test lol
-static char	**ft_test(char **strs, const char *s1, char c, int check)
+static char	**ft_fill_strs(char **strs, const char *s1, char c, int check)
 {
 	int		i;
 	int		j;
@@ -60,7 +60,7 @@ static char	**ft_test(char **strs, const char *s1, char c, int check)
 	return (strs);
 }
 
-char	**ft_split_du_futur(char const *s1, char c)
+char	**ft_sdf(char const *s1, char c)
 {
 	int			i;
 	int			k;
@@ -85,7 +85,7 @@ char	**ft_split_du_futur(char const *s1, char c)
 		if (!strs[j])
 			ft_free(strs, j);
 	}
-	ft_test(strs, s1, c, 0);
+	ft_fill_strs(strs, s1, c, 0);
 	return (strs);
 }
 
