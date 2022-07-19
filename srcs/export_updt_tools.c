@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 17:44:37 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/18 21:10:28 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:29:46 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ void	ft_concenv_up(t_big_struct *big_s, char **var)
 				var[1] = ft_remv_qt_exp(var[1]);
 				tmp = ft_strjoin(big_s->envp[i], var[1]);
 			}
-			else
+			else if (var[1])
 				tmp = ft_strjoin(big_s->envp[i], var[1]);
+			else
+				tmp = ft_strdup(big_s->envp[i]);
 			free(big_s->envp[i]);
 			big_s->envp[i] = ft_strdup(tmp);
 			free(tmp);

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 14:57:34 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:47:29 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 {
-	char			*tmp;
 	t_env_lst		*env;
 	int				len_name;
 
@@ -28,20 +27,7 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 	while (env != NULL)
 	{
 		if (ft_memcmp(env->line, var[0], len_name) == 0)
-		{
-			if (ft_strchr(env->line, '=') == 0)
-				tmp = ft_add_char(env->line, '=');
-			else
-				tmp = ft_strdup(env->line);
-			if (var[1] && ft_strchr(var[1], '"') == 0)
-			{
-				free(env->line);
-				env->line = ft_strjoin(tmp, var[1]);
-			}
-			else
-				ft_cue(env, var, ft_strlen(env->line), tmp);
-			free(tmp);
-		}
+			ft_conc_main(env, var);
 		env = env->next;
 	}
 	free(cmd[ind]);
@@ -67,13 +53,10 @@ char	**trim_conc_export(char *var)
 		ft_free_tab(tmp);
 		return (NULL);
 	}
+	if (tmp && tmp[++j])
+		result[j] = ft_strtrim(tmp[j], "+");
 	while (tmp && tmp[++j])
-	{
-		if (j == 0)
-			result[j] = ft_strtrim(tmp[j], "+");
-		else
 			result[j] = ft_strdup(tmp[j]);
-	}
 	result[j] = NULL;
 	ft_free_tab(tmp);
 	return (result);

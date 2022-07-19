@@ -6,7 +6,7 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:30:28 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 14:21:39 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 16:42:55 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,22 @@ void	ft_cue(t_env_lst *env, char **var, int len_env, char *tmp)
 			env->line[i++] = var[1][j];
 	}
 	env->line[i] = '\0';
+}
+
+void	ft_conc_main(t_env_lst *env, char **var)
+{
+	char	*tmp;
+
+	if (ft_strchr(env->line, '=') == 0)
+		tmp = ft_add_char(env->line, '=');
+	else
+		tmp = ft_strdup(env->line);
+	if (var[1] && ft_strchr(var[1], '"') == 0)
+	{
+		free(env->line);
+		env->line = ft_strjoin(tmp, var[1]);
+	}
+	else
+		ft_cue(env, var, ft_strlen(env->line), tmp);
+	free(tmp);
 }

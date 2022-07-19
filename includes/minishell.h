@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 14:54:44 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:20:02 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,12 +170,17 @@ void			ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind);
 void			ft_concenv_up(t_big_struct *big_s, char **var);
 void			ft_cue(t_env_lst *env, char **var, int len_env, char *tmp);
 void			ft_up_env_exp(t_big_struct *big_s, char **var, char **split, int ind);
+void			update_exp(t_big_struct *big_s, char **var, char **cmd, int ind);
+
 char			**ft_split_export(char *var, char c);
 char			**trim_conc_export(char *var);
 int				exp_update_line(char **var, t_env_lst *env, int i, int j);
 int				parsing_export(char *var);
 /*			-> tools			*/
 int				ft_eq_check(char *str);
+int				ft_error_export(t_big_struct *big_s, char *split);
+int				updt_e(char **s, int ind, t_big_struct *big, char **var);
+void			ft_conc_main(t_env_lst *env, char **var);
 void			ft_swap_exp(char **strs, int i, int j);
 char			*ft_add_char(char *str, char c);
 char			*ft_remv_eq(char *var);
