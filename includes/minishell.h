@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 21:10:39 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:14:47 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,19 @@ int				ft_memchr_aug(char *s, int i, char c);
 int				strtrim_size(char *cmd);
 
 /*		--> PARSING REDIRECTIONS	*/
-void			parsing_redirection(t_big_struct *big_struct);
+void			parsing_redirection(t_big_struct *big_struct, int i);
 
 /*		--> UTILS PARSING			*/
 char			**ft_split_du_futur(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
-char			*check_spe_char(char *cmd);
+char			*check_spe_char(char *cmd, int len_tmp);
 char			*strtrim_aug(char *cmd);
+int				check_after_pipe(char *cmd, char c);
 int				check_char(char c);
 int				check_str(char *cmd, int index, int end);
 int				check_char_basic(char c);
+int				ft_checkquotes(char *cmd);
 int				ft_count_char(char const *s1, int i, char c);
 int				ft_count_strs(char const *s, char c);
 int				ft_split_quotes(const char *s1, int i);
@@ -162,6 +164,7 @@ int				ft_check_echo_n(char *s);
 /*		--> EXPORT				*/
 void			ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind);
 void			ft_concenv_up(t_big_struct *big_s, char **var);
+void			ft_concenv_upd_else(t_env_lst *env, char **var, int len_env, char *tmp);
 void			ft_up_env_exp(t_big_struct *big_s, char **var, char **split, int ind);
 char			**ft_split_export(char *var, char c);
 char			**trim_conc_export(char *var);
@@ -170,6 +173,7 @@ int				parsing_export(char *var);
 /*			-> tools			*/
 int				ft_eq_check(char *str);
 void			ft_swap_exp(char **strs, int i, int j);
+char			*ft_add_char(char *str, char c);
 char			*ft_remv_eq(char *var);
 char			*ft_remv_qt_exp(char *var);
 char			**add_qt_env(char **strs);

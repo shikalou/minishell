@@ -1,47 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_export.c                                   :+:      :+:    :+:   */
+/*   export_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/18 21:10:51 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:17:26 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_add_char(char *str, char c)
-{
-	int		i;
-	char	*result;
-
-	i = 0;
-	result = malloc(sizeof(char) * (ft_strlen(str) + 2));
-	if (!result)
-		return (NULL);
-	while (str && str[i])
-	{
-		result[i] = str[i];
-		i++;
-	}
-	result[i] = c;
-	result[++i] = '\0';
-	return (result);
-}
 
 void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 {
 	char			*tmp;
 	t_env_lst		*env;
 	int				len_name;
-	int				i;
-	int				j;
-	int				len_var;
 	int				len_envvar;
 
-	len_var = ft_strlen(var[1]);
 	len_name = ft_strlen(var[0]);
 	env = big_s->env_lst;
 	if (var[1] == NULL)
@@ -60,34 +37,12 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 			if (var[1] && ft_strchr(var[1], '"') == 0)
 			{
 				free(env->line);
-				printf("tmp = %s\n", tmp);
 				env->line = ft_strjoin(tmp, var[1]);
 			}
 			else
 			{
 				len_envvar = ft_strlen(env->line);
-				free(env->line);
-				env->line = malloc(1 * (len_envvar + (len_var - 2) + 1));
-				if (!env->line)
-				{
-					free(tmp);
-					return ;
-				}
-				i = 0;
-				j = 0;
-				while (i < len_envvar)
-				{
-					env->line[i] = tmp[i];
-					i++;
-				}
-				while (j < (len_var - 1) && var[1][j])
-				{
-					if (var[1][j] == '"')
-						j++;
-					else
-						env->line[i++] = var[1][j++];
-				}
-				env->line[i] = '\0';
+				ft_concenv_upd_else(env, var, len_envvar, tmp);
 			}
 			free(tmp);
 		}
