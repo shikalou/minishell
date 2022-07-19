@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 20:09:41 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:26:51 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 void	update_exp(t_big *big_s, char **var, char **cmd, int ind)
 {
-	int			i;
-	int			j;
 	int			len_name;
 	int			len_var;
 	t_env_lst	*env;
 
-	i = -1;
-	j = -1;
 	len_name = ft_strlen(var[0]);
 	len_var = ft_strlen(var[1]);
 	env = big_s->env_lst;
@@ -37,7 +33,7 @@ void	update_exp(t_big *big_s, char **var, char **cmd, int ind)
 			}
 			else if ((var[1] == NULL))
 				return (free(cmd[ind]));
-			else if (exp_update_line(var, env, i, j) == 1)
+			else if (exp_update_line(var, env, -1, -1) == 1)
 				return ;
 		}
 		env = env->next;
@@ -102,20 +98,6 @@ void	ft_change_env_lst(t_big *big_s, char **split_exp)
 		env = big_s->env_lst;
 	}
 }
-/*
-	problemes de export
-		XOK	export a=lol a+=haha genre sur la meme ligne
-		XOK	 export a=lol
-		   	export a (a est pas sense etre remplace.....)
-		XOK	export a+=123 --> le += ne marche qu'avec les ""
-		XOK	 si export a= --> a doit valoir une chaine vide ()
-		XOK	 export a+=123 a=po a+="" a=lol
-		XOK	le last case ki bug c export a+=123 a=lol
-		XOK	y'a bcp de pblm avec split du futur genre des conditionnal jump ou des trucs kom ca
-	a= a+=1223 a="haha"
-	ca normalement c bon il reste une last dingz avec
-	a =  a="haha" a+=123 lol
-*/
 
 int	ft_export(t_big *big_s, t_cmd_lst *cmd_lst)
 {
