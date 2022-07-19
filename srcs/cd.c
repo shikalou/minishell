@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:08:11 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 11:22:18 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:15:35 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	ft_cd_len_one(t_big_struct *big_s)
 		return (1);
 	}
 	ft_update_oldpwd(big_s, "PWD=");
-	return (0);
+	big_s->status = 0;
+	return (1);
 }
 
 int	ft_cd(t_big_struct *big_struct)
@@ -81,6 +82,7 @@ int	ft_cd(t_big_struct *big_struct)
 	if (len > 2)
 	{
 		ft_putendl_fd("cd: too many arguments", 2);
+		big_struct->status = 1;
 		return (1);
 	}
 	ft_update_oldpwd(big_struct, "OLDPWD=");
@@ -90,8 +92,10 @@ int	ft_cd(t_big_struct *big_struct)
 	if (ret != 0)
 	{
 		perror("chdir");
+		big_struct->status = 1;
 		return (1);
 	}
 	ft_update_oldpwd(big_struct, "PWD=");
-	return (0);
+	big_struct->status = 0;
+	return (1);
 }

@@ -6,28 +6,15 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 13:17:37 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:09:08 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// NORME LOL
-// - on a des lines too long de ttpar du coup en vrai jme dis limite
-// big_struct moi deja jle remp tt le tmps par big_s mdr mais on peut trouver autre choz
-// et surtout spaced_cmd jkroi c la pir ds tous les fichiers elle clc donc on peut aussi
-// reflechir a lui changer son identite (c ca le wokisme puree ajean avait raison)
-// - ensuite pr les func trop longue exec_utils c pareil donc jpense on va avoir besoin
-// de carrement 2 fichiers en plus kon peut nommer de maniere hyper intello "exec_drawer.c"
-// et exec_cupboard.c lol
 void	last_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 {
-	if (b->spaced_cmd != NULL)
-	{
-		ft_free_tab(b->spaced_cmd);
-		b->spaced_cmd = NULL;
-	}
-	b->spaced_cmd = ft_split(cmd_lst->command, ' ');
+	malloc_spaced_cmd(b, cmd_lst);
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{
@@ -41,19 +28,10 @@ void	last_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 				signal(SIGQUIT, sig_handler_cmd);
 				ft_dup(cmd_lst);
 				execve(b->cmd_updated, b->spaced_cmd, b->envp);
+				perror("execve");
 			}
 		}
-		if (b->spaced_cmd[0] == NULL)
-		{
-			ft_free_tab(b->spaced_cmd);
-			b->spaced_cmd = NULL;
-			ft_free_child(b, 0);
-			exit(0);
-		}
-		ft_free_tab(b->spaced_cmd);
-		b->spaced_cmd = NULL;
-		ft_free_child(b, 0);
-		exit(127);
+		exit_child_last_mid(b);
 	}
 	close(b->pipefd[0]);
 	ft_close_fdinout(cmd_lst);
@@ -63,24 +41,13 @@ void	middle_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 {
 	int		fd_temp;
 
-	if (b->spaced_cmd != NULL)
-	{
-		ft_free_tab(b->spaced_cmd);
-		b->spaced_cmd = NULL;
-	}
-	b->spaced_cmd = ft_split(cmd_lst->command, ' ');
+	malloc_spaced_cmd(b, cmd_lst);
 	fd_temp = b->pipefd[0];
 	pipe(b->pipefd);
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{
-		if (cmd_lst->fd_in == 0)
-			cmd_lst->fd_in = fd_temp;
-		if (cmd_lst->fd_out == 1)
-		{
-			close(b->pipefd[0]);
-			cmd_lst->fd_out = b->pipefd[1];
-		}
+		fd_manager_mid(b, cmd_lst, fd_temp);
 		if (b->spaced_cmd[0] && ft_check_builtin_multi(b, cmd_lst) == 0)
 		{
 			if (ft_find_check_path(b, b->spaced_cmd) != NULL)
@@ -92,17 +59,7 @@ void	middle_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 				perror("execve");
 			}
 		}
-		if (b->spaced_cmd[0] == NULL)
-		{
-			ft_free_tab(b->spaced_cmd);
-			b->spaced_cmd = NULL;
-			ft_free_child(b, 0);
-			exit(0);
-		}
-		ft_free_tab(b->spaced_cmd);
-		b->spaced_cmd = NULL;
-		ft_free_child(b, 0);
-		exit(127);
+		exit_child_last_mid(b);
 	}
 	close(b->pipefd[1]);
 	close(fd_temp);
@@ -111,12 +68,7 @@ void	middle_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 
 void	first_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 {
-	if (b->spaced_cmd != NULL)
-	{
-		ft_free_tab(b->spaced_cmd);
-		b->spaced_cmd = NULL;
-	}
-	b->spaced_cmd = ft_split(cmd_lst->command, ' ');
+	malloc_spaced_cmd(b, cmd_lst);
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{
@@ -136,29 +88,14 @@ void	first_exec(t_big_struct *b, t_cmd_lst *cmd_lst)
 				perror("execve");
 			}
 		}
-		if (b->spaced_cmd[0] == NULL)
-		{
-			close(b->pipefd[1]);
-			ft_free_tab(b->spaced_cmd);
-			b->spaced_cmd = NULL;
-			ft_free_child(b, 0);
-			exit(0);
-		}
-		close(b->pipefd[1]);
-		ft_free_tab(b->spaced_cmd);
-		b->spaced_cmd = NULL;
-		ft_free_child(b, 0);
-		exit(127);
+		exit_child_first(b);
 	}
 	close(b->pipefd[1]);
 	ft_close_fdinout(cmd_lst);
 }
 
-void	ft_wait(t_big_struct *big_struct)
+void	ft_wait(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 {
-	t_cmd_lst	*cmd_lst;
-
-	cmd_lst = big_struct->cmd_lst;
 	while (cmd_lst)
 	{
 		if (cmd_lst->next == NULL)
@@ -206,5 +143,6 @@ void	ft_multi_pipe(t_big_struct *big_struct)
 		head = head->next;
 	}
 	last_exec(big_struct, head);
-	ft_wait(big_struct);
+	head = big_struct->cmd_lst;
+	ft_wait(big_struct, head);
 }
