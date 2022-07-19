@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:58 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:47:38 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,12 @@ int	ft_check_builtin_multi(t_big *big_s, t_cmd_lst *cmd_lst)
 		return (ft_env(big_s, cmd_lst));
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "unset") == 0)
 		return (ft_unset(big_s, cmd_lst));
+//	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "./minishell") == 0)
+//		return (0);
+	printf("cmd = %s, spaced_cmd = %s\n",cmd_lst->command, big_s->spaced_cmd[0]);
+/*
+	probleme du env -i ./minishell dans minishell lol
+	il faut iterer ds spaced_cmd... limite le faire avant ft_check_builtin genre juste avant exec mais du coup il faut bien check partout si check_export ou  check_unset et les mettre a 1 
+*/
 	return (0);
 }
