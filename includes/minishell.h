@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 17:39:41 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:21:28 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ void			sig_handler(int intSig);
 void			sig_handler_cmd(int intSig);
 void			sig_handler_heredoc(int intSig);
 void			get_value(t_big *big_struct, t_cmd_lst *cmd_lst, int i);
+void			ft_check_signal(int status);
 
 /********************************************************/
 /********************************************************/

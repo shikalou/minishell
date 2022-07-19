@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:29:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:49 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 19:23:28 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	ft_heredoc_main(t_big *b, t_cmd_lst *cmd_lst, int i)
 	ft_open_heredoc(b, cmd_lst);
 	pid = ft_heredoc(b, cmd_lst, i);
 	waitpid(pid, &b->status, 0);
+	signal(SIGINT, sig_handler);
 	close(cmd_lst->fd_in);
 	if (WEXITSTATUS(b->status) == 2)
 	{
@@ -98,6 +99,7 @@ void	ft_heredoc_main(t_big *b, t_cmd_lst *cmd_lst, int i)
 		b->spaced_par = NULL;
 		ft_lstclear_cmd(b->cmd_lst);
 		b->cmd_lst = NULL;
+		printf("\n");
 		b->status = 130;
 	}
 	else

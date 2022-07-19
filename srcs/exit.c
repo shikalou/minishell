@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:39:08 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:43 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 19:59:54 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	exit_next(t_big *b)
 {
 	int	i;
 
-	i = 0;
+	i = b->status;
 	if (b->spaced_cmd[1])
 	{
 		if (b->spaced_cmd[1][0] != '-')
@@ -99,7 +99,6 @@ void	ft_exit(t_big *b)
 			printf("%s: %s: numeric argument required\n",
 				b->spaced_cmd[0], b->spaced_cmd[1]);
 			b->status = 2;
-			return ;
 		}
 	}
 	i = exit_next(b);

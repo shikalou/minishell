@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:42 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:18:08 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,8 @@ void	ft_exec(t_big *big_struct)
 			waitpid(cmd_lst->pid, &big_struct->status, 0);
 			if (WIFSIGNALED(big_struct->status))
 			{
-				if (WCOREDUMP(big_struct->status))
-					printf("Quit (core dumped)\n");
 				big_struct->status = (WTERMSIG(big_struct->status) + 128);
-				if (big_struct->status == 130)
-					printf("\n");
+				ft_check_signal(big_struct->status);
 			}
 			else
 				big_struct->status = WEXITSTATUS(big_struct->status);

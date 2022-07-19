@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:08:11 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:38 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 17:47:24 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ int	ft_cd_len_one(t_big *big_s)
 	char	*home;
 
 	home = ft_get_home(big_s, "HOME=");
+	if (!home)
+	{
+		ft_putendl_fd("cd: HOME not set", 2);
+		big_s->status = 1;
+		return (1);
+	}
 	ret = chdir(home);
 	if (ret != 0)
 	{

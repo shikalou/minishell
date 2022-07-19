@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:51 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:02:27 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	shellmini(t_big *big_struct)
 		if (!cmd)
 			return ;
 		add_history(cmd);
-		if (ft_parsing(cmd, big_struct))
+		if (ft_strlen(cmd) > 0 && ft_parsing(cmd, big_struct))
 		{
 			ft_exec(big_struct);
 			ft_free_between(big_struct);

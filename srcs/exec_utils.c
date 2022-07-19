@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:42 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 19:48:53 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*ft_find_check_path(t_big *big_struct, char **spaced_cmd)
 			big_struct->cmd_updated = NULL;
 		}
 		printf("%s : command not found\n", big_struct->spaced_cmd[0]);
-		big_struct->status = 9;
 		return (NULL);
 	}
 }
@@ -73,7 +72,11 @@ void	ft_close_fdinout(t_cmd_lst *cmd_lst)
 	if (cmd_lst->fd_in != 0)
 		close(cmd_lst->fd_in);
 	if (cmd_lst->fd_out != 1)
+	{
+		if (cmd_lst->next && cmd_lst->next->fd_out != cmd_lst->fd_out)
+			return ;
 		close(cmd_lst->fd_out);
+	}
 }
 
 void	ft_dup(t_cmd_lst *cmd_lst)

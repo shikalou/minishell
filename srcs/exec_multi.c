@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:41 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 19:26:07 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	ft_multi_pipe(t_big *big_struct)
 	i = 0;
 	n_cmd = ft_lstsize_cmd(big_struct->cmd_lst);
 	pipe(big_struct->pipefd);
+	printf("%d\n", head->fd_in);
 	if (head->fd_in != -1)
 		first_exec(big_struct, head);
 	else

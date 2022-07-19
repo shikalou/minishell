@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_lst_utils.c                                    :+:      :+:    :+:   */
+/*   lst_utils_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:38:46 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/15 21:39:44 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 19:57:04 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	ft_lstclear_cmd(t_cmd_lst *cmd_lst)
 		return ;
 	while (cmd_lst != NULL)
 	{
+		if (cmd_lst->fd_in != 0)
+			close(cmd_lst->fd_in);
+		if (cmd_lst->fd_out != 1)
+			close(cmd_lst->fd_out);
 		lst_tmp = cmd_lst->next;
 		free(cmd_lst->command);
 		free(cmd_lst);

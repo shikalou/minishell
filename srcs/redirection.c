@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:54 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 19:28:47 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	redirect_in(t_big *b, t_cmd_lst *cmd_lst, int i)
 	i++;
 	if (cmd_lst->fd_in != 0)
 		close(cmd_lst->fd_in);
-	cmd_lst->fd_in = open(b->spaced_par[i], O_RDONLY);
+	cmd_lst->fd_in = open(b->spaced_par[i], O_RDONLY, 0644);
 	if (cmd_lst->fd_in == -1)
 		printf("%s : %s\n", strerror(errno), b->spaced_par[i + 1]);
 	k = ft_strlen(cmd_lst->command);
@@ -100,12 +100,12 @@ void	parsing_redirection(t_big *big_struct, int i)
 		{
 			if (ft_strcmp(big_struct->spaced_par[i], "<") == 0)
 				redirect_in(big_struct, cmd_lst, i);
+			else if (ft_strcmp(big_struct->spaced_par[i], "<<") == 0)
+				redirect_heredoc(big_struct, cmd_lst, i);
 			else if (ft_strcmp(big_struct->spaced_par[i], ">") == 0)
 				redirect_out(big_struct, cmd_lst, i, 1);
 			else if (ft_strcmp(big_struct->spaced_par[i], ">>") == 0)
 				redirect_out(big_struct, cmd_lst, i, 0);
-			else if (ft_strcmp(big_struct->spaced_par[i], "<<") == 0)
-				redirect_heredoc(big_struct, cmd_lst, i);
 		}
 		ft_free_tab(big_struct->spaced_par);
 		big_struct->spaced_par = NULL;
