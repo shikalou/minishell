@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 21:10:39 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:09:27 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,14 @@ void			ft_free_child(t_big_struct *big_struct, int i);
 void			ft_free_between(t_big_struct *big_struct);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 void			ft_close_fdinout(t_cmd_lst *cmd_lst);
+void			exit_child_first(t_big_struct *b);
+void			exit_child_last_mid(t_big_struct *b);
+void			fd_manager_mid(t_big_struct *b, t_cmd_lst *cmd_lst, int fd_temp);
 
 /*		--> UTILS EXEC				*/
-void			ft_wait(t_big_struct *big_struct);
+void			ft_wait(t_big_struct *big_struct, t_cmd_lst *cmd_lst);
 void			ft_dup(t_cmd_lst *cmd_lst);
+void			malloc_spaced_cmd(t_big_struct *b, t_cmd_lst *cmd_lst);
 char			*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd);
 char			*ft_check_slash(t_big_struct *big_struct);
 int				ft_strcmp(char *s1, char *s2);

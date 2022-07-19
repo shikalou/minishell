@@ -50,4 +50,3 @@ char	*check_spe_char(char *cmd)
 	}
 	return (cmd);
 }
-
