@@ -60,7 +60,7 @@ int	ft_check_arg(char *s)
 	return (1);
 }
 
-int	exit_next(t_big_struct *b)
+int	exit_next(t_big *b)
 {
 	int	i;
 
@@ -77,7 +77,7 @@ int	exit_next(t_big_struct *b)
 	return (i);
 }
 
-void	ft_exit(t_big_struct *b)
+void	ft_exit(t_big *b)
 {
 	int	i;
 

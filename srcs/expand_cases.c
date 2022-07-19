@@ -6,13 +6,48 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:09:07 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/16 20:47:16 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 19:21:24 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_first_case(t_big_struct *big_s, int i, char *cmd)
+char	*fill_cmd_expand(char *cmd, t_big *big_struct, char *up, int j)
+{
+	int		i;
+	char	*e;
+
+	i = 0;
+	while (cmd && cmd[i])
+	{
+		if (cmd[i] == '$')
+		{
+			e = ft_get_env_var(big_struct, cmd, i);
+			if (e == NULL && cmd[i])
+				i += ft_len_dollar(cmd, i);
+			else if (ft_memcmp(e, "anticonstitution", ft_strlen(e)) == 0)
+			{
+				up[j++] = cmd[i++];
+				while (cmd[i] != '$' && cmd[i] != '\'' && cmd[i] != ' '
+					&& cmd[i] != '\0')
+					up[j++] = cmd[i++];
+			}
+			else
+			{
+				up[j] = '\0';
+				ft_strlcat(up, e, (ft_strlen(up) + ft_strlen(e) + 1));
+				i += (ft_len_dollar(cmd, i));
+				j += ft_strlen(e);
+			}
+		}
+		else
+			up[j++] = cmd[i++];
+	}
+	up[j] = '\0';
+	return (up);
+}
+
+char	*expand_first_case(t_big *big_s, int i, char *cmd)
 {
 	int		j;
 
@@ -35,7 +70,7 @@ char	*expand_first_case(t_big_struct *big_s, int i, char *cmd)
 	return (get_env_lst(cmd, (i + 1), j, big_s));
 }
 
-char	*expand_second_case(t_big_struct *big_s, int i, char *cmd)
+char	*expand_second_case(t_big *big_s, int i, char *cmd)
 {
 	int		j;
 

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*update_flux(t_big_struct *b, int size, int index)
+char	*update_flux(t_big *b, int size, int index)
 {
 	int		i;
 	char	*new_cmd;
@@ -37,7 +37,7 @@ char	*update_flux(t_big_struct *b, int size, int index)
 	return (new_cmd);
 }
 
-void	redirect_out(t_big_struct *b, t_cmd_lst *cmd_lst, int i, int j)
+void	redirect_out(t_big *b, t_cmd_lst *cmd_lst, int i, int j)
 {
 	int	k;
 
@@ -57,7 +57,7 @@ void	redirect_out(t_big_struct *b, t_cmd_lst *cmd_lst, int i, int j)
 	cmd_lst->command = update_flux(b, k, i - 1);
 }
 
-void	redirect_in(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
+void	redirect_in(t_big *b, t_cmd_lst *cmd_lst, int i)
 {
 	int	k;
 
@@ -72,7 +72,7 @@ void	redirect_in(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
 	cmd_lst->command = update_flux(b, k, i - 1);
 }
 
-void	redirect_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
+void	redirect_heredoc(t_big *b, t_cmd_lst *cmd_lst, int i)
 {
 	int	k;
 
@@ -87,7 +87,7 @@ void	redirect_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
 		cmd_lst = NULL;
 }
 
-void	parsing_redirection(t_big_struct *big_struct, int i)
+void	parsing_redirection(t_big *big_struct, int i)
 {
 	t_cmd_lst	*cmd_lst;
 

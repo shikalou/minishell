@@ -28,7 +28,7 @@ int	ft_check_echo_n(char *s)
 	return (1);
 }
 
-void	echo_putstr(t_big_struct *big_s, t_cmd_lst *cmd_lst, int i)
+void	echo_putstr(t_big *big_s, t_cmd_lst *cmd_lst, int i)
 {
 	ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
 	while (big_s->spaced_cmd[++i])
@@ -38,7 +38,7 @@ void	echo_putstr(t_big_struct *big_s, t_cmd_lst *cmd_lst, int i)
 	}
 }
 
-int	ft_echo(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+int	ft_echo(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	int	i;
 

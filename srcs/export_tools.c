@@ -74,7 +74,7 @@ char	*ft_remv_qt_exp(char *var)
 	return (result);
 }
 
-char	**ft_addback_tab(t_big_struct *big_s, char **envp, char *to_add)
+char	**ft_addback_tab(t_big *big_s, char **envp, char *to_add)
 {
 	int		i;
 	int		size_tot;

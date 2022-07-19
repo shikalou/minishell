@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
+int	ft_pwd(t_big *big_struct, t_cmd_lst *cmd_lst)
 {
 	if (big_struct->absolut_path != NULL)
 	{
@@ -30,7 +30,7 @@ int	ft_pwd(t_big_struct *big_struct, t_cmd_lst *cmd_lst)
 	return (1);
 }
 
-int	ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+int	ft_env(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	char	**env;
 	int		i;
@@ -46,7 +46,7 @@ int	ft_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
 	return (1);
 }
 
-int	ft_check_builtin_multi(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+int	ft_check_builtin_multi(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "pwd") == 0)
 		return (ft_pwd(big_s, cmd_lst));

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 17:44:37 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 16:29:46 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 18:24:02 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_remv_plus(char *old)
 	return (result);
 }
 
-void	ft_up_env_exp(t_big_struct *big_s, char **var, char **split, int ind)
+void	ft_up_env_exp(t_big *big_s, char **var, char **split, int ind)
 {
 	int		i;
 
@@ -53,7 +53,7 @@ void	ft_up_env_exp(t_big_struct *big_s, char **var, char **split, int ind)
 	}
 }
 
-void	ft_concenv_up(t_big_struct *big_s, char **var)
+void	ft_concenv_up(t_big *big_s, char **var)
 {
 	int		i;
 	char	*tmp;

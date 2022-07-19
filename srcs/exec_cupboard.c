@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	malloc_spaced_cmd(t_big_struct *b, t_cmd_lst *cmd_lst)
+void	malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst)
 {
 	if (b->spaced_cmd != NULL)
 	{
@@ -22,7 +22,7 @@ void	malloc_spaced_cmd(t_big_struct *b, t_cmd_lst *cmd_lst)
 	b->spaced_cmd = ft_split(cmd_lst->command, ' ');
 }
 
-void	exit_child_last_mid(t_big_struct *b)
+void	exit_child_last_mid(t_big *b)
 {
 	if (b->spaced_cmd[0] == NULL)
 	{
@@ -37,7 +37,7 @@ void	exit_child_last_mid(t_big_struct *b)
 	exit(127);
 }
 
-void	exit_child_first(t_big_struct *b)
+void	exit_child_first(t_big *b)
 {
 	if (b->spaced_cmd[0] == NULL)
 	{
@@ -54,7 +54,7 @@ void	exit_child_first(t_big_struct *b)
 	exit(127);
 }
 
-void	fd_manager_mid(t_big_struct *b, t_cmd_lst *cmd_lst, int fd_temp)
+void	fd_manager_mid(t_big *b, t_cmd_lst *cmd_lst, int fd_temp)
 {
 	if (cmd_lst->fd_in == 0)
 		cmd_lst->fd_in = fd_temp;

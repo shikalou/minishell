@@ -61,7 +61,7 @@ char	*check_spe_char(char *cmd, int len_tmp)
 	return (cmd);
 }
 
-int	parsing_ending(char *cmd, t_big_struct *big_s)
+int	parsing_ending(char *cmd, t_big *big_s)
 {
 	big_s->input = ft_sdf(cmd, '|');
 	free(cmd);
@@ -75,7 +75,7 @@ int	parsing_ending(char *cmd, t_big_struct *big_s)
 	return (1);
 }
 
-int	ft_parsing(char *cmd, t_big_struct *big_struct)
+int	ft_parsing(char *cmd, t_big *big_struct)
 {
 	if (ft_checkquotes(cmd) != 0)
 	{

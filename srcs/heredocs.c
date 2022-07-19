@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_open_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst)
+void	ft_open_heredoc(t_big *b, t_cmd_lst *cmd_lst)
 {
 	char	file[10];
 	char	c[100];
@@ -40,7 +40,7 @@ void	ft_open_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst)
 	cmd_lst->fd_in = open(b->random_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 }
 
-int	ft_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
+int	ft_heredoc(t_big *b, t_cmd_lst *cmd_lst, int i)
 {
 	char	*input;
 	pid_t	pid;
@@ -69,7 +69,7 @@ int	ft_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
 	return (pid);
 }
 
-static void	ft_firstcheck(t_big_struct *b, t_cmd_lst *cmd_lst)
+static void	ft_firstcheck(t_big *b, t_cmd_lst *cmd_lst)
 {
 	if (cmd_lst->fd_in != 0)
 		close(cmd_lst->fd_in);
@@ -81,7 +81,7 @@ static void	ft_firstcheck(t_big_struct *b, t_cmd_lst *cmd_lst)
 	}
 }
 
-void	ft_heredoc_main(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
+void	ft_heredoc_main(t_big *b, t_cmd_lst *cmd_lst, int i)
 {
 	pid_t	pid;
 

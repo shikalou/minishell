@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	shellmini(t_big_struct *big_struct)
+void	shellmini(t_big *big_struct)
 {
 	char	*cmd;
 
@@ -35,11 +35,11 @@ void	shellmini(t_big_struct *big_struct)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_big_struct	*big_struct;
+	t_big	*big_struct;
 
 	(void)ac;
 	(void)av;
-	big_struct = ft_init_big_struct(envp);
+	big_struct = ft_init_big(envp);
 	if (!big_struct)
 		return (1);
 	get_value(big_struct, NULL, 0);

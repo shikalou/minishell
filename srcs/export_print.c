@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_print_export_env(t_big_struct *big_s, t_cmd_lst *cmd_lst)
+void	ft_print_export_env(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	t_env_lst	*env;
 	char		**env_strs;
@@ -54,7 +54,7 @@ void	env_print(char **strs, int size, t_cmd_lst *cmd_lst)
 	}
 }
 
-void	sort_n_print_exp(char **strs, t_big_struct *big_s, t_cmd_lst *cmd_lst)
+void	sort_n_print_exp(char **strs, t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	int			i;
 	int			j;

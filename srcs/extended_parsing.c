@@ -6,41 +6,37 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 14:27:38 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 19:19:30 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-	le (void)big_struct --> je comprends pas du tout pk il est void et du coup
-	comment on a acces a l'env sans passer par big_struct (et du coup a koi sert
-	la fonction et pk elle s'appelle get env lst mdrr jui perdue)
-*/
-char	*get_env_lst(char *cmd, int i, int j, t_big_struct *big_struct)
+
+char	*get_env_lst(char *cmd, int i, int j, t_big *big_struct)
 {
 	char		name[100000];
-	t_env_lst	*head;
+	t_env_lst	*env;
 	int			k;
 
 	k = 0;
-	head = big_struct->env_lst;
-	while (i < j)
+	env = big_struct->env_lst;
+	while (i < j && cmd[i] && cmd[i] != '=')
 	{
 		if (cmd[i] && ((ft_isalnum(cmd[i]) == 1) || cmd[i] == '_'))
 			name[k++] = cmd[i];
 		i++;
 	}
 	name[k] = '\0';
-	while (head)
+	while (env)
 	{
-		if (ft_memcmp(head->line, name, k) == 0 && (head->line)[k] == '=')
-			return ((head->line) + (k + 1));
-		head = head->next;
+		if (ft_strncmp(env->line, name, k) == 0 && (env->line)[k] == '=')
+			return ((env->line) + (k + 1));
+		env = env->next;
 	}
 	return (NULL);
 }
 
-char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
+char	*ft_get_env_var(t_big *big_struct, char *cmd, int index)
 {
 	int		i;
 
@@ -60,7 +56,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 				i++;
 		}
 		else if (cmd[i] == '\'' && ft_memchr_aug(cmd, i, '$') == 1)
-			return ("anticonstitutionnellement");
+			return ("anticonstitution");
 		else if (cmd[i] == '$' && i == index)
 			return (expand_second_case(big_struct, i, cmd));
 		else
@@ -69,7 +65,7 @@ char	*ft_get_env_var(t_big_struct *big_struct, char *cmd, int index)
 	return (NULL);
 }
 
-int	get_right_size(char *cmd, t_big_struct *big_struct)
+int	get_right_size(char *cmd, t_big *big_struct)
 {
 	int	i;
 	int	count;
@@ -96,22 +92,20 @@ int	get_right_size(char *cmd, t_big_struct *big_struct)
 }
 
 // elle elle va etre dure a reduire lol yoloooo
-char	*extended_dollar(char *cmd, t_big_struct *big_struct)
+char	*extended_dollar(char *cmd, t_big *big_struct)
 {
 	char	*new_cmd;
-	char	*env;
-	int		len;
+//	char	*env;
+//	int		len;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	i = get_right_size(cmd, big_struct);
 	new_cmd = malloc(sizeof(char) * i + 1);
 	if (!new_cmd)
 		return (NULL);
-	i = 0;
-	while (cmd && cmd[i])
+	new_cmd = fill_cmd_expand(cmd, big_struct, new_cmd, 0);
+/*	while (cmd && cmd[i])
 	{
 		if (cmd[i] == '$')
 		{
@@ -140,13 +134,12 @@ char	*extended_dollar(char *cmd, t_big_struct *big_struct)
 			i++;
 			j++;
 		}
-	}
-	new_cmd[j] = '\0';
+	}*/
 	free(cmd);
 	return (new_cmd);
 }
 
-void	parsing_quotes(t_big_struct *big_struct)
+void	parsing_quotes(t_big *big_struct)
 {
 	t_cmd_lst	*head;
 	char		*tmp;

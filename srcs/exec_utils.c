@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*ft_check_slash(t_big_struct *big_struct)
+char	*ft_check_slash(t_big *big_struct)
 {
 	if (access(big_struct->spaced_cmd[0], X_OK) == 0)
 	{
@@ -23,7 +23,7 @@ char	*ft_check_slash(t_big_struct *big_struct)
 	return (NULL);
 }
 
-char	*ft_find_check_path(t_big_struct *big_struct, char **spaced_cmd)
+char	*ft_find_check_path(t_big *big_struct, char **spaced_cmd)
 {
 	int		i;
 	char	*temp;
