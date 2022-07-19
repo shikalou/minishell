@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:08:11 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 15:58:50 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 11:22:18 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_cd(t_big_struct *big_struct)
 	}
 	ft_update_oldpwd(big_struct, "OLDPWD=");
 	if (len == 1)
-		return(ft_cd_len_one(big_struct));
+		return (ft_cd_len_one(big_struct));
 	ret = chdir(big_struct->spaced_cmd[1]);
 	if (ret != 0)
 	{

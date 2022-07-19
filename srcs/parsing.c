@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 20:28:26 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 11:48:07 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ int	ft_checkquotes(char *cmd)
 			while (cmd[i] && cmd[++i] && cmd[i] != '\'')
 				;
 			if (!cmd[i])
-				return(1);
+				return (1);
 		}
 		if (cmd[i] && cmd[i] == '\"')
 		{
 			while (cmd[i] && cmd[++i] && cmd[i] != '\"')
 				;
 			if (!cmd[i])
-				return(1);
+				return (1);
 		}
 	}
 	return (0);
