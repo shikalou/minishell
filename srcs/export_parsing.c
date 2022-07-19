@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:10:54 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 14:17:26 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:21:09 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 	char			*tmp;
 	t_env_lst		*env;
 	int				len_name;
-	int				len_envvar;
 
 	len_name = ft_strlen(var[0]);
 	env = big_s->env_lst;
@@ -40,10 +39,7 @@ void	ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind)
 				env->line = ft_strjoin(tmp, var[1]);
 			}
 			else
-			{
-				len_envvar = ft_strlen(env->line);
-				ft_concenv_upd_else(env, var, len_envvar, tmp);
-			}
+				ft_cue(env, var, ft_strlen(env->line), tmp);
 			free(tmp);
 		}
 		env = env->next;

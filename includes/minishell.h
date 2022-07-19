@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 14:14:47 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 14:22:03 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int				ft_check_echo_n(char *s);
 /*		--> EXPORT				*/
 void			ft_conc_update(t_big_struct *big_s, char **var, char **cmd, int ind);
 void			ft_concenv_up(t_big_struct *big_s, char **var);
-void			ft_concenv_upd_else(t_env_lst *env, char **var, int len_env, char *tmp);
+void			ft_cue(t_env_lst *env, char **var, int len_env, char *tmp);
 void			ft_up_env_exp(t_big_struct *big_s, char **var, char **split, int ind);
 char			**ft_split_export(char *var, char c);
 char			**trim_conc_export(char *var);
