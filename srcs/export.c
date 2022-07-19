@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:48 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:09:41 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ void	ft_new_env_var(t_big *big_s, char **split_exp, int index)
 	big_s->check_export = 1;
 }
 
-//	NORME TIPS
-// puree t'as fait vraiment n'importe koi la y'a rien ki va, assieds toi 5 min
-// avant de commencer a mettre les mains ds cette enorme merde
 void	ft_change_env_lst(t_big *big_s, char **split_exp)
 {
 	int			i;
@@ -74,12 +71,12 @@ void	ft_change_env_lst(t_big *big_s, char **split_exp)
 	char		**var;
 	t_env_lst	*env;
 
-	i = 1;
+	i = 0;
 	size = 1;
 	env = big_s->env_lst;
 	while (split_exp && split_exp[size])
 		size++;
-	while (i < size)
+	while (++i < size)
 	{
 		check = 0;
 		if (parsing_export(split_exp[i]) == 1)
@@ -87,65 +84,23 @@ void	ft_change_env_lst(t_big *big_s, char **split_exp)
 		else if (parsing_export(split_exp[i]) == 0)
 			var = ft_split_export(split_exp[i], '=');
 		else
-			check = ft_error_export(big_s, split_exp[i]);
+			check = ft_error_export(big_s, split_exp[i], 0);
 		while (env != NULL && check == 0)
 		{
 			if (ft_strncmp(env->line, var[0], ft_strlen(var[0])) == 0)
 			{
 				check = updt_e(split_exp, i, big_s, var);
 				split_exp[0] = NULL;
-			/*	if (parsing_export(split_exp[i]) == 1)
-				{
-					printf("hihi\n");
-					ft_concenv_up(big_s, var);
-					ft_conc_update(big_s, var, split_exp, i);
-				}
-				else
-				{
-					ft_up_env_exp(big_s, var, split_exp, i);
-					ft_update_export(big_s, var, split_exp, i);
-				}
-				free(split_exp[0]);
-				split_exp[0] = NULL;
-				ft_free_tab(var);
-				check++;*/
 			}
 			env = env->next;
 		}
 		if (check == 0)
 		{
-			if (big_s->check_name
-				&& ft_strncmp(var[0], big_s->check_name, ft_strlen(var[0])) == 0)
-			{
-				free(big_s->check_name);
-				big_s->check_name = NULL;
-				big_s->check_unset--;
-			}
 			ft_new_env_var(big_s, split_exp, i);
 			ft_free_tab(var);
 		}
 		env = big_s->env_lst;
-		i++;
 	}
-}
-
-void	ft_free_tab_special(char **tab, t_big *big_s)
-{
-	t_env_lst	*env;
-	int			i;
-	int			size;
-
-	i = 0;
-	env = big_s->env_lst;
-	size = (ft_lstsize_env(env) - 1);
-	if (!tab)
-		return ;
-	while (tab && tab[i] && i < size)
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
 }
 /*
 	problemes de export

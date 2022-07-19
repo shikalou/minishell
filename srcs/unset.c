@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:48:27 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:56 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:03:31 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	cmp_var(char *var, t_big *big_s)
 	}
 }
 
-int	parsing_unset(char *var)
+int	parsing_unset(char *var, t_big *big_s)
 {
 	int		i;
 
@@ -85,14 +85,14 @@ int	parsing_unset(char *var)
 	while (var[i] && var[i] == ' ')
 		i++;
 	if (var[i] && (ft_isalpha(var[i]) == 0 && var[i] != '_'))
-		return (1);
+		return (ft_error_export(big_s, var, 1));
 	i++;
 	while (var[i])
 	{
 		if (var[i] == '_' || var[i] == '=' || (ft_isalnum(var[i])))
 			i++;
 		else
-			return (1);
+			return (ft_error_export(big_s, var, 1));
 	}
 	return (0);
 }
@@ -106,7 +106,7 @@ int	ft_unset(t_big *big_s, t_cmd_lst *cmd_lst)
 	spaced_cmd = big_s->spaced_cmd;
 	while (spaced_cmd && spaced_cmd[i])
 	{
-		if (i > 0 && parsing_unset(spaced_cmd[i]) == 0)
+		if (i > 0 && parsing_unset(spaced_cmd[i], big_s) == 0)
 			cmp_var(spaced_cmd[i], big_s);
 		i++;
 	}

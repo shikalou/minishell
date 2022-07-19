@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 20:21:28 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:33:07 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef struct s_big_struct
 	char		**spaced_par;
 	char		*absolut_path;
 	char		*cmd_updated;
-	char		*check_name;
 	int			check_export;
 	int			check_unset;
 	int			env_size;
@@ -107,6 +106,7 @@ void			parsing_quotes(t_big *big_struct);
 char			*expand_first_case(t_big *big_s, int i, char *cmd);
 char			*expand_second_case(t_big *big_s, int i, char *cmd);
 char			*extended_dollar(char *cmd, t_big *big_struct);
+char			*fill_cmd_expand(char *cmd, t_big *big_struct, char *up, int j);
 char			*ft_get_env_var(t_big *big_struct, char *cmd, int index);
 char			*get_env_lst(char *cmd, int i, int j, t_big *big_struct);
 char			*strtrim_aug(char *cmd);
@@ -187,14 +187,13 @@ void			ft_concenv_up(t_big *b, char **var);
 void			ft_cue(t_env_lst *env, char **var, int len_env, char *tmp);
 void			ft_up_env_exp(t_big *b, char **var, char **split, int ind);
 void			update_exp(t_big *b, char **var, char **cmd, int ind);
-
 char			**ft_split_export(char *var, char c);
 char			**trim_conc_export(char *var);
 int				exp_update_line(char **var, t_env_lst *env, int i, int j);
 int				parsing_export(char *var);
 /*			-> tools			*/
 int				ft_eq_check(char *str);
-int				ft_error_export(t_big *big_s, char *split);
+int				ft_error_export(t_big *big_s, char *split, int check);
 int				updt_e(char **s, int ind, t_big *big, char **var);
 void			ft_conc_main(t_env_lst *env, char **var);
 void			ft_swap_exp(char **strs, int i, int j);

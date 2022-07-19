@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 18:44:55 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:32:54 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ void	ft_free_child(t_big *big_struct, int i)
 		ft_free_tab(big_struct->input);
 	ft_free_tab(big_struct->path);
 	if (big_struct->check_unset > 0 || big_struct->check_export == 1)
-	{
-		free(big_struct->check_name);
 		ft_free_tab(big_struct->envp);
-	}
 	if (big_struct->random_file != NULL)
 	{
 		if (i == 1)

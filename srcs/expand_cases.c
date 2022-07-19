@@ -6,11 +6,46 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:09:07 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 17:38:44 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:10:18 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*fill_cmd_expand(char *cmd, t_big *big_struct, char *up, int j)
+{
+	int		i;
+	char	*e;
+
+	i = 0;
+	while (cmd && cmd[i])
+	{
+		if (cmd[i] == '$')
+		{
+			e = ft_get_env_var(big_struct, cmd, i);
+			if (e == NULL && cmd[i])
+				i += ft_len_dollar(cmd, i);
+			else if (ft_memcmp(e, "anticonstitution", ft_strlen(e)) == 0)
+			{
+				up[j++] = cmd[i++];
+				while (cmd[i] != '$' && cmd[i] != '\'' && cmd[i] != ' '
+					&& cmd[i] != '\0')
+					up[j++] = cmd[i++];
+			}
+			else
+			{
+				up[j] = '\0';
+				ft_strlcat(up, e, (ft_strlen(up) + ft_strlen(e) + 1));
+				i += (ft_len_dollar(cmd, i));
+				j += ft_strlen(e);
+			}
+		}
+		else
+			up[j++] = cmd[i++];
+	}
+	up[j] = '\0';
+	return (up);
+}
 
 char	*expand_first_case(t_big *big_s, int i, char *cmd)
 {
