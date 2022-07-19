@@ -6,19 +6,38 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 11:48:07 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/19 13:52:55 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*check_spe_char(char *cmd)
+char	*check_spe_char_bis(char *cmd, int i)
+{
+	if (cmd[i + 1] && cmd[i] != cmd[i + 1])
+	{
+		if (cmd[i] == '|' && check_str(cmd, 0, i) == 1)
+			return (NULL);
+		else if (cmd[i + 1] != ' ')
+			return (add_space(cmd, i));
+		else if ((cmd[i + 1] == ' ')
+			&& (check_str(cmd, (i + 1), ft_strlen(cmd)) == 0))
+			return (cmd);
+	}
+	else if (cmd [i] == '<' && cmd[i + 1] == '<'
+		&& (check_str(cmd, (i + 2), ft_strlen(cmd)) == 0))
+		return (add_space_hereapp(cmd, i));
+	else if (cmd[i] == '>' && cmd[i + 1] == '>'
+		&& (check_str(cmd, (i + 2), ft_strlen(cmd)) == 0))
+		return (add_space_hereapp(cmd, i));
+	return (NULL);
+}
+
+char	*check_spe_char(char *cmd, int len_tmp)
 {
 	int	i;
-	int	len_tmp;
 
 	i = -1;
-	len_tmp = ft_strlen(cmd);
 	while (cmd[++i])
 	{
 		if (cmd[i] == '"' || cmd[i] == '\'')
@@ -27,24 +46,11 @@ char	*check_spe_char(char *cmd)
 			return (NULL);
 		if (cmd[i] == '|' || cmd[i] == '>' || cmd[i] == '<')
 		{
-			if (cmd[i + 1] && cmd[i] != cmd[i + 1])
-			{
-				if (cmd[i] == '|' && check_str(cmd, 0, i) == 1)
-					return (NULL);
-				else if (cmd[i + 1] != ' ')
-					cmd = add_space(cmd, i);
-				else if ((cmd[i + 1] == ' ')
-					&& (check_str(cmd, (i + 1), ft_strlen(cmd)) == 0))
-					i++;
-			}
-			else if (cmd[i] == '<' && cmd[i + 1] == '<'
-				&& (check_str(cmd, (i + 2), ft_strlen(cmd)) == 0))
-				cmd = add_space_hereapp(cmd, i);
-			else if (cmd[i] == '>' && cmd[i + 1] == '>'
-				&& (check_str(cmd, (i + 2), ft_strlen(cmd)) == 0))
-					cmd = add_space_hereapp(cmd, i);
-			else
+			cmd = check_spe_char_bis(cmd, i);
+			if (cmd == NULL)
 				return (NULL);
+			if (cmd[i + 1] && cmd[i + 1] == ' ')
+				i++;
 		}
 		if (ft_strlen(cmd) - len_tmp != 0)
 		{
@@ -55,60 +61,18 @@ char	*check_spe_char(char *cmd)
 	return (cmd);
 }
 
-int	ft_checkquotes(char *cmd)
+int	parsing_ending(char *cmd, t_big_struct *big_s)
 {
-	int	i;
-
-	i = -1;
-	while (cmd && cmd[++i])
-	{
-		if (cmd[i] && cmd[i] == '\'')
-		{
-			while (cmd[i] && cmd[++i] && cmd[i] != '\'')
-				;
-			if (!cmd[i])
-				return (1);
-		}
-		if (cmd[i] && cmd[i] == '\"')
-		{
-			while (cmd[i] && cmd[++i] && cmd[i] != '\"')
-				;
-			if (!cmd[i])
-				return (1);
-		}
-	}
-	return (0);
-}
-
-int	check_after_pipe(char *cmd, char c)
-{
-	int	j;
-	int	i;
-
-	if (!cmd)
-		return (1);
-	i = 0;
-	j = 0;
-	while (cmd && cmd[i] && cmd[i] != '\0')
-	{
-		if (cmd[i] == c)
-		{
-			i++;
-			j = 0;
-			while (cmd && cmd[i] && cmd[i] != '\0')
-			{
-				if (cmd[i] != '\0' && ft_isalnum(cmd[i]) == 1)
-					j++;
-				i++;
-			}
-			if (j == 0)
-				return (1);
-			else
-				i = (i - j) - 1;
-		}
-		i++;
-	}
-	return (0);
+	big_s->input = ft_split_du_futur(cmd, '|');
+	free(cmd);
+	if (big_s->input[0] == NULL)
+		return (0);
+	big_s->cmd_lst = ft_init_cmd_lst(big_s->input);
+	parsing_quotes(big_s);
+	parsing_redirection(big_s, 0);
+	if (big_s->cmd_lst == NULL)
+		return (0);
+	return (1);
 }
 
 int	ft_parsing(char *cmd, t_big_struct *big_struct)
@@ -119,7 +83,7 @@ int	ft_parsing(char *cmd, t_big_struct *big_struct)
 		big_struct->status = 2;
 		return (0);
 	}
-	cmd = check_spe_char(cmd);
+	cmd = check_spe_char(cmd, ft_strlen(cmd));
 	if (!cmd || (check_after_pipe(cmd, '|') == 1
 			|| check_after_pipe(cmd, '<') == 1
 			|| check_after_pipe(cmd, '>') == 1))
@@ -129,14 +93,5 @@ int	ft_parsing(char *cmd, t_big_struct *big_struct)
 		big_struct->status = 2;
 		return (0);
 	}
-	big_struct->input = ft_split_du_futur(cmd, '|');
-	free(cmd);
-	if (big_struct->input[0] == NULL)
-		return (0);
-	big_struct->cmd_lst = ft_init_cmd_lst(big_struct->input);
-	parsing_quotes(big_struct);
-	parsing_redirection(big_struct);
-	if (big_struct->cmd_lst == NULL)
-		return (0);
-	return (1);
+	return (parsing_ending(cmd, big_struct));
 }

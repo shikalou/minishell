@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/18 12:03:51 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/19 13:56:13 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,16 @@ void	redirect_heredoc(t_big_struct *b, t_cmd_lst *cmd_lst, int i)
 		cmd_lst = NULL;
 }
 
-void	parsing_redirection(t_big_struct *big_struct)
+void	parsing_redirection(t_big_struct *big_struct, int i)
 {
 	t_cmd_lst	*cmd_lst;
-	int			i;
 
 	cmd_lst = big_struct->cmd_lst;
-	while (cmd_lst)
+	while (cmd_lst != NULL)
 	{
-		i = 0;
+		i = -1;
 		big_struct->spaced_par = ft_split(cmd_lst->command, ' ');
-		while (big_struct->spaced_par && big_struct->spaced_par[i])
+		while (big_struct->spaced_par && big_struct->spaced_par[++i])
 		{
 			if (ft_strcmp(big_struct->spaced_par[i], "<") == 0)
 				redirect_in(big_struct, cmd_lst, i);
@@ -107,11 +106,12 @@ void	parsing_redirection(t_big_struct *big_struct)
 				redirect_out(big_struct, cmd_lst, i, 0);
 			else if (ft_strcmp(big_struct->spaced_par[i], "<<") == 0)
 				redirect_heredoc(big_struct, cmd_lst, i);
-			i++;
 		}
 		ft_free_tab(big_struct->spaced_par);
 		big_struct->spaced_par = NULL;
 		if (big_struct->cmd_lst != NULL)
 			cmd_lst = cmd_lst->next;
+		else
+			break ;
 	}
 }
