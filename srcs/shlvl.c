@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:12:40 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 18:00:37 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 18:16:20 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*shlvl_line(t_env_lst *env)
 			free(name);
 			free(to_join);
 			free(env->line);
-			printf("result final ??? %s\n", result);
 			return (result);
 		}
 	}
@@ -76,7 +75,7 @@ char	**shlvl_envp(t_big *big_s, int ind)
 	if (!result)
 		return (NULL);
 	i = 0;
-	while (big_s->envp && big_s->envp[i++])
+	while (big_s->envp && big_s->envp[i])
 	{
 		if (i == ind)
 		{
