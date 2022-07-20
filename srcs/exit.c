@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:39:08 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 19:59:54 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 15:18:49 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,9 @@ void	ft_exit(t_big *b)
 			b->status = 2;
 		}
 	}
+	ft_update_shlvl_decr(b);
 	i = exit_next(b);
+	printf("oui coyucoucikjdhj\n");
+	//ft_update_shlvl_decr(b);
 	exit(i);
 }

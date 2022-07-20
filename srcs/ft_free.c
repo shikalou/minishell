@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 20:32:54 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 15:29:58 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	ft_free_child(t_big *big_struct, int i)
 		big_struct->random_file = NULL;
 	}
 	ft_lstclear_cmd(big_struct->cmd_lst);
-	ft_lstclear_env(big_struct->env_lst);
+	if (big_struct->shlvl < 2)
+		ft_lstclear_env(big_struct->env_lst);
 	free(big_struct);
 }

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 12:49:43 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 15:38:54 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_big_struct
 	int			env_size;
 	int			pipefd[2];
 	int			status;
+	int			shlvl;
 	char		*c_status;
 	char		*random_file;
 	t_env_lst	*env_lst;
@@ -141,7 +142,14 @@ int				ft_split_quotes(const char *s1, int i);
 /********************************************************/
 /*************SHLVL**************************************/
 /********************************************************/
-void			ft_update_shlvl(t_big *big_s);
+int				ft_update_shlvl_incr(t_big *big_s);
+char			**shlvl_envp_incr(t_big *big_s, int ind);
+char			*get_nb_shlvl_incr(char *line, int ind);
+char			*shlvl_line_incr(t_env_lst *env);
+int				ft_update_shlvl_decr(t_big *big_s);
+char			**shlvl_envp_decr(t_big *big_s, int ind);
+char			*get_nb_shlvl_decr(char *line, int ind);
+char			*shlvl_line_decr(t_env_lst *env);
 
 /********************************************************/
 /*************EXECUTION**********************************/
