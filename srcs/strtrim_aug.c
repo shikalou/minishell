@@ -97,6 +97,9 @@ void	ft_fill_trim(char *new_cmd, char *cmd, int check)
 		{
 			k = 0;
 			i++;
+//		la douille c peut etre kil fo check si cmd[i] existe
+//		parske potentiellement pour le" de close on est à '\0'
+//		ce serait juste ça l'invalid read et write vu ke ça fonctionne... 
 			printf("cmd[%d] = %c<-\n", i, cmd[i]);
 			if (cmd[i] == '"' && check == 0)
 			{
