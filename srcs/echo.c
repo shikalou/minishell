@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 22:41:38 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 01:45:12 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,44 @@ void	echo_putstr(t_big *big_s, t_cmd_lst *cmd_lst, int i)
 		len = ft_strlen(big_s->spaced_cmd[i]);
 		if (ft_strncmp(big_s->spaced_cmd[i], "\"\"", len) == 0
 			|| ft_strncmp(big_s->spaced_cmd[i], "''", len) == 0)
-		{
 			ft_putstr_fd("  ", cmd_lst->fd_out);
-		}
 		else
 		{
 			ft_putchar_fd(' ', cmd_lst->fd_out);
 			ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
 		}
+	}
+}
+
+void	ft_parsing_echo(t_big *b)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*tmp;
+
+	i = 1;
+	while (b->spaced_cmd[i])
+	{
+		j = 0;
+		while (b->spaced_cmd[i][j])
+		{
+			k = j + 1;
+			if (b->spaced_cmd[i][j] == '"' && b->spaced_cmd[i][k]
+				&& b->spaced_cmd[i][k] != '"')
+			{
+				tmp = ft_strdup(b->spaced_cmd[i]);
+				free(b->spaced_cmd[i]);
+				b->spaced_cmd[i] = ft_strtrim(tmp, "\"");
+				free(tmp);
+				break;
+			}
+			else if (b->spaced_cmd[i][j] == '"')
+				j += 2;
+			else
+				j++;
+		}
+		i++;
 	}
 }
 
@@ -65,6 +95,7 @@ int	ft_echo(t_big *big_s, t_cmd_lst *cmd_lst)
 		{
 			while (ft_check_echo_n(big_s->spaced_cmd[i]))
 				i++;
+			ft_parsing_echo(big_s);
 			echo_putstr(big_s, cmd_lst, i);
 			big_s->status = 0;
 			return (1);
@@ -72,6 +103,7 @@ int	ft_echo(t_big *big_s, t_cmd_lst *cmd_lst)
 	}
 	if (big_s->spaced_cmd[i])
 	{
+		ft_parsing_echo(big_s);
 		echo_putstr(big_s, cmd_lst, i);
 		ft_putchar_fd('\n', cmd_lst->fd_out);
 	}
