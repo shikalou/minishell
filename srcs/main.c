@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 14:29:46 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:08:07 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int ac, char **av, char **envp)
 	big_struct = ft_init_big(envp);
 	if (!big_struct)
 		return (1);
+	ft_update_shlvl(big_struct);
 	get_value(big_struct, NULL, 0);
 	shellmini(big_struct);
 	printf("\nslt les gars\n");

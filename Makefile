@@ -6,20 +6,20 @@
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 16:12:42 by ldinaut           #+#    #+#              #
-#    Updated: 2022/07/20 14:56:28 by mcouppe          ###   ########.fr        #
+#    Updated: 2022/07/20 16:05:28 by mcouppe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
-SRCS_FILES	=	main.c utils_parsing.c sdf.c ft_free.c cd.c shlvl_decr.c \
+SRCS_FILES	=	main.c utils_parsing.c sdf.c ft_free.c cd.c shlvl.c \
 			init_struct_lst.c parsing.c execution.c exec_utils.c \
 			extended_parsing.c extended_parse_utils.c strtrim_aug.c \
 			builtins.c exec_multi.c redirection.c echo.c lst_utils_cmd.c \
 			export.c signals.c export_parsing.c exit.c export_split.c \
 			heredocs.c export_tools.c export_print.c unset.c expand_cases.c \
 			lst_utils_env.c sdf_tools.c export_updt_tools.c parsing_features.c \
-			export_pars_tools.c exec_cupboard.c export_errors.c shlvl_incr.c
+			export_pars_tools.c exec_cupboard.c export_errors.c
 
 SRCS		=	$(addprefix srcs/, $(SRCS_FILES))
 
