@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 20:05:38 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 12:42:19 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,19 @@ t_env_lst	*ft_init_env_lst(char **envp)
 {
 	int			i;
 	t_env_lst	*begin;
+	char		*s;
+	char		*s2;
 
 	i = 0;
+	s = getcwd(NULL, 0);
+	if (envp[i] == NULL)
+	{
+		s2 = ft_strjoin("PWD=", s);
+		free(s);
+		begin = ft_lstnew_env(i, ft_strdup(s2));
+		ft_lstadd_back_env(&begin, ft_lstnew_env(i, ft_strdup("SHLVL=1")));
+		return (free(s2), begin);
+	}
 	begin = ft_lstnew_env(i, ft_strdup(envp[i]));
 	while (envp[++i])
 	{
@@ -40,7 +51,7 @@ t_env_lst	*ft_init_env_lst(char **envp)
 		if (envp[i + 1] && (envp[i] == NULL || envp[i][0] == '\0'))
 			i++;
 	}
-	return (begin);
+	return (free(s), begin);
 }
 
 char	**ft_recover_path(char **envp)
@@ -61,6 +72,27 @@ char	**ft_recover_path(char **envp)
 	return (NULL);
 }
 
+char	**ft_new_envp(t_env_lst *env_lst)
+{
+	int			i;
+	int			j;
+	char		**envp;
+	t_env_lst	*tmp;
+
+	i = 0;
+	j = ft_lstsize_env(env_lst);
+	tmp = env_lst;
+	envp = malloc(sizeof(char) * (j + 1));
+	while (i < j)
+	{
+		envp[i] = ft_strdup(tmp->line);
+		tmp = tmp->next;
+		i++;
+	}
+	envp[i] = NULL;
+	return (envp);
+}
+
 t_big	*ft_init_big(char **envp)
 {
 	t_big	*big_struct;
@@ -70,8 +102,11 @@ t_big	*ft_init_big(char **envp)
 		return (NULL);
 	big_struct->input = NULL;
 	big_struct->absolut_path = NULL;
-	big_struct->envp = envp;
 	big_struct->env_lst = ft_init_env_lst(envp);
+	if (envp[0] == NULL)
+		big_struct->envp = ft_new_envp(big_struct->env_lst);
+	else
+		big_struct->envp = envp;
 	big_struct->path = ft_recover_path(envp);
 	big_struct->cmd_lst = NULL;
 	big_struct->cmd_updated = NULL;
