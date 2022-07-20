@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 15:29:58 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 17:16:24 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ void	ft_free_child(t_big *big_struct, int i)
 		ft_free_tab(big_struct->input);
 	ft_free_tab(big_struct->path);
 	if (big_struct->check_unset > 0 || big_struct->check_export == 1)
+	{
+		printf("unset = %d, export = %d\n", big_struct->check_unset, big_struct->check_export);
 		ft_free_tab(big_struct->envp);
+	}
 	if (big_struct->random_file != NULL)
 	{
 		if (i == 1)
@@ -93,7 +96,6 @@ void	ft_free_child(t_big *big_struct, int i)
 		big_struct->random_file = NULL;
 	}
 	ft_lstclear_cmd(big_struct->cmd_lst);
-	if (big_struct->shlvl < 2)
-		ft_lstclear_env(big_struct->env_lst);
+	ft_lstclear_env(big_struct->env_lst);
 	free(big_struct);
 }

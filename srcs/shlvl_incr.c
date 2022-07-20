@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl_incr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:12:40 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 15:31:41 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 17:55:55 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ int	ft_update_shlvl_incr(t_big *big_s)
 
 	env = big_s->env_lst;
 	i = -1;
-	if (big_s->spaced_cmd[1])
-		return (0);
 	while (env)
 	{
 		if (ft_strncmp(env->line, "SHLVL", 5) == 0)

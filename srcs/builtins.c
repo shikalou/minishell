@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 15:38:40 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 17:54:59 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_env(t_big *big_s, t_cmd_lst *cmd_lst)
 		big_s->status = 2;
 		return (1);
 	}
-	env = ft_new_envp(big_s->env_lst);
+	env = big_s->env_lst;
 	i = 0;
 	while (env[i] != NULL)
 	{
@@ -71,7 +71,5 @@ int	ft_check_builtin_multi(t_big *big_s, t_cmd_lst *cmd_lst)
 		return (ft_env(big_s, cmd_lst));
 	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "unset") == 0)
 		return (ft_unset(big_s, cmd_lst));
-	else if (cmd_lst->command && ft_strcmp(big_s->spaced_cmd[0], "./minishell") == 0)
-		return (ft_update_shlvl_incr(big_s));
 	return (0);
 }
