@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 22:48:20 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 00:27:01 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,18 @@ void	ft_fill_trim(char *new_cmd, char *cmd, int check)
 		{
 			k = 0;
 			i++;
-//		la douille c peut etre kil fo check si cmd[i] existe
-//		parske potentiellement pour le" de close on est à '\0'
-//		ce serait juste ça l'invalid read et write vu ke ça fonctionne... 
-			printf("cmd[%d] = %c<-\n", i, cmd[i]);
 			if (cmd[i] == '"' && check == 0)
 			{
 				new_cmd[j++] = cmd[i];
 				new_cmd[j++] = cmd[i++];
+				check++;
 			}
+			else if (cmd[i] == '"' && check != 0)
+				i++;
 			else if (cmd[i] == ' ')
 			{
-				printf("i first = %d\n", i);
 				while (cmd[i] && cmd[i] == ' ' && cmd[i++] != '"')
 					k++;
-				printf("k = %d\n", k);
 				if (cmd[i] == '"')
 				{
 					new_cmd[j++] = cmd[i];
@@ -119,11 +116,7 @@ void	ft_fill_trim(char *new_cmd, char *cmd, int check)
 					i++;
 				}
 				else
-				{
-					printf("i second = %d\n", i);
 					i -= k;
-					printf("i third = %d\n", i);
-				}
 				while (cmd[i] && cmd[i] != '"')
 					new_cmd[j++] = cmd[i++];
 			}
