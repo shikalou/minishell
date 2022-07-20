@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 19:28:47 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 20:42:28 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*update_flux(t_big *b, int size, int index)
 
 	i = 0;
 	new_cmd = malloc(sizeof(char) * size + 1);
+	if (!new_cmd)
+		return (NULL);
 	new_cmd[0] = '\0';
 	while (b->spaced_par && b->spaced_par[i])
 	{
