@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 16:11:27 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:16:16 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,13 @@ int	ft_env(t_big *big_s, t_cmd_lst *cmd_lst)
 	char	**env;
 	int		i;
 
-	env = big_s->envp;
+	if (big_s->spaced_cmd[1] != NULL)
+	{
+		ft_putendl_fd("env: too many arguments", 2);
+		big_s->status = 2;
+		return (1);
+	}
+	env = ft_new_envp(big_s->env_lst);
 	i = 0;
 	while (env[i] != NULL)
 	{

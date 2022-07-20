@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 16:08:37 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:16:45 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_env_lst		*ft_lstnew_env(int i, char *env_line);
 void			ft_lstadd_back_env(t_env_lst **alst, t_env_lst *new);
 void			ft_lstclear_env(t_env_lst *env_lst);
 int				ft_lstsize_env(t_env_lst *lst);
+char			**ft_new_envp(t_env_lst *env_lst);
 
 /********************************************************/
 /*************PARSING************************************/
