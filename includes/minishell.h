@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 17:57:21 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 22:21:27 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_big_struct
 	int			env_size;
 	int			pipefd[2];
 	int			status;
+	int			name_s;
 	char		*c_status;
 	char		*random_file;
 	t_env_lst	*env_lst;
@@ -110,10 +111,10 @@ char			*extended_dollar(char *cmd, t_big *big_struct);
 char			*fill_cmd_expand(char *cmd, t_big *big_struct, char *up, int j);
 char			*ft_get_env_var(t_big *big_struct, char *cmd, int index);
 char			*get_env_lst(char *cmd, int i, int j, t_big *big_struct);
-char			*strtrim_aug(char *cmd);
+char			*strtrim_aug(char *cmd, int check);
 int				ft_len_dollar(char *cmd, int i);
 int				ft_memchr_aug(char *s, int i, char c);
-int				strtrim_size(char *cmd);
+int				strtrim_size(char *cmd, int check);
 
 /*		--> PARSING REDIRECTIONS	*/
 void			parsing_redirection(t_big *big_struct, int i);
@@ -128,7 +129,6 @@ char			**ft_sdf(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
 char			*check_spe_char(char *cmd, int len_tmp);
-char			*strtrim_aug(char *cmd);
 int				check_after_pipe(char *cmd, char c);
 int				check_char(char c);
 int				check_str(char *cmd, int index, int end);

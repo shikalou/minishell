@@ -6,12 +6,23 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 18:44:55 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 22:35:28 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+	petit probleme ici (lol on adore)
+
+	on dit que spaced_cmd = ft_split sauf que ft_split skip pas les cot
+	du coup il faut appeler sdf
+	mais sdf il critche bcp :'((
+	parce que sinn echo "l            o           l"
+	donne --> l o l
+	:'((((
+	ou alors on fait juste echo avec cmd_lst->command
+*/
 int	ft_simple_exec(t_big *big_s, t_cmd_lst *cmd_lst)
 {
 	big_s->spaced_cmd = ft_split(big_s->cmd_lst->command, ' ');
