@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:12:40 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 18:16:20 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 18:47:47 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@ char	**shlvl_envp(t_big *big_s, int ind)
 int	ft_update_shlvl(t_big *big_s)
 {
 	t_env_lst	*env;
-	int		i;
+	int			i;
 
 	env = big_s->env_lst;
 	i = -1;
 	while (env)
 	{
 		if (ft_strncmp(env->line, "SHLVL", 5) == 0)
-			env->line = shlvl_line(env); 
+			env->line = shlvl_line(env);
 		env = env->next;
 	}
 	while (big_s->envp[++i])
