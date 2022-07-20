@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:44:56 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 20:32:38 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 15:09:51 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ void	ft_check_signal(int status)
 {
 	if (status == 130)
 		printf("\n");
-	if (status == 134)
+	else if (status == 134)
 		printf("Aborted (core dumped)\n");
-	if (status == 139)
+	else if (status == 139)
 		printf("Segmentation fault (core dumped)\n");
-	if (status == 135)
+	else if (status == 135)
 		printf("Bus error (core dumped\n");
 	else
 		printf("Signal\n");

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 20:07:16 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 13:57:45 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_env_lst(char *cmd, int i, int j, t_big *big_struct)
 
 	k = 0;
 	env = big_struct->env_lst;
-	while (i < j && cmd[i] && cmd[i] != '=')
+	while (i < j && (cmd[i] && cmd[i] != '='))
 	{
 		if (cmd[i] && ((ft_isalnum(cmd[i]) == 1) || cmd[i] == '_'))
 			name[k++] = cmd[i];

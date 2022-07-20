@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 20:02:27 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 14:29:46 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ int	main(int ac, char **av, char **envp)
 {
 	t_big	*big_struct;
 
-	(void)ac;
 	(void)av;
+	if (ac > 1)
+		return (1);
 	big_struct = ft_init_big(envp);
 	if (!big_struct)
 		return (1);
