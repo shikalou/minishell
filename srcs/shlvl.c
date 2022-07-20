@@ -6,22 +6,11 @@
 /*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:12:40 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 16:10:20 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:47:53 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	here == increment de shlvl
-	il faut pouvoir le decrement mais pour le lancer il faut intervenir sur les signaux
-	genre si on ctrl D ou exit dans SHLVL > 2 --> alors on shlvl --
-	ou alors
-	tt simplement lol
-	on cree une var ds la big_s en int (+ simple) de shlvl qu'on incremente(quand ft_update_shlvl)
-	 et decremente (qd ctrl+D || exit ) et juste moi j'update 
-	env et env_lst en fonction de sa valeur
-*/
 
 char	*get_nb_shlvl(char *line, int ind)
 {
@@ -47,7 +36,7 @@ char	*get_nb_shlvl(char *line, int ind)
 
 char	*shlvl_line(t_env_lst *env)
 {
-	int	i;
+	int		i;
 	char	*to_join;
 	char	*name;
 	char	*result;
@@ -87,9 +76,9 @@ char	**shlvl_envp(t_big *big_s, int ind)
 	if (!result)
 		return (NULL);
 	i = 0;
-	while (big_s->envp && big_s->envp[i])
+	while (big_s->envp && big_s->envp[i++])
 	{
-		if (i == ind) 
+		if (i == ind)
 		{
 			to_join = get_nb_shlvl(big_s->envp[i], 6);
 			name = ft_strdup("SHLVL=");
