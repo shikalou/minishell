@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:08:11 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 17:45:42 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 18:32:48 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ void	ft_update_oldpwd(t_big *big_struct, char *s, int i)
 			free(env_lst->line);
 			env_lst->line = ft_strjoin(s, str);
 			free(str);
+			if (big_struct->check_export > 0 || big_struct->check_unset > 0)
+				ft_free_tab(big_struct->envp);
+			big_struct->envp = ft_new_envp(big_struct->env_lst);
 			return ;
 		}
 		env_lst = env_lst->next;

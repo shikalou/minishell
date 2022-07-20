@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 18:13:42 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 18:39:29 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ char	**ft_new_envp(t_env_lst *env_lst)
 	tmp2 = env_lst;
 	j = ft_lstsize_env(tmp2);
 	tmp = env_lst;
-	envp = malloc(sizeof(char) * (j + 1));
-	while (tmp)
+	envp = malloc(sizeof(char *) * (j + 1));
+	while (tmp && tmp->line)
 	{
 		envp[i] = ft_strdup(tmp->line);
 		tmp = tmp->next;
