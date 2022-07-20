@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:08:11 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 13:58:12 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 17:45:42 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ char	*ft_get_home(t_big *big_struct, char *env)
 	return (NULL);
 }
 
-void	ft_update_oldpwd(t_big *big_struct, char *s)
+void	ft_update_oldpwd(t_big *big_struct, char *s, int i)
 {
 	t_env_lst	*env_lst;
 	char		*str;
+	char		*s1;
 
 	env_lst = big_struct->env_lst;
 	while (env_lst)
@@ -53,6 +54,14 @@ void	ft_update_oldpwd(t_big *big_struct, char *s)
 			return ;
 		}
 		env_lst = env_lst->next;
+	}
+	if (i == 1)
+	{
+		env_lst = big_struct->env_lst;
+		str = getcwd(NULL, 0);
+		s1 = ft_strjoin(s, str);
+		ft_lstadd_back_env(&env_lst, ft_lstnew_env(i, s1));
+		return ;
 	}
 }
 
@@ -74,7 +83,7 @@ int	ft_cd_len_one(t_big *big_s)
 		perror("chdir");
 		return (1);
 	}
-	ft_update_oldpwd(big_s, "PWD=");
+	ft_update_oldpwd(big_s, "PWD=", 0);
 	big_s->status = 0;
 	return (1);
 }
@@ -91,7 +100,7 @@ int	ft_cd(t_big *big_struct)
 		big_struct->status = 1;
 		return (1);
 	}
-	ft_update_oldpwd(big_struct, "OLDPWD=");
+	ft_update_oldpwd(big_struct, "OLDPWD=", 1);
 	if (len == 1)
 		return (ft_cd_len_one(big_struct));
 	ret = chdir(big_struct->spaced_cmd[1]);
@@ -101,7 +110,7 @@ int	ft_cd(t_big *big_struct)
 		big_struct->status = 1;
 		return (1);
 	}
-	ft_update_oldpwd(big_struct, "PWD=");
+	ft_update_oldpwd(big_struct, "PWD=", 0);
 	big_struct->status = 0;
 	return (1);
 }

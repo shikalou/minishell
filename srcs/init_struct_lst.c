@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 16:15:56 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 17:57:10 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_env_lst	*ft_init_env_lst(char **envp)
 		free(s);
 		begin = ft_lstnew_env(i, ft_strdup(s2));
 		ft_lstadd_back_env(&begin, ft_lstnew_env(i, ft_strdup("SHLVL=1")));
-		return (free(s2), begin);
+		free(s2);
+		return (begin);
 	}
 	begin = ft_lstnew_env(i, ft_strdup(envp[i]));
 	while (envp[++i])
@@ -78,12 +79,14 @@ char	**ft_new_envp(t_env_lst *env_lst)
 	int			j;
 	char		**envp;
 	t_env_lst	*tmp;
+	t_env_lst	*tmp2;
 
 	i = 0;
-	j = ft_lstsize_env(env_lst);
+	tmp2 = env_lst;
+	j = ft_lstsize_env(tmp2);
 	tmp = env_lst;
 	envp = malloc(sizeof(char) * (j + 1));
-	while (i < j)
+	while (tmp)
 	{
 		envp[i] = ft_strdup(tmp->line);
 		tmp = tmp->next;

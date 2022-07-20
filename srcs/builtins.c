@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 16:16:16 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/20 17:57:07 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_env(t_big *big_s, t_cmd_lst *cmd_lst)
 		big_s->status = 2;
 		return (1);
 	}
-	env = ft_new_envp(big_s->env_lst);
+	env = big_s->env_lst;
 	i = 0;
 	while (env[i] != NULL)
 	{

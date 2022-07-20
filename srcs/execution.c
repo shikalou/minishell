@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 20:18:08 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/20 17:44:39 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 int	ft_simple_exec(t_big *big_s, t_cmd_lst *cmd_lst)
 {
+	/*int	i = 0;
+	while (big_s->envp[i] != NULL)
+	{
+		printf("execv%s\n", big_s->envp[i]);
+		i++;
+	}*/
 	big_s->spaced_cmd = ft_split(big_s->cmd_lst->command, ' ');
 	if (big_s->spaced_cmd[0] == NULL)
 		return (1);

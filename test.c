@@ -1,6 +1,7 @@
 #include <signal.h>
 
-int	main()
+int	main(int ac, char **av)
 {
-	raise(SIGPIPE);
+	free(av[0]);
+	//raise(SIGPIPE);
 }
