@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 17:23:31 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 21:07:42 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,60 @@ char	*check_spe_char(char *cmd, int len_tmp)
 		on trim de i a j
 		de maniere a ne laisser qu'un espace
 */
+int	last_parse(t_big *b, char **str)
+{
+	int		i;
+	int		j;
+	int		k;
+
+	i = -1;
+	while (str && str[++i])
+	{
+		j = -1;
+		while (str && str[i][++j])
+		{
+			k = j + 1;
+			if (str[i][j] == '<' && str[i][k] && str[i][k] == '<')
+			{
+				k++;
+				while (str[i][k] && str[i][k] == ' ')
+					k++;
+				if (!str[i][k] || str[i][k] == '\0')
+				{
+					write(2, "Error syntax\n", 13);
+					b->status = 2;
+					ft_free_tab(b->input);
+					b->input = NULL;
+					return (1);
+				}
+			}
+			else if (str[i][j] == '>' && str[i][k] && str[i][k] == '>')
+			{
+				k++;
+				while (str[i][k] && str[i][k] == ' ')
+					k++;
+				if (!str[i][k] || str[i][k] == '\0')
+				{
+					write(2, "Error syntax\n", 13);
+					b->status = 2;
+					ft_free_tab(b->input);
+					b->input = NULL;
+					return (1);
+				}
+			}
+		}
+	}
+
+	return (0);
+}
+
 int	parsing_ending(char *cmd, t_big *big_s)
 {
 	big_s->input = ft_sdf(cmd, '|');
 	free(cmd);
 	if (big_s->input[0] == NULL)
+		return (0);
+	if (last_parse(big_s, big_s->input) == 1)
 		return (0);
 	big_s->cmd_lst = ft_init_cmd_lst(big_s->input);
 	parsing_quotes(big_s);

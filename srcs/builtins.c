@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 19:22:09 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 22:01:14 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_pwd(t_big *big_struct, t_cmd_lst *cmd_lst)
 		free(big_struct->absolut_path);
 		big_struct->absolut_path = NULL;
 	}
+	printf("icicicici=%d\n", cmd_lst->fd_out);
 	big_struct->absolut_path = getcwd(NULL, 0);
 	if (!big_struct->absolut_path)
 	{
@@ -32,7 +33,7 @@ int	ft_pwd(t_big *big_struct, t_cmd_lst *cmd_lst)
 
 int	ft_env(t_big *big_s, t_cmd_lst *cmd_lst)
 {
-	char	**env;
+//	char	**env;
 	int		i;
 
 	if (big_s->spaced_cmd[1] != NULL)
@@ -41,12 +42,13 @@ int	ft_env(t_big *big_s, t_cmd_lst *cmd_lst)
 		big_s->status = 2;
 		return (1);
 	}
-	env = big_s->envp;
+	//env = big_s->envp;
 	i = 0;
-	while (env && env[i])
+	printf("dans env %d\n", cmd_lst->fd_out);
+	while (big_s->envp && big_s->envp[i])
 	{
-		if (env[i] != NULL && env[i][0] && ft_strchr(env[i], '=') != 0)
-			ft_putendl_fd(env[i], cmd_lst->fd_out);
+		if (big_s->envp[i] != NULL && big_s->envp[i][0] && ft_strchr(big_s->envp[i], '=') != 0)
+			ft_putendl_fd(big_s->envp[i], cmd_lst->fd_out);
 		i++;
 	}
 	big_s->status = 0;
