@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:29:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 19:23:28 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 20:26:09 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	ft_heredoc_main(t_big *b, t_cmd_lst *cmd_lst, int i)
 	close(cmd_lst->fd_in);
 	if (WEXITSTATUS(b->status) == 2)
 	{
+		ft_free_tab(b->input);
+		b->input = NULL;
 		ft_free_tab(b->spaced_par);
 		b->spaced_par = NULL;
 		ft_lstclear_cmd(b->cmd_lst);

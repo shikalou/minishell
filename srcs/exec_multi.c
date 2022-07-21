@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 18:45:42 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 19:10:30 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 {
+	int	i;
+
 	malloc_spaced_cmd(b, cmd_lst);
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{
 		if (cmd_lst->fd_in == 0)
 			cmd_lst->fd_in = b->pipefd[0];
-		if (b->spaced_cmd[0] && ft_check_builtin_multi(b, cmd_lst) == 0)
+		i = ft_check_builtin_multi(b, cmd_lst);
+		if (b->spaced_cmd[0] && i == 0)
 		{
 			if (ft_find_check_path(b, b->spaced_cmd) != NULL)
 			{
@@ -31,7 +34,7 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 				perror("execve");
 			}
 		}
-		exit_child_last_mid(b);
+		exit_child_last_mid(b, i);
 	}
 	close(b->pipefd[0]);
 	ft_close_fdinout(cmd_lst);
@@ -39,7 +42,8 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 
 void	middle_exec(t_big *b, t_cmd_lst *cmd_lst)
 {
-	int		fd_temp;
+	int	fd_temp;
+	int	i;
 
 	malloc_spaced_cmd(b, cmd_lst);
 	fd_temp = b->pipefd[0];
@@ -48,7 +52,8 @@ void	middle_exec(t_big *b, t_cmd_lst *cmd_lst)
 	if (cmd_lst->pid == 0)
 	{
 		fd_manager_mid(b, cmd_lst, fd_temp);
-		if (b->spaced_cmd[0] && ft_check_builtin_multi(b, cmd_lst) == 0)
+		i = ft_check_builtin_multi(b, cmd_lst);
+		if (b->spaced_cmd[0] && i == 0)
 		{
 			if (ft_find_check_path(b, b->spaced_cmd) != NULL)
 			{
@@ -59,7 +64,7 @@ void	middle_exec(t_big *b, t_cmd_lst *cmd_lst)
 				perror("execve");
 			}
 		}
-		exit_child_last_mid(b);
+		exit_child_last_mid(b, i);
 	}
 	close(b->pipefd[1]);
 	close(fd_temp);
@@ -103,18 +108,16 @@ void	ft_wait(t_big *big_struct, t_cmd_lst *cmd_lst)
 			waitpid(cmd_lst->pid, &big_struct->status, 0);
 			if (WIFSIGNALED(big_struct->status))
 			{
-				if (WCOREDUMP(big_struct->status))
-					printf("Quit (core dumped)\n");
 				big_struct->status = (WTERMSIG(big_struct->status) + 128);
-				if (big_struct->status == 130)
-					printf("\n");
+				ft_check_signal(big_struct->status);
 			}
 			else
 				big_struct->status = WEXITSTATUS(big_struct->status);
+			break ;
 		}
 		waitpid(cmd_lst->pid, &big_struct->status, 0);
-		if (WIFSIGNALED(big_struct->status))
-			big_struct->status = WTERMSIG(big_struct->status);
+		if (WIFSIGNALED(big_struct->status) && WIFSIGNALED(big_struct->status) != 1)
+			big_struct->status = WTERMSIG(big_struct->status) + 128;
 		else
 			big_struct->status = WEXITSTATUS(big_struct->status);
 		cmd_lst = cmd_lst->next;

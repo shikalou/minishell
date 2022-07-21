@@ -6,13 +6,13 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 17:57:05 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 20:11:00 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	shellmini(t_big *big_struct)
+int	shellmini(t_big *big_struct)
 {
 	char	*cmd;
 
@@ -22,7 +22,7 @@ void	shellmini(t_big *big_struct)
 	{
 		cmd = readline("nelson et zor minishell$ ");
 		if (!cmd)
-			return ;
+			return (big_struct->status);
 		add_history(cmd);
 		if (ft_strlen(cmd) > 0 && ft_parsing(cmd, big_struct))
 		{
@@ -36,6 +36,7 @@ void	shellmini(t_big *big_struct)
 int	main(int ac, char **av, char **envp)
 {
 	t_big	*big_struct;
+	int	i;
 
 	(void)av;
 	if (ac > 1)
@@ -45,8 +46,8 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	ft_update_shlvl(big_struct);
 	get_value(big_struct, NULL, 0);
-	shellmini(big_struct);
+	i = shellmini(big_struct);
 	printf("\nslt les gars\n");
 	ft_free_child(big_struct, 0);
-	return (0);
+	return (i);
 }

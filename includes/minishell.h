@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 15:14:30 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 20:11:42 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_big_struct
 /********************************************************/
 /***********INIT AND START*******************************/
 /********************************************************/
-void			shellmini(t_big *big_struct);
+int			shellmini(t_big *big_struct);
 
 t_big			*ft_init_big(char **envp);
 
@@ -165,7 +165,7 @@ void			ft_free_between(t_big *big_struct);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 void			ft_close_fdinout(t_cmd_lst *cmd_lst);
 void			exit_child_first(t_big *b);
-void			exit_child_last_mid(t_big *b);
+void			exit_child_last_mid(t_big *b, int i);
 void			fd_manager_mid(t_big *b, t_cmd_lst *cmd_lst, int fd_tmp);
 
 /*		--> UTILS EXEC				*/

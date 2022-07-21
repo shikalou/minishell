@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_utils.c                                        :+:      :+:    :+:   */
+/*   lst_utils_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/15 21:40:50 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 19:58:56 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	ft_lstclear_env(t_env_lst *env_lst)
 	while (env_lst)
 	{
 		lst_tmp = env_lst->next;
-		free(env_lst->line);
+		if (ft_strlen(env_lst->line) > 0)
+			free(env_lst->line);
 		free(env_lst);
 		env_lst = lst_tmp;
 	}

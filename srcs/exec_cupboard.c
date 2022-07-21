@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:24:26 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 15:32:50 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 19:44:00 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,27 @@
 
 void	malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst)
 {
+	int	i;
+
+	i = 0;	
 	if (b->spaced_cmd != NULL)
 	{
 		ft_free_tab(b->spaced_cmd);
 		b->spaced_cmd = NULL;
 	}
-/*	if (ft_strnstr(cmd_lst->command, "echo \"", 6) != NULL)
-		b->spaced_cmd = ft_sdf(cmd_lst->command, ' ');
-	else if (ft_strnstr(cmd_lst->command, "echo '", 6) != NULL)
-		b->spaced_cmd = ft_sdf(cmd_lst->command, ' ');
-	else*/
+	while (cmd_lst->command[i] == ' ')
+		i++;
+	if ((int)ft_strlen(cmd_lst->command) == i)
+	{
+		free(cmd_lst->command);
+		cmd_lst->command = NULL;
+	}
 	b->spaced_cmd = ft_sdf(cmd_lst->command, ' ');
 }
-/*
-void	malloc_spacedcmd_simple(t_big *b)
-{
-	if (ft_strnstr(b->cmd_lst->command, "echo \"", 6) != NULL)
-		b->spaced_cmd = ft_sdf(b->cmd_lst->command, ' ');
-	else if (ft_strnstr(b->cmd_lst->command, "echo '", 6) != NULL)
-		b->spaced_cmd = ft_sdf(b->cmd_lst->command, ' ');
-	else
-		b->spaced_cmd = ft_split(b->cmd_lst->command, ' ');
-}*/
 
-void	exit_child_last_mid(t_big *b)
+void	exit_child_last_mid(t_big *b, int i)
 {
-	if (b->spaced_cmd[0] == NULL)
+	if (b->spaced_cmd[0] == NULL || i == 1)
 	{
 		ft_free_tab(b->spaced_cmd);
 		b->spaced_cmd = NULL;
