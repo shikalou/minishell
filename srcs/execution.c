@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 00:31:30 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 13:52:03 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 */
 int	ft_simple_exec(t_big *big_s, t_cmd_lst *cmd_lst)
 {
-	big_s->spaced_cmd = ft_sdf(big_s->cmd_lst->command, ' ');
+	malloc_spacedcmd_simple(big_s);
 	if (big_s->spaced_cmd[0] == NULL)
 		return (1);
 	if (ft_check_builtin_multi(big_s, cmd_lst) == 0)

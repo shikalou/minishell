@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 22:21:27 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 13:57:46 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void			fd_manager_mid(t_big *b, t_cmd_lst *cmd_lst, int fd_tmp);
 void			ft_wait(t_big *big_struct, t_cmd_lst *cmd_lst);
 void			ft_dup(t_cmd_lst *cmd_lst);
 void			malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst);
+void			malloc_spacedcmd_simple(t_big *b);
 char			*ft_find_check_path(t_big *b, char **spaced_cmd);
 char			*ft_check_slash(t_big *big_struct);
 int				ft_strcmp(char *s1, char *s2);

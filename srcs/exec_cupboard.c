@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:24:26 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/19 20:15:29 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 13:58:01 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ void	malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst)
 		b->spaced_cmd = NULL;
 	}
 	b->spaced_cmd = ft_split(cmd_lst->command, ' ');
+}
+
+void	malloc_spacedcmd_simple(t_big *b)
+{
+	if (ft_strnstr(b->cmd_lst->command, "echo", ft_strlen(b->cmd_lst->command)) != NULL)
+		b->spaced_cmd = ft_sdf(b->cmd_lst->command, ' ');
+	else
+		b->spaced_cmd = ft_split(b->cmd_lst->command, ' ');
 }
 
 void	exit_child_last_mid(t_big *b)
