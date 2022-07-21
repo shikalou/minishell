@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:24:26 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 14:52:42 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:32:50 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst)
 		ft_free_tab(b->spaced_cmd);
 		b->spaced_cmd = NULL;
 	}
-	if (ft_strnstr(cmd_lst->command, "echo \"", 6) != NULL)
+/*	if (ft_strnstr(cmd_lst->command, "echo \"", 6) != NULL)
 		b->spaced_cmd = ft_sdf(cmd_lst->command, ' ');
 	else if (ft_strnstr(cmd_lst->command, "echo '", 6) != NULL)
 		b->spaced_cmd = ft_sdf(cmd_lst->command, ' ');
-	else
-		b->spaced_cmd = ft_split(cmd_lst->command, ' ');
+	else*/
+	b->spaced_cmd = ft_sdf(cmd_lst->command, ' ');
 }
-
+/*
 void	malloc_spacedcmd_simple(t_big *b)
 {
 	if (ft_strnstr(b->cmd_lst->command, "echo \"", 6) != NULL)
@@ -35,7 +35,7 @@ void	malloc_spacedcmd_simple(t_big *b)
 		b->spaced_cmd = ft_sdf(b->cmd_lst->command, ' ');
 	else
 		b->spaced_cmd = ft_split(b->cmd_lst->command, ' ');
-}
+}*/
 
 void	exit_child_last_mid(t_big *b)
 {

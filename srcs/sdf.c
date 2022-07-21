@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 13:21:11 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 16:42:04 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static char	**ft_fill_strs(t_sdf *sdf, int check)
 	{
 		sdf->l = 0;
 		check = 0;
+		while (sdf->s[sdf->i] && sdf->s[sdf->i] == sdf->c)
+				sdf->i++;
 		while (sdf->s[sdf->i] && sdf->s[sdf->i] != sdf->c && sdf->s[sdf->i + 1])
 		{
 			if (sdf->s[sdf->i] == '"' || sdf->s[sdf->i] == '\'')
@@ -43,11 +45,14 @@ static char	**ft_fill_strs(t_sdf *sdf, int check)
 				sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i++];
 		}
 		if (sdf->s[sdf->i] && (sdf->s[sdf->i] != sdf->c) && !(sdf->s[sdf->i + 1]))
-			sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i];
+			sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i++];
 		sdf->strs[sdf->j][sdf->l] = '\0';
 		sdf->j++;
-		if (sdf->s[sdf->i])
-			sdf->i++;
+		if (sdf->s[sdf->i] && sdf->s[sdf->i] == sdf->c)
+		{
+			while (sdf->s[sdf->i] && sdf->s[sdf->i] == sdf->c)
+				sdf->i++;
+		}
 	}
 	sdf->strs[sdf->j] = NULL;
 	return (sdf->strs);
@@ -71,9 +76,7 @@ char	**ft_sdf(char const *s1, char c)
 		while (sdf.s[i] && sdf.s[i] == c)
 			i++;
 		if (s1[i] != c)
-		{
 			l = ft_count_char(s1, i, c);
-		}
 		sdf.strs[j] = malloc(sizeof(char) * (l + 1));
 		i += l;
 		if (!sdf.strs[j])

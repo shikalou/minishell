@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 13:57:46 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 15:14:30 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char			*update_flux(t_big *b, int size, int index);
 
 /*		--> UTILS PARSING			*/
 void			ft_init_sdf(t_sdf *sdf, const char *s1, char c);
+void			parsing_trash(t_big *big_s);
 char			**ft_sdf(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);

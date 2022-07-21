@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/21 14:37:33 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 16:38:46 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,14 +167,14 @@ char	*strtrim_aug(char *cmd, int check)
 	int		size;
 
 	size = strtrim_size(cmd, check);
-	if (ft_strnstr(cmd, "export ", 7) != NULL)
+	if (ft_strnstr(cmd, "export ", ft_strlen(cmd)) != NULL)
 		return (cmd);
-	if (ft_strnstr(cmd, "echo \"", 6) != NULL)
+	if (ft_strnstr(cmd, "echo ", ft_strlen(cmd)) != NULL)
 		return (cmd);
-	if (ft_strnstr(cmd, "echo -n \"", 9) != NULL)
+/*	if (ft_strnstr(cmd, "echo -n \"", 9) != NULL)
 		return (cmd);
 	if (ft_strnstr(cmd, "echo '", 6) != NULL)
-		return (cmd);
+		return (cmd);*/
 	new_cmd = malloc(sizeof(char) * size + 1);
 	if (!new_cmd)
 		return (NULL);
