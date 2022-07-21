@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 22:29:13 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 14:58:08 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,20 @@ char	*check_spe_char(char *cmd, int len_tmp)
 	}
 	return (cmd);
 }
-
+/*
+	ici parsing ending ---> ajouter check de if str[i++] c ke d ' ' --> on trim 
+	+ if cmd = "     echo        "lol" "
+	on trim en "echo "lol""
+	genre d'abord trim de 1ere cmd ou on enleve les espaces du debut
+	ensuite trim genre while str[i] == ft_isalpha i++
+	if str[i] == ' '
+		j = ++i
+		while str[j] == ' '
+			 j++;
+	if j > i
+		on trim de i a j
+		de maniere a ne laisser qu'un espace
+*/
 int	parsing_ending(char *cmd, t_big *big_s)
 {
 	big_s->input = ft_sdf(cmd, '|');

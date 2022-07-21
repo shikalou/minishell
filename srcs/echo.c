@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 13:37:26 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 14:35:36 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	echo_putstr(t_big *big_s, t_cmd_lst *cmd_lst, int i)
 	}
 	else
 		ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
-	while (big_s->spaced_cmd[++i])
+	while (big_s->spaced_cmd[i] && big_s->spaced_cmd[++i])
 	{
 		len = ft_strlen(big_s->spaced_cmd[i]);
 		if (ft_strncmp(big_s->spaced_cmd[i], "\"\"", len) == 0
@@ -78,6 +78,17 @@ void	ft_parsing_echo(t_big *b)
 				free(tmp);
 				break;
 			}
+			else if (b->spaced_cmd[i][j] == '\'' && b->spaced_cmd[i][k]
+				&& b->spaced_cmd[i][k] != '\'')
+			{
+				tmp = ft_strdup(b->spaced_cmd[i]);
+				free(b->spaced_cmd[i]);
+				b->spaced_cmd[i] = ft_strtrim(tmp, "\'");
+				free(tmp);
+				break;
+			}
+			else if (b->spaced_cmd[i][j] == '\'')
+				j += 2;
 			else if (b->spaced_cmd[i][j] == '"')
 				j += 2;
 			else
