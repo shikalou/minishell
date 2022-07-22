@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 22:26:53 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/22 13:21:02 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ char	*get_env_lst(char *cmd, int i, int j, t_big *big_struct)
 	while (env)
 	{
 		if (ft_strncmp(env->line, name, k) == 0 && (env->line)[k] == '=')
+		{
+			if (env->line[k + 1] == '\0')
+				return(" ");
 			return ((env->line) + (k + 1));
+		}
 		env = env->next;
 	}
 	return (NULL);
