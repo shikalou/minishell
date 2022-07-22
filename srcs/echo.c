@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/22 14:04:19 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/22 14:07:43 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	ft_parsing_echo(t_big *b)
 	while (b->spaced_cmd[i])
 	{
 		j = 0;
-	//	printf("c bizar ou pas\n %s\n", b->spaced_cmd[i]);
 		while (b->spaced_cmd[i][j])
 		{
 			k = j + 1;
@@ -101,10 +100,8 @@ void	ft_parsing_echo(t_big *b)
 			else
 				j++;
 		}
-	//	printf("c ici ou pas\n %s\n", b->spaced_cmd[i]);
 		i++;
 	}
-//	printf("c normal ou pas\n %s\n", b->spaced_cmd[i]);
 }
 
 int	ft_echo(t_big *big_s, t_cmd_lst *cmd_lst)

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:48:27 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/21 20:16:42 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 22:22:45 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	parsing_unset(char *var, t_big *big_s)
 	i++;
 	while (var[i])
 	{
-		if (var[i] == '_' || var[i] == '=' || (ft_isalnum(var[i])))
+		if (var[i] == '_' || (ft_isalnum(var[i])))
 			i++;
 		else
 			return (ft_error_export(big_s, var, 1));
