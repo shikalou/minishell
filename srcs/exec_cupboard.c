@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:24:26 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/22 02:23:10 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/22 13:10:01 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	get_sz_spacer(char *old, int i)
 	}
 	return (i + check);
 }
-
 
 char	*qt_spacer(char *old, int i)
 {

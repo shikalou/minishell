@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 20:11:42 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/22 13:42:28 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <limits.h>
 # include "../libft/libft.h"
+# define NAME_S 100000
 
 typedef struct s_env_lst
 {
@@ -68,7 +69,6 @@ typedef struct s_big_struct
 	int			env_size;
 	int			pipefd[2];
 	int			status;
-	int			name_s;
 	char		*c_status;
 	char		*random_file;
 	t_env_lst	*env_lst;
@@ -78,9 +78,10 @@ typedef struct s_big_struct
 /********************************************************/
 /***********INIT AND START*******************************/
 /********************************************************/
-int			shellmini(t_big *big_struct);
+int				shellmini(t_big *big_struct);
 
 t_big			*ft_init_big(char **envp);
+char			**ft_recover_path(char **envp);
 
 /*		--> INIT CMD_LST			*/
 t_cmd_lst		*ft_init_cmd_lst(char **input);

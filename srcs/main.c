@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:00:55 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/21 20:11:00 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/22 11:46:40 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	shellmini(t_big *big_struct)
 int	main(int ac, char **av, char **envp)
 {
 	t_big	*big_struct;
-	int	i;
+	int		i;
 
 	(void)av;
 	if (ac > 1)

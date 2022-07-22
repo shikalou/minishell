@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 19:48:53 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/22 14:03:30 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,34 @@ char	*ft_check_slash(t_big *big_struct)
 	return (NULL);
 }
 
-char	*ft_find_check_path(t_big *big_struct, char **spaced_cmd)
+char	*ft_find_check_path(t_big *b, char **spaced_cmd)
 {
 	int		i;
 	char	*temp;
+	char	**new_path;
 
 	i = 0;
-	if (ft_strchr(big_struct->spaced_cmd[0], '/'))
-		return (ft_check_slash(big_struct));
+	new_path = ft_recover_path(b->envp);
+	if (ft_strchr(b->spaced_cmd[0], '/'))
+		return (ft_check_slash(b));
 	else
 	{
-		while (big_struct->path && big_struct->path[i] != NULL)
+		while (new_path && new_path[i] != NULL)
 		{
-			temp = ft_strjoin(big_struct->path[i], "/");
-			big_struct->cmd_updated = ft_strjoin(temp, spaced_cmd[0]);
+			temp = ft_strjoin(new_path[i], "/");
+			b->cmd_updated = ft_strjoin(temp, spaced_cmd[0]);
 			free(temp);
-			if (big_struct->cmd_updated
-				&& access(big_struct->cmd_updated, X_OK) == 0)
-				return (big_struct->cmd_updated);
+			if (b->cmd_updated && access(b->cmd_updated, X_OK) == 0)
+			{
+				ft_free_tab(new_path);
+				return (b->cmd_updated);
+			}
 			i++;
-			free(big_struct->cmd_updated);
-			big_struct->cmd_updated = NULL;
+			free(b->cmd_updated);
+			b->cmd_updated = NULL;
 		}
-		printf("%s : command not found\n", big_struct->spaced_cmd[0]);
+		printf("%s : command not found\n", b->spaced_cmd[0]);
+		ft_free_tab(new_path);
 		return (NULL);
 	}
 }

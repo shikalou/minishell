@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 22:26:53 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/22 13:38:42 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_env_lst(char *cmd, int i, int j, t_big *big_struct)
 {
-	char		name[big_struct->name_s];
+	char		name[NAME_S];
 	t_env_lst	*env;
 	int			k;
 
@@ -38,7 +38,7 @@ char	*get_env_lst(char *cmd, int i, int j, t_big *big_struct)
 
 char	*ft_get_env_var(t_big *big_struct, char *cmd, int index)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (cmd[i])
@@ -110,7 +110,7 @@ void	parsing_quotes(t_big *big_struct)
 {
 	t_cmd_lst	*head;
 	char		*tmp;
-	int		i;
+	int			i;
 
 	i = 0;
 	head = big_struct->cmd_lst;

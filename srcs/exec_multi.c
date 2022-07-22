@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 21:31:20 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/22 11:46:51 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	first_exec(t_big *b, t_cmd_lst *cmd_lst)
 		if (cmd_lst->fd_out == 1)
 		{
 			close(b->pipefd[0]);
-			printf("fl;dkjfkldnfbnk hiihihi \n\n");
 			cmd_lst->fd_out = b->pipefd[1];
 		}
 		if (b->spaced_cmd[0] && ft_check_builtin_multi(b, cmd_lst) == 0)
