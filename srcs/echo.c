@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 17:20:23 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/22 01:42:35 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	echo_putstr(t_big *big_s, t_cmd_lst *cmd_lst, int i, int check)
 	len = ft_strlen(big_s->spaced_cmd[i]);
 	if (ft_strncmp(big_s->spaced_cmd[i], "\"\"", len) == 0
 		|| ft_strncmp(big_s->spaced_cmd[i], "''", len) == 0)
+	{
 			ft_putchar_fd(' ', cmd_lst->fd_out);
+			check++;
+	}
 	else
 		ft_putstr_fd(big_s->spaced_cmd[i], cmd_lst->fd_out);
 	while (big_s->spaced_cmd[i] && big_s->spaced_cmd[++i])
