@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 20:42:28 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/21 22:16:23 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	parsing_redirection(t_big *big_struct, int i)
 	while (cmd_lst != NULL)
 	{
 		i = -1;
-		big_struct->spaced_par = ft_split(cmd_lst->command, ' ');
+		big_struct->spaced_par = ft_sdf(cmd_lst->command, ' ');
 		while (big_struct->spaced_par && big_struct->spaced_par[++i])
 		{
 			if (ft_strcmp(big_struct->spaced_par[i], "<") == 0)

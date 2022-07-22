@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 17:20:23 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/21 22:17:33 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	ft_parsing_echo(t_big *b)
 	while (b->spaced_cmd[i])
 	{
 		j = 0;
-	//	printf("c bizar ou pas\n %s\n", b->spaced_cmd[i]);
 		while (b->spaced_cmd[i][j])
 		{
 			k = j + 1;
