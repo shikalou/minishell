@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 16:19:20 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 20:16:58 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int				error_parse(t_big *b);
 /*************SHLVL**************************************/
 /********************************************************/
 int				ft_update_shlvl(t_big *big_s);
-char			**shlvl_envp(t_big *big_s, int ind);
+char			**shlvl_envp(t_big *big_s, int ind, int i, int j);
 char			*get_nb_shlvl(char *line, int ind);
 char			*shlvl_line(t_env_lst *env);
 

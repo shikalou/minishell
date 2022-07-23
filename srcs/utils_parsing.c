@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:46:20 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/23 17:41:49 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 20:38:04 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ char	*add_space_hereapp(char *cmd, int index)
 
 	i = -1;
 	j = 0;
-	printf("cmd before = %s<- len = %ld index = %d\n", cmd, ft_strlen(cmd), index);
 	new = malloc(sizeof(char) * (ft_strlen(cmd) + 2 + 1));
 	if (!new)
 		return (NULL);
@@ -98,7 +97,6 @@ char	*add_space_hereapp(char *cmd, int index)
 			new[j] = cmd[i];
 		j++;
 	}
-	printf("j = %d\n", j);
 	new[j] = '\0';
 	free(cmd);
 	return (new);

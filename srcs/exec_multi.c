@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 16:23:13 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 20:36:23 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,27 +99,27 @@ void	first_exec(t_big *b, t_cmd_lst *cmd_lst)
 	ft_close_fdinout(cmd_lst);
 }
 
-void	ft_wait(t_big *big_struct, t_cmd_lst *cmd_lst)
+void	ft_wait(t_big *b, t_cmd_lst *cmd_lst)
 {
 	while (cmd_lst)
 	{
 		if (cmd_lst->next == NULL)
 		{
-			waitpid(cmd_lst->pid, &big_struct->status, 0);
-			if (WIFSIGNALED(big_struct->status))
+			waitpid(cmd_lst->pid, &b->status, 0);
+			if (WIFSIGNALED(b->status))
 			{
-				big_struct->status = (WTERMSIG(big_struct->status) + 128);
-				ft_check_signal(big_struct->status);
+				b->status = (WTERMSIG(b->status) + 128);
+				ft_check_signal(b->status);
 			}
 			else
-				big_struct->status = WEXITSTATUS(big_struct->status);
+				b->status = WEXITSTATUS(b->status);
 			break ;
 		}
-		waitpid(cmd_lst->pid, &big_struct->status, 0);
-		if (WIFSIGNALED(big_struct->status) && WIFSIGNALED(big_struct->status) != 1)
-			big_struct->status = WTERMSIG(big_struct->status) + 128;
+		waitpid(cmd_lst->pid, &b->status, 0);
+		if (WIFSIGNALED(b->status) && WIFSIGNALED(b->status) != 1)
+			b->status = WTERMSIG(b->status) + 128;
 		else
-			big_struct->status = WEXITSTATUS(big_struct->status);
+			b->status = WEXITSTATUS(b->status);
 		cmd_lst = cmd_lst->next;
 	}
 }

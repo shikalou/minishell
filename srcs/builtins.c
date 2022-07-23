@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:12:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 15:19:46 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 20:33:08 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	ft_env(t_big *b, t_cmd_lst *cmd_lst)
 	printf("dans env %d\n", cmd_lst->fd_out);
 	while (b->envp && b->envp[i])
 	{
-		if (b->envp[i] != NULL && b->envp[i][0] && ft_strchr(b->envp[i], '=') != 0)
+		if (b->envp[i] != NULL && b->envp[i][0]
+			&& ft_strchr(b->envp[i], '=') != 0)
 			ft_putendl_fd(b->envp[i], cmd_lst->fd_out);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/21 16:38:46 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 20:33:59 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	ft_fill_trim(char *new_cmd, char *cmd, int check)
 		else if (cmd[i] == '\'')
 		{
 			i++;
-			if (cmd[i] == '\''&& check == 0)
+			if (cmd[i] == '\'' && check == 0)
 			{
 				new_cmd[j++] = cmd[--i];
 				new_cmd[j++] = cmd[i++];
@@ -171,10 +171,6 @@ char	*strtrim_aug(char *cmd, int check)
 		return (cmd);
 	if (ft_strnstr(cmd, "echo ", ft_strlen(cmd)) != NULL)
 		return (cmd);
-/*	if (ft_strnstr(cmd, "echo -n \"", 9) != NULL)
-		return (cmd);
-	if (ft_strnstr(cmd, "echo '", 6) != NULL)
-		return (cmd);*/
 	new_cmd = malloc(sizeof(char) * size + 1);
 	if (!new_cmd)
 		return (NULL);

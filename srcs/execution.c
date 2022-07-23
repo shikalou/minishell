@@ -6,11 +6,22 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 17:00:47 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 20:31:54 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	fd_manager_mid(t_big *b, t_cmd_lst *cmd_lst, int fd_temp)
+{
+	if (cmd_lst->fd_in == 0)
+		cmd_lst->fd_in = fd_temp;
+	if (cmd_lst->fd_out == 1)
+	{
+		close(b->pipefd[0]);
+		cmd_lst->fd_out = b->pipefd[1];
+	}
+}
 
 int	ft_simple_exec(t_big *big_s, t_cmd_lst *cmd_lst)
 {
