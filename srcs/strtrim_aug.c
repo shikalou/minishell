@@ -6,80 +6,61 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:53:29 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/23 20:33:59 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 21:40:28 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	strtrim_size(char *cmd, int check)
+void	size_calculator(t_trim *tr)
 {
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	if (!cmd)
-		return (i);
-	while (cmd && cmd[i++] != '\0')
+	if (tr->cmd[tr->i] == tr->c && tr->check == 1)
 	{
-		if (cmd[i] == '"')
+		tr->j -= 2;
+		tr->i++;
+	}
+	else if (tr->cmd[tr->i] == ' ')
+	{
+		while (tr->cmd[tr->i] && tr->cmd[tr->i] == ' ' 
+			&& tr->cmd[tr->i++] != tr->c)
+			tr->k++;
+		if (tr->cmd[tr->i] == tr->c)
 		{
-			k = 0;
-			j += 2;
-			i++;
-			if (cmd[i] == '"' && check == 1)
-			{
-				j -= 2;
-				i++;
-			}
-			else if (cmd[i] == ' ')
-			{
-				while (cmd[i] && cmd[i] == ' ' && cmd[i++] != '"')
-					k++;
-				if (cmd[i] == '"')
-				{
-					i -= k;
-					i++;
-					j -= 2;
-				}
-				else
-					i -= k;
-				while (cmd[i] && cmd[i] != '"')
-					i++;
-			}
-			else
-			{
-				while (cmd[i] && cmd[i] != '"')
-					i++;
-			}
+			tr->i -= tr->k;
+			tr->i++;
+			tr->j -= 2;
 		}
-		else if (cmd[i] == '\'')
+		else
+			tr->i -= tr->k;
+	}
+	while (tr->cmd[tr->i] && tr->cmd[tr->i] != '"')
+		tr->i++;
+}
+
+int	strtrim_size(t_trim *tr)
+{
+	if (!tr->cmd)
+		return (tr->i);
+	while (tr->cmd && tr->cmd[tr->i++] != '\0')
+	{
+		if (tr->cmd[tr->i] == '"')
 		{
-			j += 2;
-			i++;
-			if (cmd[i] == '\'')
-				j -= 2;
-			else if (cmd[i] == ' ')
-			{
-				while (cmd[i] && cmd[i] == ' ' && cmd[i++] != '\'')
-					k++;
-				if (cmd[i] == '\'')
-				{
-					i -= k;
-					i++;
-					j -= 2;
-				}
-				else
-					i -= k;
-			}
-			while (cmd[i] && cmd[i] != '\'')
-				i++;
+			tr->k = 0;
+			tr->j += 2;
+			tr->c = '"';
+			tr->i++;
+			size_calculator(tr);
+		}
+		else if (tr->cmd[tr->i] == '\'')
+		{
+			tr->j += 2;
+			tr->k = 0;
+			tr->c = '\'';
+			tr->i++;
+			size_calculator(tr);
 		}
 	}
-	return ((i + 1) - j);
+	return ((tr->i + 1) - tr->j);
 }
 
 void	ft_fill_trim(char *new_cmd, char *cmd, int check)
@@ -161,12 +142,24 @@ void	ft_fill_trim(char *new_cmd, char *cmd, int check)
 	new_cmd[j] = '\0';
 }
 
+void	ft_init_trim(t_trim *trim, int check, char *cmd)
+{
+	trim->i = 0;
+	trim->j = 0;
+	trim->cmd = cmd;
+	trim->check = check;
+	trim->k = 0;
+	trim->c = '"';
+}
+
 char	*strtrim_aug(char *cmd, int check)
 {
+	t_trim		trim;
 	char	*new_cmd;
 	int		size;
 
-	size = strtrim_size(cmd, check);
+	ft_init_trim(&trim, check, cmd);
+	size = strtrim_size(&trim);
 	if (ft_strnstr(cmd, "export ", ft_strlen(cmd)) != NULL)
 		return (cmd);
 	if (ft_strnstr(cmd, "echo ", ft_strlen(cmd)) != NULL)

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 19:50:14 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 20:58:54 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,8 @@ int	last_parse(t_big *b, char **str, int i, int j)
 		while (str && str[i][++j])
 		{
 			k = j + 1;
-			if (str[i][j] == '<' && str[i][k] && str[i][k] == '<')
-			{
-				k++;
-				while (str[i][k] && str[i][k] == ' ')
-					k++;
-				if (!str[i][k] || str[i][k] == '\0' || str[i][k] == '|')
-					return (error_parse(b));
-			}
-			else if (str[i][j] == '>' && str[i][k] && str[i][k] == '>')
+			if (str[i][k] && ((str[i][j] == '<' && str[i][k] == '<')
+				|| (str[i][j] == '>' && str[i][k] == '>')))
 			{
 				k++;
 				while (str[i][k] && str[i][k] == ' ')

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 20:16:58 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 21:39:26 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ typedef struct s_sdf
 	char		**strs;
 
 }	t_sdf;
+
+typedef struct s_trim
+{
+	int		i;
+	int		j;
+	int		k;
+	int		check;
+	char		c;
+	char		*cmd;
+}	t_trim;
 
 typedef struct s_big_struct
 {
@@ -115,7 +125,7 @@ char			*get_env_lst(char *cmd, int i, int j, t_big *big_struct);
 char			*strtrim_aug(char *cmd, int check);
 int				ft_len_dollar(char *cmd, int i);
 int				ft_memchr_aug(char *s, int i, char c);
-int				strtrim_size(char *cmd, int check);
+int				strtrim_size(t_trim *tr);
 
 /*		--> PARSING REDIRECTIONS	*/
 void			parsing_redirection(t_big *big_struct, int i);
