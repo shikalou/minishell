@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 22:17:17 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 22:24:00 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ typedef struct s_trim
 	int		j;
 	int		k;
 	int		check;
-	char		c;
-	char		*cmd;
-	char		*n_cmd;
+	char	c;
+	char	*cmd;
+	char	*n_cmd;
 }	t_trim;
 
 typedef struct s_big_struct

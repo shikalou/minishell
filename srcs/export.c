@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:35:18 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/19 20:26:51 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 22:58:12 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,34 @@ void	ft_new_env_var(t_big *big_s, char **split_exp, int index)
 	big_s->check_export = 1;
 }
 
-void	ft_change_env_lst(t_big *big_s, char **split_exp)
+void	launch_updt_e(t_big *b, char **var, char **split, int i)
 {
-	int			i;
-	int			size;
+	t_env_lst	*env;
+	int			check;
+
+	env = b->env_lst;
+	check = 0;
+	while (env && check == 0)
+	{
+		if (ft_strncmp(env->line, var[0], ft_strlen(var[0])) == 0)
+		{
+			check = updt_e(split, i, b, var);
+			split[0] = NULL;
+		}
+		env = env->next;
+	}
+	if (check == 0)
+	{
+		ft_new_env_var(b, split, i);
+		ft_free_tab(var);
+	}
+}
+
+void	ft_change_env_lst(t_big *big_s, char **split_exp, int i, int size)
+{
 	int			check;
 	char		**var;
-	t_env_lst	*env;
 
-	i = 0;
-	size = 1;
-	env = big_s->env_lst;
 	while (split_exp && split_exp[size])
 		size++;
 	while (++i < size)
@@ -81,21 +98,8 @@ void	ft_change_env_lst(t_big *big_s, char **split_exp)
 			var = ft_split_export(split_exp[i], '=');
 		else
 			check = ft_error_export(big_s, split_exp[i], 0);
-		while (env != NULL && check == 0)
-		{
-			if (ft_strncmp(env->line, var[0], ft_strlen(var[0])) == 0)
-			{
-				check = updt_e(split_exp, i, big_s, var);
-				split_exp[0] = NULL;
-			}
-			env = env->next;
-		}
 		if (check == 0)
-		{
-			ft_new_env_var(big_s, split_exp, i);
-			ft_free_tab(var);
-		}
-		env = big_s->env_lst;
+			launch_updt_e(big_s, var, split_exp, i);
 	}
 }
 
@@ -111,7 +115,7 @@ int	ft_export(t_big *big_s, t_cmd_lst *cmd_lst)
 	if (i == 1)
 		ft_print_export_env(big_s, cmd_lst);
 	else
-		ft_change_env_lst(big_s, split_export);
+		ft_change_env_lst(big_s, split_export, 0, 1);
 	free(split_export[0]);
 	free(split_export);
 	return (1);
