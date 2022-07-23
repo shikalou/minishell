@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/22 11:46:51 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 16:23:13 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 		i = ft_check_builtin_multi(b, cmd_lst);
 		if (b->spaced_cmd[0] && i == 0)
 		{
-			if (ft_find_check_path(b, b->spaced_cmd) != NULL)
+			if (ft_find_check_path(b, b->spaced_cmd, -1) != NULL)
 			{
 				signal(SIGINT, SIG_DFL);
 				signal(SIGQUIT, sig_handler_cmd);
@@ -55,7 +55,7 @@ void	middle_exec(t_big *b, t_cmd_lst *cmd_lst)
 		i = ft_check_builtin_multi(b, cmd_lst);
 		if (b->spaced_cmd[0] && i == 0)
 		{
-			if (ft_find_check_path(b, b->spaced_cmd) != NULL)
+			if (ft_find_check_path(b, b->spaced_cmd, -1) != NULL)
 			{
 				signal(SIGINT, SIG_DFL);
 				signal(SIGQUIT, sig_handler_cmd);
@@ -84,7 +84,7 @@ void	first_exec(t_big *b, t_cmd_lst *cmd_lst)
 		}
 		if (b->spaced_cmd[0] && ft_check_builtin_multi(b, cmd_lst) == 0)
 		{
-			if (ft_find_check_path(b, b->spaced_cmd) != NULL)
+			if (ft_find_check_path(b, b->spaced_cmd, -1) != NULL)
 			{
 				signal(SIGINT, SIG_DFL);
 				signal(SIGQUIT, sig_handler_cmd);

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 16:42:04 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 15:34:16 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ static void	ft_free(char **strs, int j)
 	free(strs);
 }
 
+static void	ft_fill_while(t_sdf *sdf, int check)
+{
+	if (sdf->s[sdf->i] == '"' || sdf->s[sdf->i] == '\'')
+	{
+		check = sdf->i + (ft_split_quotes(sdf->s, sdf->i) + 1);
+		while (sdf->s[sdf->i] && (sdf->i <= check))
+			sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i++];
+	}
+	else
+		sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i++];
+}
+
 static char	**ft_fill_strs(t_sdf *sdf, int check)
 {
 	while (sdf->s && sdf->s[sdf->i])
@@ -34,17 +46,9 @@ static char	**ft_fill_strs(t_sdf *sdf, int check)
 		while (sdf->s[sdf->i] && sdf->s[sdf->i] == sdf->c)
 				sdf->i++;
 		while (sdf->s[sdf->i] && sdf->s[sdf->i] != sdf->c && sdf->s[sdf->i + 1])
-		{
-			if (sdf->s[sdf->i] == '"' || sdf->s[sdf->i] == '\'')
-			{
-				check = sdf->i + (ft_split_quotes(sdf->s, sdf->i) + 1);
-				while (sdf->s[sdf->i] && (sdf->i <= check))
-					sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i++];
-			}
-			else
-				sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i++];
-		}
-		if (sdf->s[sdf->i] && (sdf->s[sdf->i] != sdf->c) && !(sdf->s[sdf->i + 1]))
+			ft_fill_while(sdf, check);
+		if (sdf->s[sdf->i] && (sdf->s[sdf->i] != sdf->c)
+			&& !(sdf->s[sdf->i + 1]))
 			sdf->strs[sdf->j][sdf->l++] = sdf->s[sdf->i++];
 		sdf->strs[sdf->j][sdf->l] = '\0';
 		sdf->j++;

@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/22 13:42:28 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 16:19:20 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int				ft_checkquotes(char *cmd);
 int				ft_count_char(char const *s1, int i, char c);
 int				ft_count_strs(char const *s, char c);
 int				ft_split_quotes(const char *s1, int i);
+int				error_parse(t_big *b);
 
 /********************************************************/
 /*************SHLVL**************************************/
@@ -174,7 +175,7 @@ void			ft_wait(t_big *big_struct, t_cmd_lst *cmd_lst);
 void			ft_dup(t_cmd_lst *cmd_lst);
 void			malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst);
 void			malloc_spacedcmd_simple(t_big *b);
-char			*ft_find_check_path(t_big *b, char **spaced_cmd);
+char			*ft_find_check_path(t_big *b, char **spaced_cmd, int i);
 char			*ft_check_slash(t_big *big_struct);
 int				ft_strcmp(char *s1, char *s2);
 
@@ -189,6 +190,7 @@ void			ft_exit(t_big *big_struct);
 
 /*			->utils				*/
 void			ft_update_oldpwd(t_big *big_struct, char *s, int i);
+void			ft_oldpwd_envi(t_big *big_struct, char *s);
 char			*ft_get_home(t_big *big_struct, char *env);
 int				ft_count_tab(char **tab);
 int				ft_check_echo_n(char *s);

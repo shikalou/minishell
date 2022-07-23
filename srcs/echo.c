@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/22 14:07:43 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 14:52:48 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_parsing_echo(t_big *b)
 				free(b->spaced_cmd[i]);
 				b->spaced_cmd[i] = ft_strtrim(tmp, "\"");
 				free(tmp);
-				break;
+				break ;
 			}
 			else if (b->spaced_cmd[i][j] == '\'' && b->spaced_cmd[i][k]
 				&& b->spaced_cmd[i][k] != '\'')
@@ -91,7 +91,7 @@ void	ft_parsing_echo(t_big *b)
 				free(b->spaced_cmd[i]);
 				b->spaced_cmd[i] = ft_strtrim(tmp, "\'");
 				free(tmp);
-				break;
+				break ;
 			}
 			else if (b->spaced_cmd[i][j] == '\'')
 				j += 2;

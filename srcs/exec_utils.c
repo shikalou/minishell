@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/22 14:03:30 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 16:22:19 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,17 @@ char	*ft_check_slash(t_big *big_struct)
 	return (NULL);
 }
 
-char	*ft_find_check_path(t_big *b, char **spaced_cmd)
+char	*ft_find_check_path(t_big *b, char **spaced_cmd, int i)
 {
-	int		i;
 	char	*temp;
 	char	**new_path;
 
-	i = 0;
 	new_path = ft_recover_path(b->envp);
 	if (ft_strchr(b->spaced_cmd[0], '/'))
 		return (ft_check_slash(b));
 	else
 	{
-		while (new_path && new_path[i] != NULL)
+		while (new_path && new_path[++i] != NULL)
 		{
 			temp = ft_strjoin(new_path[i], "/");
 			b->cmd_updated = ft_strjoin(temp, spaced_cmd[0]);
@@ -45,7 +43,6 @@ char	*ft_find_check_path(t_big *b, char **spaced_cmd)
 				ft_free_tab(new_path);
 				return (b->cmd_updated);
 			}
-			i++;
 			free(b->cmd_updated);
 			b->cmd_updated = NULL;
 		}

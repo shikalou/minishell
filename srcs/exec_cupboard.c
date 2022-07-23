@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:24:26 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/22 13:10:01 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 14:53:50 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_sz_spacer(char *old, int i)
 char	*qt_spacer(char *old, int i)
 {
 	int		j;
-	size_t		size;
+	size_t	size;
 	char	*result;
 
 	size = get_sz_spacer(old, 0);
@@ -62,7 +62,7 @@ char	*qt_spacer(char *old, int i)
 			result[j++] = ' ';
 		}
 		else if (old[i] == '\'' && old[i + 1] && old[i + 1] == '\''
-			&& old[i + 2]&& old[i + 2] != ' ')
+			&& old[i + 2] && old[i + 2] != ' ')
 		{
 			result[j++] = old[i++];
 			result[j++] = old[i++];

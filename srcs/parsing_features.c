@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_features.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcouppe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:17:33 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/21 20:45:02 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 16:00:59 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,13 @@ int	check_after_pipe(char *cmd, char c)
 		}
 	}
 	return (0);
+}
+
+int	error_parse(t_big *b)
+{
+	write(2, "Error syntax\n", 13);
+	b->status = 2;
+	ft_free_tab(b->input);
+	b->input = NULL;
+	return (1);
 }

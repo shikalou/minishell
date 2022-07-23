@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 21:07:42 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 16:00:35 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	*check_spe_char(char *cmd, int len_tmp)
 		on trim de i a j
 		de maniere a ne laisser qu'un espace
 */
+
 int	last_parse(t_big *b, char **str)
 {
 	int		i;
@@ -93,13 +94,7 @@ int	last_parse(t_big *b, char **str)
 				while (str[i][k] && str[i][k] == ' ')
 					k++;
 				if (!str[i][k] || str[i][k] == '\0')
-				{
-					write(2, "Error syntax\n", 13);
-					b->status = 2;
-					ft_free_tab(b->input);
-					b->input = NULL;
-					return (1);
-				}
+					return (error_parse(b));
 			}
 			else if (str[i][j] == '>' && str[i][k] && str[i][k] == '>')
 			{
@@ -107,17 +102,10 @@ int	last_parse(t_big *b, char **str)
 				while (str[i][k] && str[i][k] == ' ')
 					k++;
 				if (!str[i][k] || str[i][k] == '\0')
-				{
-					write(2, "Error syntax\n", 13);
-					b->status = 2;
-					ft_free_tab(b->input);
-					b->input = NULL;
-					return (1);
-				}
+					return (error_parse(b));
 			}
 		}
 	}
-
 	return (0);
 }
 
