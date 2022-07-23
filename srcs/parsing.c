@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 16:00:35 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 18:04:09 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	last_parse(t_big *b, char **str)
 				k++;
 				while (str[i][k] && str[i][k] == ' ')
 					k++;
-				if (!str[i][k] || str[i][k] == '\0')
+				if (!str[i][k] || str[i][k] == '\0' || str[i][k] == '|')
 					return (error_parse(b));
 			}
 			else if (str[i][j] == '>' && str[i][k] && str[i][k] == '>')
@@ -101,7 +101,7 @@ int	last_parse(t_big *b, char **str)
 				k++;
 				while (str[i][k] && str[i][k] == ' ')
 					k++;
-				if (!str[i][k] || str[i][k] == '\0')
+				if (!str[i][k] || str[i][k] == '\0' || str[i][k] == '|')
 					return (error_parse(b));
 			}
 		}
@@ -127,21 +127,26 @@ int	parsing_ending(char *cmd, t_big *big_s)
 
 int	ft_parsing(char *cmd, t_big *big_struct)
 {
+//	char	*tmp;
+
 	if (ft_checkquotes(cmd) != 0)
 	{
 		write(2, "Error syntax\n", 13);
 		big_struct->status = 2;
 		return (0);
 	}
+//	tmp = ft_strdup(cmd);
 	cmd = check_spe_char(cmd, ft_strlen(cmd));
 	if (!cmd || (check_after_pipe(cmd, '|') == 1
 			|| check_after_pipe(cmd, '<') == 1
 			|| check_after_pipe(cmd, '>') == 1))
 	{
 		free(cmd);
+//		free(tmp);
 		write(2, "Error syntax\n", 13);
 		big_struct->status = 2;
 		return (0);
 	}
+//	free(tmp);
 	return (parsing_ending(cmd, big_struct));
 }

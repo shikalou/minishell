@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:12:40 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 18:47:47 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/23 18:36:00 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,12 @@ char	*shlvl_line(t_env_lst *env)
 	return (NULL);
 }
 
-char	**shlvl_envp(t_big *big_s, int ind)
+char	**shlvl_envp(t_big *big_s, int ind, int i, int j)
 {
-	int		i;
-	int		j;
 	char	*name;
 	char	*to_join;
 	char	**result;
 
-	i = 0;
-	j = 0;
 	while (big_s->envp && big_s->envp[i])
 		i++;
 	result = malloc(sizeof(char *) * (i + 1));
@@ -111,7 +107,7 @@ int	ft_update_shlvl(t_big *big_s)
 	while (big_s->envp[++i])
 	{
 		if (ft_strncmp(big_s->envp[i], "SHLVL", 5) == 0)
-			big_s->envp = shlvl_envp(big_s, i);
+			big_s->envp = shlvl_envp(big_s, i, 0, 0);
 	}
 	big_s->check_export++;
 	return (0);
