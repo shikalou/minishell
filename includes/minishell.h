@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 21:39:26 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/23 22:17:17 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_trim
 	int		check;
 	char		c;
 	char		*cmd;
+	char		*n_cmd;
 }	t_trim;
 
 typedef struct s_big_struct
@@ -137,6 +138,7 @@ char			*update_flux(t_big *b, int size, int index);
 /*		--> UTILS PARSING			*/
 void			ft_init_sdf(t_sdf *sdf, const char *s1, char c);
 void			parsing_trash(t_big *big_s);
+void			w_condition_tr(t_trim *tr);
 char			**ft_sdf(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
@@ -145,6 +147,7 @@ int				check_after_pipe(char *cmd, char c);
 int				check_char(char c);
 int				check_str(char *cmd, int index, int end);
 int				check_char_basic(char c);
+int				filling_tr(t_trim *tr);
 int				ft_checkquotes(char *cmd);
 int				ft_count_char(char const *s1, int i, char c);
 int				ft_count_strs(char const *s, char c);
