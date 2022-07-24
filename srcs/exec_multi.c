@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 20:36:23 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/24 16:48:30 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,9 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 	ft_close_fdinout(cmd_lst);
 }
 
-void	middle_exec(t_big *b, t_cmd_lst *cmd_lst)
+void	middle_exec(t_big *b, t_cmd_lst *cmd_lst, int i, int fd_temp)
 {
-	int	fd_temp;
-	int	i;
-
 	malloc_spaced_cmd(b, cmd_lst);
-	fd_temp = b->pipefd[0];
 	pipe(b->pipefd);
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
@@ -124,28 +120,28 @@ void	ft_wait(t_big *b, t_cmd_lst *cmd_lst)
 	}
 }
 
-void	ft_multi_pipe(t_big *big_struct)
+void	ft_multi_pipe(t_big *b)
 {
 	t_cmd_lst	*head;
 	int			i;
 	int			n_cmd;
 
-	head = big_struct->cmd_lst;
+	head = b->cmd_lst;
 	i = 0;
-	n_cmd = ft_lstsize_cmd(big_struct->cmd_lst);
-	pipe(big_struct->pipefd);
+	n_cmd = ft_lstsize_cmd(b->cmd_lst);
+	pipe(b->pipefd);
 	if (head->fd_in != -1)
-		first_exec(big_struct, head);
+		first_exec(b, head);
 	else
-		close(big_struct->pipefd[1]);
+		close(b->pipefd[1]);
 	head = head->next;
 	while (i < (n_cmd - 2))
 	{
-		middle_exec(big_struct, head);
+		middle_exec(b, head, 0, b->pipefd[0]);
 		i++;
 		head = head->next;
 	}
-	last_exec(big_struct, head);
-	head = big_struct->cmd_lst;
-	ft_wait(big_struct, head);
+	last_exec(b, head);
+	head = b->cmd_lst;
+	ft_wait(b, head);
 }

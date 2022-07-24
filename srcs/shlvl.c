@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:12:40 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/23 18:36:00 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/24 16:09:15 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*shlvl_line(t_env_lst *env)
 
 char	**shlvl_envp(t_big *big_s, int ind, int i, int j)
 {
-	char	*name;
 	char	*to_join;
 	char	**result;
 
@@ -76,9 +75,7 @@ char	**shlvl_envp(t_big *big_s, int ind, int i, int j)
 		if (i == ind)
 		{
 			to_join = get_nb_shlvl(big_s->envp[i], 6);
-			name = ft_strdup("SHLVL=");
-			result[j++] = ft_strjoin(name, to_join);
-			free(name);
+			result[j++] = ft_strjoin("SHLVL=", to_join);
 			free(to_join);
 			i++;
 		}

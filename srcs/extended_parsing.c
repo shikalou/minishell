@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/23 14:54:57 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/07/24 16:30:58 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_get_env_var(t_big *big_struct, char *cmd, int index)
 				i++;
 		}
 		else if (cmd[i] == '\'' && ft_memchr_aug(cmd, i, '$') == 1)
-			return ("anticonstitution");
+			return ("anticonstitutionnellement");
 		else if (cmd[i] == '$' && i == index)
 			return (expand_second_case(big_struct, i, cmd));
 		else
@@ -98,6 +98,7 @@ int	get_right_size(char *cmd, t_big *big_struct)
 char	*extended_dollar(char *cmd, t_big *big_struct)
 {
 	char	*new_cmd;
+	t_exp	exp;
 	int		i;
 
 	i = 0;
@@ -105,7 +106,8 @@ char	*extended_dollar(char *cmd, t_big *big_struct)
 	new_cmd = malloc(sizeof(char) * i + 1);
 	if (!new_cmd)
 		return (NULL);
-	new_cmd = fill_cmd_expand(cmd, big_struct, new_cmd, 0);
+	ft_init_expand(&exp, cmd, new_cmd);
+	new_cmd = fill_cmd_expand(big_struct, &exp);
 	free(cmd);
 	return (new_cmd);
 }

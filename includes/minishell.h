@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 22:24:00 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/24 16:47:44 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,18 @@ typedef struct s_trim
 	char	*n_cmd;
 }	t_trim;
 
+typedef struct	s_expand
+{
+	int		i;
+	int		j;
+	int		sz_e;
+	int		sz_up;
+	char	*cmd;
+	char	*e;
+	char	*up;
+	char	*token;
+}	t_exp;
+
 typedef struct s_big_struct
 {
 	char		**input;
@@ -120,7 +132,7 @@ void			parsing_quotes(t_big *big_struct);
 char			*expand_first_case(t_big *big_s, int i, char *cmd);
 char			*expand_second_case(t_big *big_s, int i, char *cmd);
 char			*extended_dollar(char *cmd, t_big *big_struct);
-char			*fill_cmd_expand(char *cmd, t_big *big_struct, char *up, int j);
+char			*fill_cmd_expand(t_big *big, t_exp *exp);
 char			*ft_get_env_var(t_big *big_struct, char *cmd, int index);
 char			*get_env_lst(char *cmd, int i, int j, t_big *big_struct);
 char			*strtrim_aug(char *cmd, int check);
@@ -136,6 +148,7 @@ void			redirect_out(t_big *b, t_cmd_lst *cmd_lst, int i, int j);
 char			*update_flux(t_big *b, int size, int index);
 
 /*		--> UTILS PARSING			*/
+void			ft_init_expand(t_exp *exp, char *cmd, char *up);
 void			ft_init_sdf(t_sdf *sdf, const char *s1, char c);
 void			parsing_trash(t_big *big_s);
 void			w_condition_tr(t_trim *tr);
@@ -168,7 +181,7 @@ char			*shlvl_line(t_env_lst *env);
 void			ft_exec(t_big *big_struct);
 void			ft_multi_pipe(t_big *big_struct);
 void			first_exec(t_big *big_struct, t_cmd_lst *cmd_lst);
-void			middle_exec(t_big *big_struct, t_cmd_lst *cmd_lst);
+void			middle_exec(t_big *b, t_cmd_lst *cmd_lst, int i, int fd_temp);
 void			last_exec(t_big *big_struct, t_cmd_lst *cmd_lst);
 int				ft_simple_exec(t_big *big_s, t_cmd_lst *cmd_lst);
 int				ft_check_builtin_multi(t_big *big_s, t_cmd_lst *cmd_lst);

@@ -6,45 +6,60 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:09:07 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 13:51:25 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/24 16:41:36 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*fill_cmd_expand(char *cmd, t_big *big_struct, char *up, int j)
+void	cases_testing(t_exp *exp)
 {
-	int		i;
-	char	*e;
-
-	i = 0;
-	while (cmd && cmd[i])
+	if (exp->e == NULL && exp->cmd[exp->i])
+		exp->i += ft_len_dollar(exp->cmd, exp->i);
+	else if (ft_memcmp(exp->e, exp->token, exp->sz_e) == 0)
 	{
-		if (cmd[i] == '$')
+		exp->up[exp->j++] = exp->cmd[exp->i++];
+		while (exp->cmd[exp->i] != '$' && exp->cmd[exp->i] != '\''
+			&& exp->cmd[exp->i] != ' ' && exp->cmd[exp->i] != '\0')
+			exp->up[exp->j++] = exp->cmd[exp->i++];
+	}
+	else
+	{
+		exp->up[exp->j] = '\0';
+		exp->sz_up = ft_strlen(exp->up);
+		ft_strlcat(exp->up, exp->e, (exp->sz_up + exp->sz_e + 1));
+		exp->i += (ft_len_dollar(exp->cmd, exp->i));
+		exp->j += exp->sz_e;
+	}
+}
+
+void	ft_init_expand(t_exp *exp, char *cmd, char *up)
+{
+	exp->i = 0;
+	exp->j = 0;
+	exp->cmd = cmd;
+	exp->up = up;
+	exp->e = NULL;
+	exp->sz_e = 0;
+	exp->sz_up = 0;
+	exp->token = "anticonstitutionnellement";
+}
+
+char	*fill_cmd_expand(t_big *big, t_exp *exp)
+{
+	while (exp->cmd && exp->cmd[exp->i])
+	{
+		if (exp->cmd[exp->i] == '$')
 		{
-			e = ft_get_env_var(big_struct, cmd, i);
-			if (e == NULL && cmd[i])
-				i += ft_len_dollar(cmd, i);
-			else if (ft_memcmp(e, "anticonstitution", ft_strlen(e)) == 0)
-			{
-				up[j++] = cmd[i++];
-				while (cmd[i] != '$' && cmd[i] != '\'' && cmd[i] != ' '
-					&& cmd[i] != '\0')
-					up[j++] = cmd[i++];
-			}
-			else
-			{
-				up[j] = '\0';
-				ft_strlcat(up, e, (ft_strlen(up) + ft_strlen(e) + 1));
-				i += (ft_len_dollar(cmd, i));
-				j += ft_strlen(e);
-			}
+			exp->e = ft_get_env_var(big, exp->cmd, exp->i);
+			exp->sz_e = ft_strlen(exp->e);
+			cases_testing(exp);
 		}
 		else
-			up[j++] = cmd[i++];
+			exp->up[exp->j++] = exp->cmd[exp->i++];
 	}
-	up[j] = '\0';
-	return (up);
+	exp->up[exp->j] = '\0';
+	return (exp->up);
 }
 
 char	*expand_first_case(t_big *big_s, int i, char *cmd)
