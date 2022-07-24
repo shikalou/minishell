@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/22 12:52:43 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/24 18:34:10 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,24 @@ void	redirect_in(t_big *b, t_cmd_lst *cmd_lst, int i)
 		close(cmd_lst->fd_in);
 	cmd_lst->fd_in = open(b->spaced_par[i], O_RDONLY, 0644);
 	if (cmd_lst->fd_in == -1)
-		printf("%s : %s\n", strerror(errno), b->spaced_par[i + 1]);
+	{
+		b->status = 1;
+		printf("%s : %s\n", strerror(errno), b->spaced_par[i]);
+//		return ;
+// 	pour le cas "< fjdksgn cat"
+//	en gros il faut pas exec redir, aller dans l'exec mais sans exec totalement
+//	parce kil fo exec le no such file or directory mais pas le cat
+// 	+ le No such file or directory est sur la mauvaise partie de la commande il faut etre sur celle ki bug
+//	du coup < dskjhb renvoie Warning: invalid file descriptor -1 in syscall close();
+/*
+	alors en fait
+	< jfdhjg ls --> n'exec rien, sort juste l'erreur
+	par contre on peut pas gerer ca au parsing direct 
+	parce que
+	< sjfdfk | ls -->  exec ls (en plus de sortir l'erreur)
+	donc petite piste/idee -> suppr la cmd_lst ki marche pas pour ke ds l'exec on ait ke un truc ki fonctionne
+*/
+	}
 	k = ft_strlen(cmd_lst->command);
 	free(cmd_lst->command);
 	cmd_lst->command = update_flux(b, k, i - 1);
