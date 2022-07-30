@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/24 18:34:16 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/30 18:55:40 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,11 +190,11 @@ int				ft_check_builtin_multi(t_big *big_s, t_cmd_lst *cmd_lst);
 void			ft_free_tab(char **tab);
 void			ft_free_child(t_big *big_struct, int i);
 void			ft_free_between(t_big *big_struct);
-char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 void			ft_close_fdinout(t_cmd_lst *cmd_lst);
 void			exit_child_first(t_big *b);
 void			exit_child_last_mid(t_big *b, int i);
 void			fd_manager_mid(t_big *b, t_cmd_lst *cmd_lst, int fd_tmp);
+char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 
 /*		--> UTILS EXEC				*/
 void			ft_wait(t_big *big_struct, t_cmd_lst *cmd_lst);
@@ -203,7 +203,11 @@ void			malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst);
 void			malloc_spacedcmd_simple(t_big *b);
 char			*ft_find_check_path(t_big *b, char **spaced_cmd, int i);
 char			*ft_check_slash(t_big *big_struct);
+char			*qt_aft_spacer(char *old, int i, int j);
+char			*qt_pre_spacer(char *old, int i, int j);
 int				ft_strcmp(char *s1, char *s2);
+int				get_sz_aft_spacer(char *old, int i);
+int				get_sz_pre_spacer(char *old, int i);
 
 /*		--> BUILTIN				*/
 int				ft_cd(t_big *big_struct);
