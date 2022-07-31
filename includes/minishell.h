@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/30 18:55:40 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/07/31 19:26:59 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_trim
 	char	*n_cmd;
 }	t_trim;
 
-typedef struct	s_expand
+typedef struct s_expand
 {
 	int		i;
 	int		j;
