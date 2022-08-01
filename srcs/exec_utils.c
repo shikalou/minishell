@@ -6,20 +6,20 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/01 13:57:51 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/01 18:46:54 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_check_slash(t_big *big_struct)
+char	*ft_check_slash(t_big *big_s)
 {
-	if (access(big_struct->spaced_cmd[0], X_OK) == 0)
+	if (access(big_s->spaced_cmd[0], X_OK) == 0)
 	{
-		big_struct->cmd_updated = ft_strdup(big_struct->spaced_cmd[0]);
-		return (big_struct->cmd_updated);
+		big_s->cmd_updated = ft_strdup(big_s->spaced_cmd[0]);
+		return (big_s->cmd_updated);
 	}
-	printf("%s: %s\n", strerror(errno), big_struct->spaced_cmd[0]);
+	printf("%s: %s\n", strerror(errno), big_s->spaced_cmd[0]);
 	return (NULL);
 }
 
@@ -28,11 +28,11 @@ char	*ft_find_check_path(t_big *b, char **spaced_cmd, int i)
 	char	*temp;
 	char	**new_path;
 
-	new_path = ft_recover_path(b->envp);
 	if (ft_strchr(b->spaced_cmd[0], '/'))
 		return (ft_check_slash(b));
 	else
 	{
+		new_path = ft_recover_path(b->envp);
 		while (new_path && new_path[++i] != NULL)
 		{
 			temp = ft_strjoin(new_path[i], "/");

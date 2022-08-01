@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/01 14:22:52 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/01 19:25:17 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,6 @@ void	ft_multi_pipe(t_big *b)
 	head = b->cmd_lst;
 	ft_wait(b, head);
 	i = 2;
-	while (++i <= 1024)
+	while (++i < 1024)
 		close(i);
 }
