@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/31 20:19:07 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/01 14:22:52 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 	{
 		if (cmd_lst->fd_in == 0)
 			cmd_lst->fd_in = b->pipefd[0];
-	//	printf("pipefd [0] = %d\n", b->pipefd[0]);
 		i = ft_check_builtin_multi(b, cmd_lst);
 		if (b->spaced_cmd[0] && i == 0)
 		{
@@ -37,7 +36,6 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 		}
 		exit_child_last_mid(b, i);
 	}
-	close(b->pipefd[0]);
 	ft_close_fdinout(cmd_lst);
 }
 
@@ -64,7 +62,6 @@ void	middle_exec(t_big *b, t_cmd_lst *cmd_lst, int i, int fd_temp)
 		exit_child_last_mid(b, i);
 	}
 	close(b->pipefd[1]);
-	close(fd_temp);
 	ft_close_fdinout(cmd_lst);
 }
 
@@ -145,4 +142,7 @@ void	ft_multi_pipe(t_big *b)
 	last_exec(b, head);
 	head = b->cmd_lst;
 	ft_wait(b, head);
+	i = 2;
+	while (++i <= 1024)
+		close(i);
 }
