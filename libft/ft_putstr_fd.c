@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:25:25 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/16 17:25:04 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:52:00 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
-	i = 0;
 	if (!s)
 		return ;
 	write(fd, s, ft_strlen(s));

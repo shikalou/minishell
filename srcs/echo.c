@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/01 15:22:59 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/02 19:42:42 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,10 @@ void	ft_parsing_echo(char **sp, int i, int j)
 			{
 				tmp = ft_strdup(sp[i]);
 				free(sp[i]);
-				if (tmp[j] == '"')
-					sp[i] = ft_strtrim(tmp, "\"");
-				else
-					sp[i] = ft_strtrim(tmp, "\'");
-				free(tmp);
+				sp[i] = strtrim_aug(tmp, 0);
 				break ;
 			}
-			else if (sp[i][j] == '\'' || sp[i][j] == '"')
+			if (sp[i][j] == '\'' || sp[i][j] == '"')
 				j += 2;
 			else
 				j++;

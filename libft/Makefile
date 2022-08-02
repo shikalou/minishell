@@ -6,7 +6,7 @@
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 13:25:54 by ldinaut           #+#    #+#              #
-#    Updated: 2022/06/09 16:55:16 by ldinaut          ###   ########.fr        #
+#    Updated: 2022/08/02 18:51:39 by mcouppe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,9 +56,9 @@ SRCS	=	ft_atoi.c\
 		ft_lstiter.c\
 		ft_lstmap.c
 
-CC	=	clang
+CC	=	gcc
 
-CFLAGS	=	-Wall -Wextra -Werror -g3
+CFLAGS	=	-Wall -Wextra -Werror
 
 OBJS	=	$(SRCS:.c=.o)
 

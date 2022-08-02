@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:09:07 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/02 11:57:26 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/02 19:17:00 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char	*expand_first_case(t_big *big_s, int i, char *cmd)
 	}
 	if ((j - i) == 1)
 		return ("$");
+	printf("hern");
 	return (get_env_lst(cmd, (i + 1), j, big_s));
 }
 
