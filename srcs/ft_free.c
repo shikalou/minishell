@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:11:18 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/01 18:48:37 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:38:57 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	ft_free_between_two(t_big *big_struct)
 	}
 	if (big_struct->cmd_updated)
 	{
-		printf("bah oui\n");
 		free(big_struct->cmd_updated);
 		big_struct->cmd_updated = NULL;
 	}

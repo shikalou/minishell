@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:24:26 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/02 12:38:30 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/02 15:53:43 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ void	malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst)
 
 void	exit_child_last_mid(t_big *b, int i)
 {
+	int	j;
+
 	if (b->spaced_cmd[0] == NULL || i == 1)
 	{
 		ft_free_tab(b->spaced_cmd);
 		b->spaced_cmd = NULL;
+		j = b->status;
 		ft_free_child(b, 0);
-		exit(0);
+		exit(j);
 	}
 	ft_free_tab(b->spaced_cmd);
 	b->spaced_cmd = NULL;
@@ -71,7 +74,7 @@ void	exit_child_first(t_big *b)
 	exit(127);
 }
 
-void	ft_exit_err(int	noerr)
+void	ft_exit_err(int noerr)
 {
 	if (noerr == 13)
 		exit (126);

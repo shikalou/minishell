@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/02 12:38:23 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:44:23 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_simple_exec(t_big *big_s, t_cmd_lst *cmd_lst)
 	malloc_spaced_cmd(big_s, cmd_lst);
 	if (big_s->spaced_cmd[0] == NULL)
 		return (1);
-	if (ft_check_builtin_multi(big_s, cmd_lst) == 0)
+	if (cmd_lst->fd_in != -1 && ft_check_builtin_multi(big_s, cmd_lst) == 0)
 	{
 		cmd_lst->pid = fork();
 		if (cmd_lst->pid == 0)
