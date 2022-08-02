@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:09:07 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/24 16:41:36 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/02 11:57:26 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	cases_testing(t_exp *exp)
 {
 	if (exp->e == NULL && exp->cmd[exp->i])
 		exp->i += ft_len_dollar(exp->cmd, exp->i);
-	else if (ft_memcmp(exp->e, exp->token, exp->sz_e) == 0)
+	else if (ft_memcmp(exp->e, exp->token, ft_strlen(exp->token)) == 0)
 	{
 		exp->up[exp->j++] = exp->cmd[exp->i++];
 		while (exp->cmd[exp->i] != '$' && exp->cmd[exp->i] != '\''

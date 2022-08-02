@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/01 19:25:17 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/02 14:36:56 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, sig_handler_cmd);
 		if (cmd_lst->fd_in == 0)
 			cmd_lst->fd_in = b->pipefd[0];
+		// printf("last fork fd[0] %d\nfd in %d fd out %d\n\n", b->pipefd[0], cmd_lst->fd_in, cmd_lst->fd_out);
 		i = ft_check_builtin_multi(b, cmd_lst);
 		if (b->spaced_cmd[0] && i == 0)
 		{
 			if (ft_find_check_path(b, b->spaced_cmd, -1) != NULL)
 			{
-				signal(SIGINT, SIG_DFL);
-				signal(SIGQUIT, sig_handler_cmd);
 				ft_dup(cmd_lst);
 				execve(b->cmd_updated, b->spaced_cmd, b->envp);
 				perror("execve");
@@ -36,6 +37,8 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 		}
 		exit_child_last_mid(b, i);
 	}
+	// printf("last out fd[0] %d\nin %d, out %d\n", b->pipefd[0], cmd_lst->fd_in, cmd_lst->fd_out);
+	close(b->pipefd[0]);
 	ft_close_fdinout(cmd_lst);
 }
 
@@ -46,14 +49,17 @@ void	middle_exec(t_big *b, t_cmd_lst *cmd_lst, int i, int fd_temp)
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, sig_handler_cmd);
+		signal(SIGPIPE, SIG_IGN);
+		// printf("mid fork fd[0] %d, fd[1] %d, in %d, out %d\n\n", b->pipefd[0], b->pipefd[1], cmd_lst->fd_in, cmd_lst->fd_out);
 		fd_manager_mid(b, cmd_lst, fd_temp);
 		i = ft_check_builtin_multi(b, cmd_lst);
 		if (b->spaced_cmd[0] && i == 0)
 		{
+			signal(SIGPIPE, SIG_DFL);
 			if (ft_find_check_path(b, b->spaced_cmd, -1) != NULL)
 			{
-				signal(SIGINT, SIG_DFL);
-				signal(SIGQUIT, sig_handler_cmd);
 				ft_dup(cmd_lst);
 				execve(b->cmd_updated, b->spaced_cmd, b->envp);
 				perror("execve");
@@ -61,7 +67,9 @@ void	middle_exec(t_big *b, t_cmd_lst *cmd_lst, int i, int fd_temp)
 		}
 		exit_child_last_mid(b, i);
 	}
+	// printf("mid out fd[0] %d, fd[1] %d\nfd_temp %d fd in %d, fd out %d\n", b->pipefd[0], b->pipefd[1], fd_temp, cmd_lst->fd_in, cmd_lst->fd_out);
 	close(b->pipefd[1]);
+	close(fd_temp);
 	ft_close_fdinout(cmd_lst);
 }
 
@@ -71,17 +79,18 @@ void	first_exec(t_big *b, t_cmd_lst *cmd_lst)
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, sig_handler_cmd);
+		signal(SIGPIPE, SIG_IGN);
+		close(b->pipefd[0]);
 		if (cmd_lst->fd_out == 1)
-		{
-			close(b->pipefd[0]);
 			cmd_lst->fd_out = b->pipefd[1];
-		}
+		// printf("first fork fd[0] %d, fd[1] %d\nfd in %d, fd out %d\n\n", b->pipefd[0], b->pipefd[1], cmd_lst->fd_in, cmd_lst->fd_out);
 		if (b->spaced_cmd[0] && ft_check_builtin_multi(b, cmd_lst) == 0)
 		{
+			signal(SIGPIPE, SIG_DFL);
 			if (ft_find_check_path(b, b->spaced_cmd, -1) != NULL)
 			{
-				signal(SIGINT, SIG_DFL);
-				signal(SIGQUIT, sig_handler_cmd);
 				ft_dup(cmd_lst);
 				execve(b->cmd_updated, b->spaced_cmd, b->envp);
 				perror("execve");
@@ -89,6 +98,7 @@ void	first_exec(t_big *b, t_cmd_lst *cmd_lst)
 		}
 		exit_child_first(b);
 	}
+	// printf("first out fd[0] %d, fd[1] %d\nfd in %d, fd out %d\n", b->pipefd[0], b->pipefd[1], cmd_lst->fd_in, cmd_lst->fd_out);
 	close(b->pipefd[1]);
 	ft_close_fdinout(cmd_lst);
 }
@@ -143,6 +153,6 @@ void	ft_multi_pipe(t_big *b)
 	head = b->cmd_lst;
 	ft_wait(b, head);
 	i = 2;
-	while (++i < 1024)
-		close(i);
+	// while (++i < 1024)
+	// 	close(i);
 }

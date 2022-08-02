@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:24:26 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/01 15:23:30 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/02 12:38:30 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	exit_child_last_mid(t_big *b, int i)
 	ft_free_tab(b->spaced_cmd);
 	b->spaced_cmd = NULL;
 	ft_free_child(b, 0);
+	if (errno == 13)
+		exit (126);
 	exit(127);
 }
 
@@ -66,5 +68,12 @@ void	exit_child_first(t_big *b)
 	ft_free_tab(b->spaced_cmd);
 	b->spaced_cmd = NULL;
 	ft_free_child(b, 0);
+	exit(127);
+}
+
+void	ft_exit_err(int	noerr)
+{
+	if (noerr == 13)
+		exit (126);
 	exit(127);
 }
