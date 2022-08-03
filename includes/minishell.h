@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/02 15:41:21 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/03 14:22:42 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ char			**ft_sdf(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
 char			*check_spe_char(char *cmd, int len_tmp);
-int				check_after_pipe(char *cmd, char c, int j);
+int				check_after_pipe(char *cmd, char c, int j, int i);
 int				check_char(char c);
 int				check_str(char *cmd, int index, int end);
 int				check_char_basic(char c);

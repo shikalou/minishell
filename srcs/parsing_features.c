@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:17:33 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/01 18:26:33 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/03 14:23:22 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,8 @@ int	ft_checkquotes(char *cmd)
 	return (0);
 }
 
-int	check_after_pipe(char *cmd, char c, int j)
+int	check_after_pipe(char *cmd, char c, int j, int i)
 {
-	int	i;
-
-	if (!cmd)
-		return (1);
-	i = -1;
 	while (cmd && cmd[++i] && cmd[i] != '\0')
 	{
 		if (cmd[i] == '\'' || cmd[i] == '"')
@@ -54,13 +49,17 @@ int	check_after_pipe(char *cmd, char c, int j)
 			j = 0;
 			while (cmd && cmd[i++] && cmd[i] != '\0')
 			{
-				if (cmd[i] != '\0' && ft_isalnum(cmd[i]) == 1)
+				if (cmd[i] == '\'' || cmd[i] == '"')
+					j += ft_split_quotes(cmd, i) + 1;
+				else if (cmd[i] != '\0' && ft_isalnum(cmd[i]) == 1)
 					j++;
 			}
 			if (j == 0)
 				return (1);
 			else
-				i = (i - j) - 1;
+				i = (i - j);
+			if (i <= 0)
+				return (0);
 		}
 	}
 	return (0);
