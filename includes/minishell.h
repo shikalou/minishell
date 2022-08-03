@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/03 14:22:42 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/03 16:36:28 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ void			fd_manager_mid(t_big *b, t_cmd_lst *cmd_lst, int fd_tmp);
 char			*ft_strnstr_exec(char *s1, char *s2, size_t n);
 
 /*		--> UTILS EXEC				*/
+void			echo_trim_sp(t_big *b);
 void			ft_wait(t_big *big_struct, t_cmd_lst *cmd_lst);
 void			ft_dup(t_cmd_lst *cmd_lst);
 void			malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst);
@@ -206,6 +207,7 @@ char			*ft_find_check_path(t_big *b, char **spaced_cmd, int i);
 char			*ft_check_slash(t_big *big_struct);
 char			*qt_aft_spacer(char *old, int i, int j);
 char			*qt_pre_spacer(char *old, int i, int j);
+int				echo_check_sp_dq(t_big *b, int i);
 int				ft_strcmp(char *s1, char *s2);
 int				get_sz_aft_spacer(char *old, int i);
 int				get_sz_pre_spacer(char *old, int i);
