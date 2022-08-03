@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/22 13:39:04 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/03 21:23:33 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,53 @@ t_cmd_lst	*ft_init_cmd_lst(char **input)
 	return (begin);
 }
 
+int	havepwd(char **envp)
+{
+	int i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (strncmp(envp[i], "PWD", 3) == 0)
+			return (1);
+		i++;
+	}
+	return 0;
+}
+
+void	addpwd(t_env_lst **env, t_env_lst *pwd)
+{
+	t_env_lst *tmp  = *env;	
+
+	if (!pwd)
+		return ;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = pwd;
+}
+
 t_env_lst	*ft_init_env_lst(char **envp)
 {
 	int			i;
 	t_env_lst	*begin;
+	t_env_lst	*safe;
 	char		*s;
 	char		*s2;
 
 	i = 0;
 	s = getcwd(NULL, 0);
-	if (envp[i] == NULL)
+	safe = NULL;
+	if (!havepwd(envp))
 	{
 		s2 = ft_strjoin("PWD=", s);
-		free(s);
-		begin = ft_lstnew_env(i, ft_strdup(s2));
-		ft_lstadd_back_env(&begin, ft_lstnew_env(i, ft_strdup("SHLVL=1")));
+		safe = ft_lstnew_env(i, ft_strdup(s2));
+		ft_lstadd_back_env(&safe, ft_lstnew_env(i, ft_strdup("SHLVL=0")));
 		free(s2);
-		return (begin);
+	}
+	if (envp[0] == NULL)
+	{
+		free(s);
+		return safe;
 	}
 	begin = ft_lstnew_env(i, ft_strdup(envp[i]));
 	while (envp[++i])
@@ -52,6 +82,8 @@ t_env_lst	*ft_init_env_lst(char **envp)
 		if (envp[i + 1] && (envp[i] == NULL || envp[i][0] == '\0'))
 			i++;
 	}
+
+	addpwd(&begin, safe);
 	return (free(s), begin);
 }
 
@@ -108,10 +140,7 @@ t_big	*ft_init_big(char **envp)
 	big_struct->input = NULL;
 	big_struct->absolut_path = NULL;
 	big_struct->env_lst = ft_init_env_lst(envp);
-	if (envp[0] == NULL)
-		big_struct->envp = ft_new_envp(big_struct->env_lst);
-	else
-		big_struct->envp = envp;
+	big_struct->envp = ft_new_envp(big_struct->env_lst);
 	big_struct->path = ft_recover_path(envp);
 	big_struct->cmd_lst = NULL;
 	big_struct->cmd_updated = NULL;
@@ -120,8 +149,9 @@ t_big	*ft_init_big(char **envp)
 	big_struct->status = 0;
 	big_struct->c_status = NULL;
 	big_struct->random_file = NULL;
-	big_struct->check_export = 0;
-	big_struct->check_unset = 0;
+	big_struct->check_export = 1;
+	big_struct->check_unset = 1;
 	big_struct->env_size = ft_lstsize_env(big_struct->env_lst);
+	ft_update_oldpwd(big_struct, "PWD=", 0);
 	return (big_struct);
 }
