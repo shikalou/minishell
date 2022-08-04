@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:36:34 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/03 21:23:33 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 19:32:13 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,6 @@ t_cmd_lst	*ft_init_cmd_lst(char **input)
 		ft_lstadd_back_cmd(&begin, ft_lstnew_cmd(i, ft_strdup(input[i])));
 	}
 	return (begin);
-}
-
-int	havepwd(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (strncmp(envp[i], "PWD=", 4) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	addpwd(t_env_lst **env, t_env_lst *pwd)
-{
-	t_env_lst	*tmp;	
-
-	tmp = *env;
-	if (!pwd)
-		return ;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = pwd;
 }
 
 t_env_lst	*ft_init_env_lst(char **envp, int i)
@@ -75,8 +49,6 @@ t_env_lst	*ft_init_env_lst(char **envp, int i)
 	{
 		if (envp[i])
 			ft_lstadd_back_env(&begin, ft_lstnew_env(i, ft_strdup(envp[i])));
-		// if (envp[i + 1] && (envp[i] == NULL || envp[i][0] == '\0'))
-		// 	i++;
 	}
 	addpwd(&begin, safe);
 	return (free(s), begin);

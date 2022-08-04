@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 21:12:40 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/24 16:09:15 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/04 19:36:15 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ char	**shlvl_envp(t_big *big_s, int ind, int i, int j)
 		else
 			result[j++] = ft_strdup(big_s->envp[i++]);
 	}
-//	if (big_s->check_unset > 0 || big_s->check_export > 0)
 	ft_free_tab(big_s->envp);
 	result[j] = NULL;
 	return (result);
@@ -106,6 +105,5 @@ int	ft_update_shlvl(t_big *big_s)
 		if (ft_strncmp(big_s->envp[i], "SHLVL", 5) == 0)
 			big_s->envp = shlvl_envp(big_s, i, 0, 0);
 	}
-	/*big_s->check_export++;*/
 	return (0);
 }

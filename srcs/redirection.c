@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/02 16:31:40 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 19:36:59 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	redirect_out(t_big *b, t_cmd_lst *cmd_lst, int i, int j)
 	int	k;
 
 	i++;
+	update_spaced_par(b->spaced_par[i], b, i);
 	if (cmd_lst->fd_out != 1)
 		close(cmd_lst->fd_out);
 	if (j == 1)
@@ -64,6 +65,7 @@ void	redirect_in(t_big *b, t_cmd_lst *cmd_lst, int i)
 	int	k;
 
 	i++;
+	update_spaced_par(b->spaced_par[i], b, i);
 	if (cmd_lst->fd_in == -1)
 	{
 		k = ft_strlen(cmd_lst->command);

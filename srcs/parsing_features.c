@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:17:33 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/03 14:23:22 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/04 19:02:31 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,18 @@ int	error_parse(t_big *b)
 	ft_free_tab(b->input);
 	b->input = NULL;
 	return (1);
+}
+
+int	is_only_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t')
+			return (1);
+		i++;
+	}
+	return (0);
 }
