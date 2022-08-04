@@ -42,7 +42,7 @@ void	update_envp(t_big *big_s, char **envp, int ind)
 void	update_lst(t_big *big_s, char *var)
 {
 	ft_lstclear_env(big_s->env_lst);
-	big_s->env_lst = ft_init_env_lst(big_s->envp);
+	big_s->env_lst = ft_init_env_lst(big_s->envp, 0);
 	big_s->env_size = ft_lstsize_env(big_s->env_lst);
 	if (ft_strncmp("PATH", var, 4) == 0)
 	{

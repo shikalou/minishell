@@ -92,6 +92,7 @@ typedef struct s_big_struct
 	int			env_size;
 	int			pipefd[2];
 	int			status;
+	int			check_expand_status;
 	char		*c_status;
 	char		*random_file;
 	t_env_lst	*env_lst;
@@ -114,7 +115,7 @@ void			ft_lstclear_cmd(t_cmd_lst *cmd_lst);
 int				ft_lstsize_cmd(t_cmd_lst *lst);
 
 /*		--> INIT ENV_LST			*/
-t_env_lst		*ft_init_env_lst(char **envp);
+t_env_lst		*ft_init_env_lst(char **envp, int i);
 t_env_lst		*ft_lstnew_env(int i, char *env_line);
 void			ft_lstadd_back_env(t_env_lst **alst, t_env_lst *new);
 void			ft_lstclear_env(t_env_lst *env_lst);
@@ -131,6 +132,7 @@ void			parsing_quotes(t_big *big_struct);
 
 char			*expand_first_case(t_big *big_s, int i, char *cmd);
 char			*expand_second_case(t_big *big_s, int i, char *cmd);
+char			*expand_status(char *b_status, char *cmd, int index, t_big *b);
 char			*extended_dollar(char *cmd, t_big *big_struct);
 char			*fill_cmd_expand(t_big *big, t_exp *exp);
 char			*ft_get_env_var(t_big *big_struct, char *cmd, int index);

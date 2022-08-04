@@ -73,6 +73,7 @@ int	get_right_size(char *cmd, t_big *big_struct)
 {
 	int	i;
 	int	count;
+	char	*tmp;
 
 	i = 0;
 	count = 0;
@@ -81,10 +82,13 @@ int	get_right_size(char *cmd, t_big *big_struct)
 		if (cmd[i] == '$')
 		{
 			count++;
-			count += ft_strlen(ft_get_env_var(big_struct, cmd, i));
-			if (ft_strlen(ft_get_env_var(big_struct, cmd, i)) == 0)
+			tmp = ft_get_env_var(big_struct, cmd, i);
+			count += ft_strlen(tmp);
+			if (ft_strlen(tmp) == 0)
 				count += ft_len_dollar(cmd, i);
 			i += ft_len_dollar(cmd, i);
+			if (big_struct->check_expand_status == 1)
+				free(tmp);
 		}
 		else
 		{
@@ -123,7 +127,10 @@ void	parsing_quotes(t_big *big_struct)
 	while (head && head->command)
 	{
 		if (ft_memchr(head->command, '$', ft_strlen(head->command)))
+		{
+			big_struct->check_expand_status = 0;
 			head->command = extended_dollar(head->command, big_struct);
+		}
 		if (head->command && head->command[0] != '\0')
 		{
 			tmp = head->command;

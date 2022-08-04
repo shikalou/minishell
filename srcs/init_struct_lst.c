@@ -28,22 +28,23 @@ t_cmd_lst	*ft_init_cmd_lst(char **input)
 
 int	havepwd(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
 	{
-		if (strncmp(envp[i], "PWD", 3) == 0)
+		if (strncmp(envp[i], "PWD=", 4) == 0)
 			return (1);
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
 void	addpwd(t_env_lst **env, t_env_lst *pwd)
 {
-	t_env_lst *tmp  = *env;	
+	t_env_lst	*tmp;	
 
+	tmp = *env;
 	if (!pwd)
 		return ;
 	while (tmp->next)
@@ -51,15 +52,13 @@ void	addpwd(t_env_lst **env, t_env_lst *pwd)
 	tmp->next = pwd;
 }
 
-t_env_lst	*ft_init_env_lst(char **envp)
+t_env_lst	*ft_init_env_lst(char **envp, int i)
 {
-	int			i;
 	t_env_lst	*begin;
 	t_env_lst	*safe;
 	char		*s;
 	char		*s2;
 
-	i = 0;
 	s = getcwd(NULL, 0);
 	safe = NULL;
 	if (!havepwd(envp))
@@ -70,19 +69,15 @@ t_env_lst	*ft_init_env_lst(char **envp)
 		free(s2);
 	}
 	if (envp[0] == NULL)
-	{
-		free(s);
-		return safe;
-	}
+		return (free(s), safe);
 	begin = ft_lstnew_env(i, ft_strdup(envp[i]));
 	while (envp[++i])
 	{
 		if (envp[i])
 			ft_lstadd_back_env(&begin, ft_lstnew_env(i, ft_strdup(envp[i])));
-		if (envp[i + 1] && (envp[i] == NULL || envp[i][0] == '\0'))
-			i++;
+		// if (envp[i + 1] && (envp[i] == NULL || envp[i][0] == '\0'))
+		// 	i++;
 	}
-
 	addpwd(&begin, safe);
 	return (free(s), begin);
 }
@@ -139,7 +134,7 @@ t_big	*ft_init_big(char **envp)
 		return (NULL);
 	big_struct->input = NULL;
 	big_struct->absolut_path = NULL;
-	big_struct->env_lst = ft_init_env_lst(envp);
+	big_struct->env_lst = ft_init_env_lst(envp, 0);
 	big_struct->envp = ft_new_envp(big_struct->env_lst);
 	big_struct->path = ft_recover_path(envp);
 	big_struct->cmd_lst = NULL;
@@ -151,6 +146,7 @@ t_big	*ft_init_big(char **envp)
 	big_struct->random_file = NULL;
 	big_struct->check_export = 1;
 	big_struct->check_unset = 1;
+	big_struct->check_expand_status = 0;
 	big_struct->env_size = ft_lstsize_env(big_struct->env_lst);
 	ft_update_oldpwd(big_struct, "PWD=", 0);
 	return (big_struct);

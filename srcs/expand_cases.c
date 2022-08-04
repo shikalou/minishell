@@ -54,11 +54,14 @@ char	*fill_cmd_expand(t_big *big, t_exp *exp)
 			exp->e = ft_get_env_var(big, exp->cmd, exp->i);
 			exp->sz_e = ft_strlen(exp->e);
 			cases_testing(exp);
+			if (big->check_expand_status == 1)
+				free(exp->e);
 		}
 		else
 			exp->up[exp->j++] = exp->cmd[exp->i++];
 	}
 	exp->up[exp->j] = '\0';
+
 	return (exp->up);
 }
 
@@ -67,10 +70,8 @@ char	*expand_first_case(t_big *big_s, int i, char *cmd)
 	int		j;
 
 	j = i + 1;
-	while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '"'
-			&& cmd[j] != '$' && cmd[j] != '\''))
-		j++;
-	if (cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
+	printf("cmd[%d] = %c\n", i, cmd[i]);
+	if (cmd[i + 1] && cmd[i + 1] == '?')
 	{
 		if (big_s->c_status != NULL)
 		{
@@ -78,8 +79,12 @@ char	*expand_first_case(t_big *big_s, int i, char *cmd)
 			big_s->c_status = NULL;
 		}
 		big_s->c_status = ft_itoa(big_s->status);
-		return (big_s->c_status);
+		return (expand_status(big_s->c_status, cmd, i, big_s));
 	}
+	while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '"'
+			&& cmd[j] != '$' && cmd[j] != '\''))
+		j++;
+
 	if ((j - i) == 1)
 		return ("$");
 	return (get_env_lst(cmd, (i + 1), j, big_s));
@@ -92,10 +97,7 @@ char	*expand_second_case(t_big *big_s, int i, char *cmd)
 	j = i;
 	if (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '"'))
 		j++;
-	while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '\''
-			&& cmd[j] != '"' && cmd[j] != '$'))
-		j++;
-	if (cmd[i + 1] && cmd[i + 1] == '?' && ((j - i) == 2))
+	if (cmd[i + 1] && cmd[i + 1] == '?')
 	{
 		if (big_s->c_status != NULL)
 		{
@@ -103,8 +105,11 @@ char	*expand_second_case(t_big *big_s, int i, char *cmd)
 			big_s->c_status = NULL;
 		}
 		big_s->c_status = ft_itoa(big_s->status);
-		return (big_s->c_status);
+		return (expand_status(big_s->c_status, cmd, i, big_s));
 	}
+	while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '\''
+			&& cmd[j] != '"' && cmd[j] != '$'))
+		j++;
 	if ((j - i) == 1)
 		return ("$");
 	return (get_env_lst(cmd, i, j, big_s));
