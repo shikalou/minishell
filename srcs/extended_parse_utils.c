@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:49:15 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/07/20 13:56:24 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/04 19:51:56 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char	*expand_status(char *b_status, char *cmd, int index, t_big *b)
 {
 	int		i;
 	int		j;
-	char	*result;
 	char	*end;
 
 	i = index + 2;
@@ -75,13 +74,9 @@ char	*expand_status(char *b_status, char *cmd, int index, t_big *b)
 		while (index < i)
 			end[j++] = cmd[index++];
 		end[j] = '\0';
-		result = ft_strjoin(b_status, end);
 		b->check_expand_status = 1;
-		return (free(end), result);
+		return (free(end), ft_strjoin(b_status, end));
 	}
-	else
-	{
-		b->check_expand_status = 0;
-		return (b_status);
-	}
+	b->check_expand_status = 0;
+	return (b_status);
 }
