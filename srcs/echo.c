@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:11:10 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/03 23:44:03 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/04 15:26:21 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_check_echo_n(char *s)
 
 	i = 1;
 	if (!s)
+		return (0);
+	if (ft_memcmp(s, "-n", 2))
 		return (0);
 	while (s && s[i])
 	{

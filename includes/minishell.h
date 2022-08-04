@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/03 16:36:28 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/04 19:38:41 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,9 @@ typedef struct s_big_struct
 int				shellmini(t_big *big_struct);
 
 t_big			*ft_init_big(char **envp);
+void			addpwd(t_env_lst **env, t_env_lst *pwd);
 char			**ft_recover_path(char **envp);
+int				havepwd(char **envp);
 
 /*		--> INIT CMD_LST			*/
 t_cmd_lst		*ft_init_cmd_lst(char **input);
@@ -147,6 +149,7 @@ void			parsing_redirection(t_big *big_struct, int i);
 void			redirect_heredoc(t_big *b, t_cmd_lst *cmd_lst, int i);
 void			redirect_in(t_big *b, t_cmd_lst *cmd_lst, int i);
 void			redirect_out(t_big *b, t_cmd_lst *cmd_lst, int i, int j);
+void			update_spaced_par(char *spaced_par, t_big *b, int i);
 char			*update_flux(t_big *b, int size, int index);
 
 /*		--> UTILS PARSING			*/
@@ -168,6 +171,7 @@ int				ft_count_char(char const *s1, int i, char c);
 int				ft_count_strs(char const *s, char c);
 int				ft_split_quotes(const char *s1, int i);
 int				error_parse(t_big *b);
+int				is_only_space(char *str);
 
 /********************************************************/
 /*************SHLVL**************************************/

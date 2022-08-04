@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/02 19:16:47 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/04 19:34:54 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,11 @@ char	*ft_get_env_var(t_big *big_struct, char *cmd, int index)
 	return (NULL);
 }
 
-int	get_right_size(char *cmd, t_big *big_struct)
+int	get_right_size(char *cmd, t_big *big_struct, int i)
 {
-	int	i;
-	int	count;
+	int		count;
 	char	*tmp;
 
-	i = 0;
 	count = 0;
 	while (cmd && cmd[i])
 	{
@@ -106,7 +104,7 @@ char	*extended_dollar(char *cmd, t_big *big_struct)
 	int		i;
 
 	i = 0;
-	i = get_right_size(cmd, big_struct);
+	i = get_right_size(cmd, big_struct, 0);
 	new_cmd = malloc(sizeof(char) * i + 1);
 	if (!new_cmd)
 		return (NULL);

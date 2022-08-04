@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:09:07 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/02 19:17:00 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/04 19:40:12 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*fill_cmd_expand(t_big *big, t_exp *exp)
 			exp->up[exp->j++] = exp->cmd[exp->i++];
 	}
 	exp->up[exp->j] = '\0';
-
 	return (exp->up);
 }
 
@@ -84,7 +83,6 @@ char	*expand_first_case(t_big *big_s, int i, char *cmd)
 	while (cmd[j] && (cmd[j] != ' ' && cmd[j] != '\0' && cmd[j] != '"'
 			&& cmd[j] != '$' && cmd[j] != '\''))
 		j++;
-
 	if ((j - i) == 1)
 		return ("$");
 	return (get_env_lst(cmd, (i + 1), j, big_s));
