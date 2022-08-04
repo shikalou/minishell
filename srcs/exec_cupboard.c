@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cupboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 12:24:26 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/03 23:39:38 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/04 19:15:03 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	malloc_spaced_cmd(t_big *b, t_cmd_lst *cmd_lst)
 	else
 	{
 		cmd_lst->command = qt_pre_spacer(cmd_lst->command, 0, 0);
-	//	cmd_lst->command = qt_aft_spacer(cmd_lst->command, 0, 0);
+		cmd_lst->command = qt_aft_spacer(cmd_lst->command, 0, 0);
 	}
 	b->spaced_cmd = ft_sdf(cmd_lst->command, ' ');
 }
