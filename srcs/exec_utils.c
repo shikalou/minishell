@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 15:02:50 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/02 16:20:03 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 22:27:53 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,24 @@ char	*ft_find_check_path(t_big *b, char **spaced_cmd, int i)
 
 	if (ft_strchr(b->spaced_cmd[0], '/'))
 		return (ft_check_slash(b));
-	else
+	new_path = ft_recover_path(b->envp);
+	while (new_path && new_path[++i] != NULL)
 	{
-		new_path = ft_recover_path(b->envp);
-		while (new_path && new_path[++i] != NULL)
+		temp = ft_strjoin(new_path[i], "/");
+		b->cmd_updated = ft_strjoin(temp, spaced_cmd[0]);
+		free(temp);
+		if (b->cmd_updated && access(b->cmd_updated, X_OK) == 0
+			&& open(b->cmd_updated, __O_DIRECTORY) == -1)
 		{
-			temp = ft_strjoin(new_path[i], "/");
-			b->cmd_updated = ft_strjoin(temp, spaced_cmd[0]);
-			free(temp);
-			if (b->cmd_updated && access(b->cmd_updated, X_OK) == 0)
-			{
-				ft_free_tab(new_path);
-				return (b->cmd_updated);
-			}
-			free(b->cmd_updated);
-			b->cmd_updated = NULL;
+			ft_free_tab(new_path);
+			return (b->cmd_updated);
 		}
-		printf("%s : command not found\n", b->spaced_cmd[0]);
-		ft_free_tab(new_path);
-		return (NULL);
+		free(b->cmd_updated);
+		b->cmd_updated = NULL;
 	}
+	printf("%s : command not found\n", b->spaced_cmd[0]);
+	ft_free_tab(new_path);
+	return (NULL);
 }
 
 int	ft_strcmp(char *s1, char *s2)

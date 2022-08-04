@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 13:49:52 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/04 19:34:54 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 22:30:05 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,7 @@ char	*extended_dollar(char *cmd, t_big *big_struct)
 void	parsing_quotes(t_big *big_struct)
 {
 	t_cmd_lst	*head;
-	char		*tmp;
-	int			i;
 
-	i = 0;
 	head = big_struct->cmd_lst;
 	while (head && head->command)
 	{
@@ -129,12 +126,15 @@ void	parsing_quotes(t_big *big_struct)
 			big_struct->check_expand_status = 0;
 			head->command = extended_dollar(head->command, big_struct);
 		}
-		if (head->command && head->command[0] != '\0')
-		{
-			tmp = head->command;
-			head->command = strtrim_aug(tmp, i);
-			i++;
-		}
+		head = head->next;
+	}
+	head = big_struct->cmd_lst;
+	while (head)
+	{
+		head->spaced_cmd = ft_sdf(head->command, ' ');
+		if (!head->spaced_cmd)
+			return ;
+		strtrim_new(head->spaced_cmd);
 		head = head->next;
 	}
 }

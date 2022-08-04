@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:49:15 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/04 19:51:56 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 22:29:02 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,18 @@ char	*expand_status(char *b_status, char *cmd, int index, t_big *b)
 	}
 	b->check_expand_status = 0;
 	return (b_status);
+}
+
+void	strtrim_new(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (ft_memcmp(tab[0], "export", 7) == 0)
+		return ;
+	while (tab[i])
+	{
+		tab[i] = strtrim_aug(tab[i], 0);
+		i++;
+	}
 }

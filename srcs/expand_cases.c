@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 20:09:07 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/04 19:40:12 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 22:24:16 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	*expand_first_case(t_big *big_s, int i, char *cmd)
 	int		j;
 
 	j = i + 1;
-	printf("cmd[%d] = %c\n", i, cmd[i]);
 	if (cmd[i + 1] && cmd[i + 1] == '?')
 	{
 		if (big_s->c_status != NULL)

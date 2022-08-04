@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:22:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/02 16:44:23 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 22:24:10 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	fd_manager_mid(t_big *b, t_cmd_lst *cmd_lst, int fd_temp)
 
 int	ft_simple_exec(t_big *big_s, t_cmd_lst *cmd_lst)
 {
-	malloc_spaced_cmd(big_s, cmd_lst);
+	big_s->spaced_cmd = cmd_lst->spaced_cmd;
 	if (big_s->spaced_cmd[0] == NULL)
 		return (1);
 	if (cmd_lst->fd_in != -1 && ft_check_builtin_multi(big_s, cmd_lst) == 0)
@@ -41,7 +41,6 @@ int	ft_simple_exec(t_big *big_s, t_cmd_lst *cmd_lst)
 				execve(big_s->cmd_updated, big_s->spaced_cmd, big_s->envp);
 				perror("execve");
 			}
-			ft_free_tab(big_s->spaced_cmd);
 			ft_free_child(big_s, 0);
 			ft_exit_err(errno);
 		}

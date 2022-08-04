@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 13:58:00 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/02 16:58:22 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 22:06:19 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 {
 	int	i;
 
-	malloc_spaced_cmd(b, cmd_lst);
+	b->spaced_cmd = cmd_lst->spaced_cmd;
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{
@@ -42,7 +42,7 @@ void	last_exec(t_big *b, t_cmd_lst *cmd_lst)
 
 void	middle_exec(t_big *b, t_cmd_lst *cmd_lst, int i, int fd_temp)
 {
-	malloc_spaced_cmd(b, cmd_lst);
+	b->spaced_cmd = cmd_lst->spaced_cmd;
 	pipe(b->pipefd);
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
@@ -71,7 +71,7 @@ void	middle_exec(t_big *b, t_cmd_lst *cmd_lst, int i, int fd_temp)
 
 void	first_exec(t_big *b, t_cmd_lst *cmd_lst)
 {
-	malloc_spaced_cmd(b, cmd_lst);
+	b->spaced_cmd = cmd_lst->spaced_cmd;
 	cmd_lst->pid = fork();
 	if (cmd_lst->pid == 0)
 	{

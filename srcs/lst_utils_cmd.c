@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:38:46 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/02 16:31:02 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 22:17:10 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	ft_lstclear_cmd(t_cmd_lst *cmd_lst)
 			close(cmd_lst->fd_out);
 		lst_tmp = cmd_lst->next;
 		free(cmd_lst->command);
+		if (cmd_lst->spaced_cmd)
+			ft_free_tab(cmd_lst->spaced_cmd);
 		free(cmd_lst);
 		cmd_lst = lst_tmp;
 	}
@@ -73,5 +75,6 @@ t_cmd_lst	*ft_lstnew_cmd(int i, char *cmd)
 	newlist->fd_in = 0;
 	newlist->fd_out = 1;
 	newlist->command = cmd;
+	newlist->spaced_cmd = NULL;
 	return (newlist);
 }

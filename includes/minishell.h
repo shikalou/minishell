@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/04 19:38:41 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/04 22:29:56 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cmd_lst
 {
 	int					index;
 	char				*command;
+	char				**spaced_cmd;
 	int					fd_in;
 	int					fd_out;
 	pid_t				pid;
@@ -155,8 +156,7 @@ char			*update_flux(t_big *b, int size, int index);
 /*		--> UTILS PARSING			*/
 void			ft_init_expand(t_exp *exp, char *cmd, char *up);
 void			ft_init_sdf(t_sdf *sdf, const char *s1, char c);
-void			parsing_trash(t_big *big_s);
-void			w_condition_tr(t_trim *tr);
+void			strtrim_new(char **tab);
 char			**ft_sdf(char const *s1, char c);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
@@ -280,4 +280,5 @@ void			ft_check_signal(int status);
 
 /********************************************************/
 /********************************************************/
+/*coucou*/
 #endif
