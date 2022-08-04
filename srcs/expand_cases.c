@@ -82,7 +82,6 @@ char	*expand_first_case(t_big *big_s, int i, char *cmd)
 	}
 	if ((j - i) == 1)
 		return ("$");
-	printf("hern");
 	return (get_env_lst(cmd, (i + 1), j, big_s));
 }
 

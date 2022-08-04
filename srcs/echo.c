@@ -87,7 +87,7 @@ void	ft_parsing_echo(char **sp, int i, int j)
 				free(sp[i]);
 				printf("1tmp before trim = %s\n", tmp);
 				sp[i] = strtrim_aug(tmp, 0);
-				free(tmp);
+			//	free(tmp);
 				break ;
 			}
 			else if (sp[i][j + 1] && sp[i][j + 2]  && (i == 1) && ((sp[i][j] == '"' && sp[i][j + 1] == '"')

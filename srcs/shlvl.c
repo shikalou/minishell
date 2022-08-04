@@ -82,8 +82,8 @@ char	**shlvl_envp(t_big *big_s, int ind, int i, int j)
 		else
 			result[j++] = ft_strdup(big_s->envp[i++]);
 	}
-	if (big_s->check_unset > 0 || big_s->check_export > 0)
-		ft_free_tab(big_s->envp);
+//	if (big_s->check_unset > 0 || big_s->check_export > 0)
+	ft_free_tab(big_s->envp);
 	result[j] = NULL;
 	return (result);
 }
@@ -106,6 +106,6 @@ int	ft_update_shlvl(t_big *big_s)
 		if (ft_strncmp(big_s->envp[i], "SHLVL", 5) == 0)
 			big_s->envp = shlvl_envp(big_s, i, 0, 0);
 	}
-	big_s->check_export++;
+	/*big_s->check_export++;*/
 	return (0);
 }
