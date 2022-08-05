@@ -6,7 +6,7 @@
 #    By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/23 16:12:42 by ldinaut           #+#    #+#              #
-#    Updated: 2022/08/04 22:27:09 by ldinaut          ###   ########.fr        #
+#    Updated: 2022/08/05 15:56:41 by ldinaut          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ CC			=	gcc
 
 LIB			=	-lreadline -Llibft -lft
 
-CFLAGS		=	-Wall -Wextra -Werror -g3 -I./includes
+CFLAGS		=	-Wall -Wextra -Werror -I./includes #-g3
 
 OBJS_FILES	=	$(SRCS_FILES:%.c=%.o)
 

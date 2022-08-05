@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/05 14:38:30 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 15:53:04 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,3 @@ char	**ft_sdf(char const *s1, char c)
 	}
 	return (ft_fill_strs(&sdf, 0));
 }
-
-/*int main()
-{
-	char	**split;
-	char *hihi = "lol | lil | \"merde test|test\"ui oui | nn non";
-	printf("%s\n", hihi);
-	split = ft_split_du_futur(hihi, '|');
-	int i;
-	i = 0;
-	while (split[i])
-	{
-		printf("%s\n", split[i]);
-		i++;
-	}
-	return 0;
-}*/

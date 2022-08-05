@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 19:29:38 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/05 13:05:36 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 15:54:05 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	havepwd(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (strncmp(envp[i], "PWD=", 4) == 0)
+		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
 			return (1);
 		i++;
 	}
