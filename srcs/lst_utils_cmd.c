@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 21:38:46 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/04 22:17:10 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 13:58:59 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_lstclear_cmd(t_cmd_lst *cmd_lst)
 	{
 		if (cmd_lst->fd_in != 0 && cmd_lst->fd_in != -1)
 			close(cmd_lst->fd_in);
-		if (cmd_lst->fd_out != 1)
+		if (cmd_lst->fd_out != 1 && cmd_lst->fd_out != -1)
 			close(cmd_lst->fd_out);
 		lst_tmp = cmd_lst->next;
 		free(cmd_lst->command);

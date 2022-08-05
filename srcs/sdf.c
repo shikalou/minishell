@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:18:19 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/23 15:34:16 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 14:38:30 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	**ft_sdf(char const *s1, char c)
 	i = 0;
 	j = -1;
 	ft_init_sdf(&sdf, s1, c);
+	if (sdf.k == 0)
+		return (NULL);
 	sdf.strs = malloc(sizeof(char *) * (sdf.k + 1));
 	if (!sdf.strs)
 		return (NULL);
@@ -79,15 +81,14 @@ char	**ft_sdf(char const *s1, char c)
 	{
 		while (sdf.s[i] && sdf.s[i] == c)
 			i++;
-		if (s1[i] != c)
+		if (s1[i] && s1[i] != c)
 			l = ft_count_char(s1, i, c);
 		sdf.strs[j] = malloc(sizeof(char) * (l + 1));
 		i += l;
 		if (!sdf.strs[j])
 			ft_free(sdf.strs, j);
 	}
-	ft_fill_strs(&sdf, 0);
-	return (sdf.strs);
+	return (ft_fill_strs(&sdf, 0));
 }
 
 /*int main()

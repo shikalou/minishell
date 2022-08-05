@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 18:44:56 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 19:45:36 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 13:30:20 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	get_value(t_big *big_struct, t_cmd_lst *cmd_lst, int i)
 	if (i == 2)
 	{
 		close(static_cmd_lst->fd_in);
+		ft_free_tab(static_struct->spaced_par);
+		static_struct->spaced_par = NULL;
 		ft_free_child(static_struct, 0);
 	}
 }

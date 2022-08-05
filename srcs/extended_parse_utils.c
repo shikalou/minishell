@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:49:15 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/05 12:18:52 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 13:46:02 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ void	strtrim_new(char **tab)
 	int	i;
 
 	i = 0;
-	if (ft_memcmp(tab[0], "export", 7) == 0)
+	if (tab[0] && ft_memcmp(tab[0], "export", 7) == 0)
 		return ;
-	if (ft_memcmp(tab[0], "unset", 6) == 0)
+	if (tab[0] && ft_memcmp(tab[0], "unset", 6) == 0)
 		return ;
 	while (tab[i])
 	{

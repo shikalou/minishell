@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 17:10:29 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/04 19:36:59 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 14:02:30 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	redirect_out(t_big *b, t_cmd_lst *cmd_lst, int i, int j)
 		cmd_lst->fd_out = open(b->spaced_par[i],
 				O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (cmd_lst->fd_out == -1)
+	{
+		b->status = 1;
 		printf("%s : %s\n", strerror(errno), b->spaced_par[i + 1]);
+	}
 	k = ft_strlen(cmd_lst->command);
 	free(cmd_lst->command);
 	cmd_lst->command = update_flux(b, k, i - 1);

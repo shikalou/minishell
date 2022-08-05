@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:29:57 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/21 20:26:09 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 14:09:06 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ void	ft_open_heredoc(t_big *b, t_cmd_lst *cmd_lst)
 	cmd_lst->fd_in = open(b->random_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 }
 
+static void	print_error_here_doc(t_big *b, int i)
+{
+	printf("warning: here_doc delimited by EOF (wanted `%s')\n",
+		b->spaced_par[i]);
+}
+
 int	ft_heredoc(t_big *b, t_cmd_lst *cmd_lst, int i)
 {
 	char	*input;
@@ -58,11 +64,10 @@ int	ft_heredoc(t_big *b, t_cmd_lst *cmd_lst, int i)
 			input = readline("> ");
 		}
 		if (!input)
-		{
-			printf("warning: here_doc delimited by EOF (wanted `%s')\n",
-				b->spaced_par[i]);
-		}
+			print_error_here_doc(b, i);
 		close(cmd_lst->fd_in);
+		ft_free_tab(b->spaced_par);
+		b->spaced_par = NULL;
 		ft_free_child(b, 0);
 		exit(0);
 	}
