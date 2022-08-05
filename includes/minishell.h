@@ -6,7 +6,7 @@
 /*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/05 15:20:01 by mcouppe          ###   ########.fr       */
+/*   Updated: 2022/08/05 15:41:58 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int				is_only_space(char *str);
 /********************************************************/
 int				ft_update_shlvl(t_big *big_s);
 char			**shlvl_envp(t_big *big_s, int ind, int i, int j);
-char			*get_nb_shlvl(char *line, int ind);
+char			*get_nb_shlvl(char *line, int ind, int i);
 char			*shlvl_line(t_env_lst *env);
 
 /********************************************************/
