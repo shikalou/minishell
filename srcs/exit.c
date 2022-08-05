@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:39:08 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/07/20 17:57:38 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 11:24:57 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	exit_next(t_big *b)
 		else
 			i = (b->status % 256);
 	}
-	ft_free_tab(b->spaced_cmd);
 	ft_free_child(b, 1);
 	return (i);
 }

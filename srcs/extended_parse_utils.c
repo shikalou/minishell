@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:49:15 by mcouppe           #+#    #+#             */
-/*   Updated: 2022/08/04 22:29:02 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 12:18:52 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*expand_status(char *b_status, char *cmd, int index, t_big *b)
 			end[j++] = cmd[index++];
 		end[j] = '\0';
 		b->check_expand_status = 1;
-		return (free(end), ft_strjoin(b_status, end));
+		return (ft_strjoin_free2(b_status, end));
 	}
 	b->check_expand_status = 0;
 	return (b_status);
@@ -87,6 +87,8 @@ void	strtrim_new(char **tab)
 
 	i = 0;
 	if (ft_memcmp(tab[0], "export", 7) == 0)
+		return ;
+	if (ft_memcmp(tab[0], "unset", 6) == 0)
 		return ;
 	while (tab[i])
 	{

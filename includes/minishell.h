@@ -6,7 +6,7 @@
 /*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/04 22:29:56 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 12:20:02 by ldinaut          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ int				ft_parsing(char *cmd, t_big *big_struct);
 
 /*		--> PARSING QUOTES			*/
 void			parsing_quotes(t_big *big_struct);
-
 char			*expand_first_case(t_big *big_s, int i, char *cmd);
 char			*expand_second_case(t_big *big_s, int i, char *cmd);
 char			*expand_status(char *b_status, char *cmd, int index, t_big *b);
@@ -158,6 +157,7 @@ void			ft_init_expand(t_exp *exp, char *cmd, char *up);
 void			ft_init_sdf(t_sdf *sdf, const char *s1, char c);
 void			strtrim_new(char **tab);
 char			**ft_sdf(char const *s1, char c);
+char			*ft_strjoin_free2(char const *s1, char *s2);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
 char			*check_spe_char(char *cmd, int len_tmp);
