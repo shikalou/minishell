@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:37:58 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/04 22:30:16 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 15:20:10 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ int	parsing_ending(char *cmd, t_big *big_s)
 
 int	ft_parsing(char *cmd, t_big *big_struct)
 {
-	if (ft_checkquotes(cmd) != 0)
+	if (ft_checkquotes(cmd) != 0 || check_rafter(cmd, '>', '<', -1) == 1)
 	{
-		write(2, "Error syntax\n", 13);
+		write(2, "Syntax error\n", 13);
 		big_struct->status = 2;
 		return (0);
 	}
@@ -113,7 +113,7 @@ int	ft_parsing(char *cmd, t_big *big_struct)
 	if (!cmd)
 	{
 		free(cmd);
-		write(2, "Error syntax\n", 13);
+		write(2, "Syntax error\n", 13);
 		big_struct->status = 2;
 		return (0);
 	}

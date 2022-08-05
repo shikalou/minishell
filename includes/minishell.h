@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldinaut <ldinaut@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcouppe <mcouppe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:47:27 by ldinaut           #+#    #+#             */
-/*   Updated: 2022/08/05 12:20:02 by ldinaut          ###   ########.fr       */
+/*   Updated: 2022/08/05 15:20:01 by mcouppe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ char			*ft_strjoin_free2(char const *s1, char *s2);
 char			*add_space(char *cmd, int index);
 char			*add_space_hereapp(char *cmd, int index);
 char			*check_spe_char(char *cmd, int len_tmp);
-int				check_after_pipe(char *cmd, char c, int j, int i);
+int				check_rafter(char *cmd, char o_rafter, char c_rafter, int i);
 int				check_char(char c);
 int				check_str(char *cmd, int index, int end);
 int				check_char_basic(char c);
